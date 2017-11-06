@@ -11,9 +11,13 @@ public class Test {
 			System.out.println(e.getMessage());
 		}
 
-		System.out.println("Mesas:\n");
-		for (Object m : Controlador.getInstancia().getMesas())
-			System.out.println(m.toString());
+		try {
+			System.out.println("Mesas:\n");
+			for (Object m : Controlador.getInstancia().getMesas())
+				System.out.println(m.toString());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 		new Server();
 	}

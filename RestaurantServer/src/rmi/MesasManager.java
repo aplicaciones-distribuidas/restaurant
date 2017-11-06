@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import controlador.Controlador;
 import dto.MesaView;
-import excepciones.MesaYaExisteException;
+import excepciones.BaseDeDatosException;
 import interfaces.MesasTDA;
 
 public class MesasManager extends UnicastRemoteObject implements MesasTDA, Serializable {
@@ -16,7 +16,7 @@ public class MesasManager extends UnicastRemoteObject implements MesasTDA, Seria
 
 	private static final long serialVersionUID = 3548218673814294625L;
 
-	public void agregarMesa(MesaView mesa) throws MesaYaExisteException, RemoteException {
+	public void agregarMesa(MesaView mesa) throws BaseDeDatosException, RemoteException {
 		Controlador.getInstancia().agregarMesa(mesa.getNumero());
 		System.out.println("Mesa agregada: " + mesa.getNumero()); // TODO: remove
 	}

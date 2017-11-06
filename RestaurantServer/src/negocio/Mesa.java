@@ -1,11 +1,19 @@
 package negocio;
 
+import dao.MesasDAO;
+import excepciones.BaseDeDatosException;
+
 public class Mesa {
 	private int numero;
 	private boolean ocupada;
 
 	public Mesa(int numero) {
 		this.numero = numero;
+	}
+
+	public Mesa(int numero, boolean ocupada) {
+		this.numero = numero;
+		this.ocupada = ocupada;
 	}
 
 	public boolean esLaMesa(int numero) {
@@ -26,5 +34,9 @@ public class Mesa {
 
 	public String toString() {
 		return String.format("Mesa número: %d", this.numero);
+	}
+
+	public void save() throws BaseDeDatosException {
+		MesasDAO.getInstancia().save(this);
 	}
 }

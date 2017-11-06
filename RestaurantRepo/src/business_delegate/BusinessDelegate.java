@@ -6,7 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import dto.MesaView;
-import excepciones.MesaYaExisteException;
+import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
 import interfaces.MesasTDA;
 
@@ -30,7 +30,7 @@ public class BusinessDelegate {
 		return instancia;
 	}
 
-	public void agregarMesa(int numero) throws ConexionException, MesaYaExisteException {
+	public void agregarMesa(int numero) throws ConexionException, BaseDeDatosException {
 		MesaView mesa = new MesaView();
 		mesa.setNumero(numero);
 

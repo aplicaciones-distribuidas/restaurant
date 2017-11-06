@@ -1,18 +1,16 @@
 package controlador;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import dao.MesasDAO;
+import excepciones.BaseDeDatosException;
 import excepciones.MesaNoExisteException;
-import excepciones.MesaYaExisteException;
 import negocio.Mesa;
 
 public class Controlador {
 	private static Controlador instancia;
-	private List<Mesa> mesas;
 
 	private Controlador() {
-		this.mesas = new ArrayList<Mesa>();
 	}
 
 	public static Controlador getInstancia() {
@@ -21,33 +19,26 @@ public class Controlador {
 		return instancia;
 	}
 
-	public List<Mesa> getMesas() {
-		return this.mesas;
+	public List<Mesa> getMesas() throws BaseDeDatosException {
+		return MesasDAO.getInstancia().getAll();
 	}
 
-	private Mesa buscarMesa(int numero) throws MesaNoExisteException {
-		for (Mesa m : this.mesas)
-			if (m.esLaMesa(numero))
-				return m;
-		throw new MesaNoExisteException(numero);
+	private Mesa buscarMesa(int numero) throws BaseDeDatosException, MesaNoExisteException {
+		return MesasDAO.getInstancia().getByNumero(numero);
 	}
 
-	public void agregarMesa(int numero) throws MesaYaExisteException {
-		try {
-			this.buscarMesa(numero);
-			throw new MesaYaExisteException(numero);
-		} catch (MesaNoExisteException e) {
-			this.mesas.add(new Mesa(numero));
-		}
+	public void agregarMesa(int numero) throws BaseDeDatosException {
+		Mesa m = new Mesa(numero);
+		m.save();
 	}
 
-	public void cargarDatos() throws Exception {
+	public void cargarDatos() throws BaseDeDatosException {
 		cargarMesas();
 	}
 
-	private void cargarMesas() throws Exception {
-		this.mesas.add(new Mesa(1));
-		this.mesas.add(new Mesa(2));
-		this.mesas.add(new Mesa(3));
+	private void cargarMesas() throws BaseDeDatosException {
+		this.agregarMesa(10);
+		this.agregarMesa(20);
+		this.agregarMesa(30);
 	}
 }
