@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import business_delegate.BusinessDelegate;
-import excepciones.MesaYaExisteException;
+import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
 
 public class AltaMesa extends JInternalFrame {
@@ -46,7 +46,7 @@ public class AltaMesa extends JInternalFrame {
 				try {
 					int numero = Integer.parseInt(txtNumeroMesa.getText());
 					BusinessDelegate.getInstancia().agregarMesa(numero);
-				} catch (MesaYaExisteException | ConexionException ex) {
+				} catch (BaseDeDatosException | ConexionException ex) {
 					JOptionPane.showMessageDialog(aux, ex.getMessage());
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Debe ingresar un número");
