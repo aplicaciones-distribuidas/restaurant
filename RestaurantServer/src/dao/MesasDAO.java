@@ -7,11 +7,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
+import entities.MesaCompuestaEntity;
 import entities.MesaEntity;
+import entities.MesaSimpleEntity;
 import excepciones.MesaNoExisteException;
 import excepciones.BaseDeDatosException;
 import hibernate.HibernateUtil;
 import negocio.Mesa;
+import negocio.MesaCompuesta;
+import negocio.MesaSimple;
 
 public class MesasDAO {
 	private static MesasDAO instancia;
@@ -26,7 +30,21 @@ public class MesasDAO {
 	}
 
 	private Mesa toBusiness(MesaEntity entity) {
-		return new Mesa(entity.getNumero(), entity.isOcupada());
+		if (MesaSimpleEntity.class.isInstance(entity)) {
+			return this.toBusinessSimple((MesaSimpleEntity) entity);
+		} else if (MesaCompuestaEntity.class.isInstance(entity)) {
+			return this.toBusinessCompuesta((MesaCompuestaEntity) entity);
+		} else {
+			return null; // TODO: throw custom exception?
+		}
+	}
+
+	private Mesa toBusinessSimple(MesaSimpleEntity entity) {
+		return new MesaSimple(entity.getNumero(), entity.isOcupada());
+	}
+
+	private Mesa toBusinessCompuesta(MesaCompuestaEntity entity) {
+		return new MesaCompuesta(entity.getNumero(), entity.isOcupada(), this.toBusiness(entity.getMesas()));
 	}
 
 	private List<Mesa> toBusiness(List<MesaEntity> entities) {
@@ -38,7 +56,29 @@ public class MesasDAO {
 	}
 
 	private MesaEntity toEntity(Mesa business) {
-		return new MesaEntity(business.getNumero(), business.isOcupada());
+		if (MesaSimple.class.isInstance(business)) {
+			return this.toEntitySimple((MesaSimple) business);
+		} else if (MesaCompuesta.class.isInstance(business)) {
+			return this.toEntityCompuesta((MesaCompuesta) business);
+		} else {
+			return null; // TODO: throw custom exception?
+		}
+	}
+
+	private MesaEntity toEntitySimple(MesaSimple business) {
+		return new MesaSimpleEntity(business.getNumero(), business.isOcupada());
+	}
+
+	private MesaEntity toEntityCompuesta(MesaCompuesta business) {
+		return new MesaCompuestaEntity(business.getNumero(), business.isOcupada(), this.toEntity(business.getMesas()));
+	}
+
+	private List<MesaEntity> toEntity(List<Mesa> businesses) {
+		List<MesaEntity> entities = new ArrayList<MesaEntity>();
+		for (Mesa business : businesses) {
+			entities.add(this.toEntity(business));
+		}
+		return entities;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -55,16 +95,18 @@ public class MesasDAO {
 	}
 
 	public Mesa getByNumero(int numero) throws BaseDeDatosException, MesaNoExisteException {
-		MesaEntity entity = new MesaEntity();
+		MesaEntity entity;
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			session.load(entity, numero);
+			entity = (MesaEntity) session.createQuery("from MesaEntity m where m.numero = :numero").setParameter(
+					"numero", numero).uniqueResult();
 			session.close();
 		} catch (ObjectNotFoundException e) {
 			throw new MesaNoExisteException(numero);
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+
 		return this.toBusiness(entity);
 	}
 

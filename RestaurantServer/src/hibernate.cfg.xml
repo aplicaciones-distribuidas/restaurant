@@ -22,13 +22,14 @@
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
 
-		<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.auto">create-drop</property>
 
 		<property name="max_fetch_depth">1</property>
 		<property name="jdbc.use_streams_for_binary">true</property>
 		<property name="jdbc.batch_size">20</property>
 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 
-		<mapping class="entities.MesaEntity" />
+		<mapping class="entities.MesaSimpleEntity" />
+		<mapping class="entities.MesaCompuestaEntity" />
 	</session-factory>
 </hibernate-configuration>

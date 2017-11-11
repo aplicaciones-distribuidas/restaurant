@@ -3,7 +3,7 @@ package negocio;
 import dao.MesasDAO;
 import excepciones.BaseDeDatosException;
 
-public class Mesa {
+public abstract class Mesa {
 	private int numero;
 	private boolean ocupada;
 
@@ -32,8 +32,9 @@ public class Mesa {
 		return numero;
 	}
 
+	@Override
 	public String toString() {
-		return String.format("Mesa número: %d", this.numero);
+		return String.format("Mesa [numero => %d]", this.getNumero());
 	}
 
 	public void save() throws BaseDeDatosException {
