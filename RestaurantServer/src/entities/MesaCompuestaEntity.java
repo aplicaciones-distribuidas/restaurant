@@ -19,8 +19,8 @@ public class MesaCompuestaEntity extends MesaEntity {
 		super();
 	}
 
-	public MesaCompuestaEntity(int numero, boolean ocupada, List<MesaEntity> mesas) {
-		super(numero, ocupada);
+	public MesaCompuestaEntity(int numero, boolean ocupada, SectorSalonEntity sectorSalon, List<MesaEntity> mesas) {
+		super(numero, ocupada, sectorSalon);
 		this.mesas = mesas;
 	}
 

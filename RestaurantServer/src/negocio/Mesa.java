@@ -6,14 +6,16 @@ import excepciones.BaseDeDatosException;
 public abstract class Mesa {
 	private int numero;
 	private boolean ocupada;
+	private SectorSalon sectorSalon;
 
 	public Mesa(int numero) {
 		this.numero = numero;
 	}
 
-	public Mesa(int numero, boolean ocupada) {
+	public Mesa(int numero, boolean ocupada, SectorSalon sectorSalon) {
 		this.numero = numero;
 		this.ocupada = ocupada;
+		this.sectorSalon = sectorSalon;
 	}
 
 	public boolean esLaMesa(int numero) {
@@ -32,9 +34,18 @@ public abstract class Mesa {
 		return numero;
 	}
 
+	public SectorSalon getSectorSalon() {
+		return sectorSalon;
+	}
+
+	public void setSectorSalon(SectorSalon sectorSalon) {
+		this.sectorSalon = sectorSalon;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Mesa [numero => %d]", this.getNumero());
+		return String.format("Mesa [numero => %d, sectorSalon => %s]", this.getNumero(), this.getSectorSalon()
+				.getNombre());
 	}
 
 	public void save() throws BaseDeDatosException {

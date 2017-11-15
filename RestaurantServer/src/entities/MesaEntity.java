@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,9 +23,10 @@ public abstract class MesaEntity implements Serializable {
 	public MesaEntity() {
 	}
 
-	public MesaEntity(int numero, boolean ocupada) {
+	public MesaEntity(int numero, boolean ocupada, SectorSalonEntity sectorSalon) {
 		this.numero = numero;
 		this.ocupada = ocupada;
+		this.sectorSalon = sectorSalon;
 	}
 
 	@Id
@@ -41,6 +44,10 @@ public abstract class MesaEntity implements Serializable {
 
 	@Column(name = "ocupada")
 	private boolean ocupada;
+
+	@ManyToOne
+	@JoinColumn(name = "sector_salon")
+	private SectorSalonEntity sectorSalon;
 
 	public int getNumero() {
 		return numero;
@@ -80,6 +87,14 @@ public abstract class MesaEntity implements Serializable {
 
 	public void setOcupada(boolean ocupada) {
 		this.ocupada = ocupada;
+	}
+
+	public SectorSalonEntity getSectorSalon() {
+		return sectorSalon;
+	}
+
+	public void setSectorSalon(SectorSalonEntity sectorSalon) {
+		this.sectorSalon = sectorSalon;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class MesaSimpleEntity extends MesaEntity {
 		super();
 	}
 
-	public MesaSimpleEntity(int numero, boolean ocupada) {
-		super(numero, ocupada);
+	public MesaSimpleEntity(int numero, boolean ocupada, SectorSalonEntity sectorSalon) {
+		super(numero, ocupada, sectorSalon);
 	}
 }

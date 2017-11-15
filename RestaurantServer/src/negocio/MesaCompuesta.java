@@ -8,8 +8,8 @@ public class MesaCompuesta extends Mesa {
 		super(numero);
 	}
 
-	public MesaCompuesta(int numero, boolean ocupada, List<Mesa> mesas) {
-		super(numero, ocupada);
+	public MesaCompuesta(int numero, boolean ocupada, SectorSalon sectorSalon, List<Mesa> mesas) {
+		super(numero, ocupada, sectorSalon);
 		this.mesas = mesas;
 	}
 
@@ -25,7 +25,8 @@ public class MesaCompuesta extends Mesa {
 
 	@Override
 	public String toString() {
-		return String.format("MesaCompuesta [numero => %d]", this.getNumero());
+		return String.format("MesaCompuesta [numero => %d, sectorSalon => %s]", this.getNumero(), this.getSectorSalon()
+				.getNombre());
 	}
 
 }
