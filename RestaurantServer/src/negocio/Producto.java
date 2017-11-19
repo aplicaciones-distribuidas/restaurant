@@ -2,7 +2,7 @@ package negocio;
 
 import java.util.Date;
 
-public class Producto {
+public abstract class Producto {
 	
 	private String rubro;
 	private int caducidad;
@@ -14,7 +14,6 @@ public class Producto {
 
 	public Producto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio,
 			InsumoProducto insumoProducto) {
-		super();
 		this.rubro = rubro;
 		this.caducidad = caducidad;
 		this.comisionMozo = comisionMozo;
