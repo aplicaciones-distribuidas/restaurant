@@ -10,18 +10,16 @@ public class Insumo {
 	private Date fechaVencimiento;
 	private Date fechaCompra;
 	private Proveedor proveedor;
-	private StockInsumo stockInsumo;
 	
 
 	public Insumo(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra,
-			Proveedor proveedor, StockInsumo stockInsumo) {
+			Proveedor proveedor) {
 		this.clasificacion = clasificacion;
 		this.nombre = nombre;
 		this.cantidadMinima = cantidadMinima;
 		this.fechaVencimiento = fechaVencimiento;
 		this.fechaCompra = fechaCompra;
 		this.proveedor = proveedor;
-		this.stockInsumo = stockInsumo;
 	}
 
 	public String getClasificacion() {
@@ -46,10 +44,6 @@ public class Insumo {
 
 	public Proveedor getProveedor() {
 		return proveedor;
-	}
-
-	public StockInsumo getStockInsumo() {
-		return stockInsumo;
 	}
 
 }

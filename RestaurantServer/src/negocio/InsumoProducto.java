@@ -6,7 +6,6 @@ public class InsumoProducto {
 	private Insumo insumo;
 
 	public InsumoProducto(float cantidad, Insumo insumo) {
-		super();
 		this.cantidad = cantidad;
 		this.insumo = insumo;
 	}
@@ -17,6 +16,10 @@ public class InsumoProducto {
 
 	public Insumo getInsumo() {
 		return insumo;
+	}
+	
+	public void setCantidad(float cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }
