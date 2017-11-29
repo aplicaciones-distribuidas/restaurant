@@ -7,7 +7,6 @@ public class Proveedor {
 	private String direccion;
 
 	public Proveedor(String nombre, String telefono, String direccion) {
-		super();
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.direccion = direccion;

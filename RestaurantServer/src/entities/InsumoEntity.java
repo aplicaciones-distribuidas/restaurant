@@ -1,18 +1,37 @@
-package negocio;
+package entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Insumo {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "insumos")
+public class InsumoEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4417390382531223020L;
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	private String clasificacion;
 	private String nombre;
 	private int cantidadMinima;
 	private Date fechaVencimiento;
 	private Date fechaCompra;
-	private Proveedor proveedor;
+	@OneToOne
+	private ProveedorEntity proveedor;
 	
 
-	public Insumo(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, Proveedor proveedor) {
+	public InsumoEntity(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, ProveedorEntity proveedor) {
 		this.clasificacion = clasificacion;
 		this.nombre = nombre;
 		this.cantidadMinima = cantidadMinima;
@@ -20,6 +39,8 @@ public class Insumo {
 		this.fechaCompra = fechaCompra;
 		this.proveedor = proveedor;
 	}
+	
+	public InsumoEntity() {}
 
 	public String getClasificacion() {
 		return clasificacion;
@@ -41,7 +62,7 @@ public class Insumo {
 		return fechaCompra;
 	}
 
-	public Proveedor getProveedor() {
+	public ProveedorEntity getProveedor() {
 		return proveedor;
 	}
 

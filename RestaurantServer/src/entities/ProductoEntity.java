@@ -1,0 +1,94 @@
+package entities;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "productos")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
+public abstract class ProductoEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8088811606516162589L;
+
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	private String rubro;
+	private int caducidad;
+	private float comisionMozo;
+	private Date fecha;
+	private float precio;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "idProducto")
+	private List<InsumoProductoEntity> insumosProducto;
+	@OneToOne
+	private AreaEntity area;
+	
+	
+	public ProductoEntity(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, List<InsumoProductoEntity> insumosProducto, AreaEntity area) {
+		this.rubro = rubro;
+		this.caducidad = caducidad;
+		this.comisionMozo = comisionMozo;
+		this.fecha = fecha;
+		this.precio = precio;
+		this.insumosProducto = insumosProducto;
+		this.area = area;
+	}
+	
+	public ProductoEntity() {}
+
+
+	public String getRubro() {
+		return rubro;
+	}
+
+
+	public int getCaducidad() {
+		return caducidad;
+	}
+
+
+	public float getComisionMozo() {
+		return comisionMozo;
+	}
+
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+
+	public float getPrecio() {
+		return precio;
+	}
+
+
+	public List<InsumoProductoEntity> getInsumosProducto() {
+		return insumosProducto;
+	}
+
+
+	public AreaEntity getArea() {
+		return area;
+	}
+	
+}
