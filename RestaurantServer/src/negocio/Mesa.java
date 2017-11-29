@@ -5,6 +5,7 @@ import java.util.List;
 import dao.MesasDAO;
 import excepciones.BaseDeDatosException;
 
+
 public abstract class Mesa {
 	private int numero;
 	private boolean ocupada;
@@ -56,7 +57,7 @@ public abstract class Mesa {
 				.getNombre());
 	}
 
-	public void save() throws BaseDeDatosException {
+	/*public void save() throws BaseDeDatosException {
 		MesasDAO.getInstancia().save(this);
-	}
+	}*/
 }

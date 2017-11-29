@@ -1,13 +1,15 @@
 package negocio;
 
+import java.util.List;
+
 public class MesaSimple extends Mesa {
 
 	public MesaSimple(int numero) {
 		super(numero);
 	}
 
-	public MesaSimple(int numero, boolean ocupada, SectorSalon sectorSalon) {
-		super(numero, ocupada, sectorSalon);
+	public MesaSimple(int numero, boolean ocupada, SectorSalon sectorSalon, List<Factura> facturas) {
+		super(numero, ocupada, sectorSalon, facturas);
 	}
 
 	@Override

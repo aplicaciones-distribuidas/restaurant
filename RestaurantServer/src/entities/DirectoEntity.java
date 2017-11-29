@@ -19,5 +19,7 @@ public class DirectoEntity extends ProductoEntity {
 			List<InsumoProductoEntity> insumoProducto, AreaEntity area) {
 		super(rubro, caducidad, comisionMozo, fecha, precio, insumoProducto, area);
 	}
+	
+	public DirectoEntity() {}
 
 }

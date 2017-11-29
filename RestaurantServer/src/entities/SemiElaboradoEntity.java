@@ -19,4 +19,6 @@ public class SemiElaboradoEntity extends ProductoEntity {
 		super(rubro, caducidad, comisionMozo, fecha, precio, insumoProducto, area);
 	}
 	
+	public SemiElaboradoEntity() {}
+	
 }

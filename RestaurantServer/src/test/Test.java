@@ -5,7 +5,9 @@ import server.Server;
 
 public class Test {
 	public static void main(String[] args) {
-		try {
+		
+		
+		/*try {
 			Controlador.getInstancia().cargarDatos();
 		} catch (Exception e) {
 			System.err.println("Error cargando datos");
@@ -25,7 +27,7 @@ public class Test {
 			System.err.println("Error corriendo tests");
 			System.err.printf("Mensaje: %s\n", e.getMessage());
 			e.printStackTrace();
-		}
+		}*/
 
 		new Server();
 	}

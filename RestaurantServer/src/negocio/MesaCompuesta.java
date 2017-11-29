@@ -8,19 +8,19 @@ public class MesaCompuesta extends Mesa {
 		super(numero);
 	}
 
-	public MesaCompuesta(int numero, boolean ocupada, SectorSalon sectorSalon, List<Mesa> mesas) {
-		super(numero, ocupada, sectorSalon);
-		this.mesas = mesas;
+	public MesaCompuesta(int numero, boolean ocupada, SectorSalon sectorSalon, List<Mesa> mesaItems, List<Factura> facturas) {
+		super(numero, ocupada, sectorSalon, facturas);
+		this.mesaItems = mesaItems;
 	}
 
-	private List<Mesa> mesas;
+	private List<Mesa> mesaItems;
 
-	public List<Mesa> getMesas() {
-		return mesas;
+	public List<Mesa> getMesaItems() {
+		return mesaItems;
 	}
 
-	public void setMesas(List<Mesa> mesas) {
-		this.mesas = mesas;
+	public void setMesaItems(List<Mesa> mesaItems) {
+		this.mesaItems = mesaItems;
 	}
 
 	@Override

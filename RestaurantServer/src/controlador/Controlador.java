@@ -3,10 +3,7 @@ package controlador;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.MesasDAO;
-import dao.SectoresSalonDAO;
 import excepciones.BaseDeDatosException;
-import excepciones.MesaNoExisteException;
 import negocio.Mesa;
 import negocio.MesaCompuesta;
 import negocio.MesaSimple;
@@ -24,7 +21,7 @@ public class Controlador {
 		return instancia;
 	}
 
-	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
+	/*public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
 		return SectoresSalonDAO.getInstancia().getAll();
 	}
 
@@ -76,5 +73,5 @@ public class Controlador {
 		simples.add(m3);
 		m5.setMesas(simples);
 		m5.save();
-	}
+	}*/
 }

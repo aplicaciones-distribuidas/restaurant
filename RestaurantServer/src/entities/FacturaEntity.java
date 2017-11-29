@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,6 +21,10 @@ public class FacturaEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -798692605392125434L;
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	private Date fecha;
 	private float comisionMozo;

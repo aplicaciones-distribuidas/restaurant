@@ -7,9 +7,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
-import entities.MesaCompuestaEntity;
 import entities.MesaEntity;
-import entities.MesaSimpleEntity;
+import entities.MesaEntity;
+import entities.MesaEntity;
 import entities.SectorSalonEntity;
 import excepciones.MesaNoExisteException;
 import excepciones.BaseDeDatosException;
@@ -20,7 +20,7 @@ import negocio.MesaSimple;
 import negocio.SectorSalon;
 
 public class MesasDAO {
-	private static MesasDAO instancia;
+	/*private static MesasDAO instancia;
 
 	private MesasDAO() {
 	}
@@ -141,5 +141,5 @@ public class MesasDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
-	}
+	}*/
 }
