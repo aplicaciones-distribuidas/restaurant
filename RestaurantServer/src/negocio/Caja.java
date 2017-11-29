@@ -3,7 +3,7 @@ package negocio;
 import java.util.Date;
 
 public class Caja {
-	
+
 	private float monto;
 	private Date ultimoCierre;
 

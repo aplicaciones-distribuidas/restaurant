@@ -16,16 +16,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "facturas")
 public class FacturaEntity implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -798692605392125434L;
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private Date fecha;
 	private float comisionMozo;
 	private boolean cobrado;
@@ -35,8 +35,9 @@ public class FacturaEntity implements Serializable {
 	private List<ItemFacturaEntity> itemsFactura;
 	@OneToOne
 	private FormaPagoEntity formaPago;
-	
-	public FacturaEntity(Date fecha, float comisionMozo, boolean cobrado, float monto, List<ItemFacturaEntity> itemsFactura, FormaPagoEntity formaPago) {
+
+	public FacturaEntity(Date fecha, float comisionMozo, boolean cobrado, float monto,
+			List<ItemFacturaEntity> itemsFactura, FormaPagoEntity formaPago) {
 		this.fecha = fecha;
 		this.comisionMozo = comisionMozo;
 		this.cobrado = cobrado;
@@ -44,8 +45,9 @@ public class FacturaEntity implements Serializable {
 		this.itemsFactura = itemsFactura;
 		this.formaPago = formaPago;
 	}
-	
-	public FacturaEntity() {}
+
+	public FacturaEntity() {
+	}
 
 	public Date getFecha() {
 		return fecha;
@@ -70,5 +72,5 @@ public class FacturaEntity implements Serializable {
 	public FormaPagoEntity getFormaPago() {
 		return formaPago;
 	}
-	
+
 }

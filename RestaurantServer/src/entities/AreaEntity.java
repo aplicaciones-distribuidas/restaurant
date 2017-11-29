@@ -16,24 +16,21 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public abstract class AreaEntity implements Serializable {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2404141548058946672L;
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String nombre;
-	
+
 	public AreaEntity(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public AreaEntity() {}
-	
+
+	public AreaEntity() {
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

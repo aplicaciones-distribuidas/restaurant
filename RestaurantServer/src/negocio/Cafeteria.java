@@ -1,7 +1,7 @@
 package negocio;
 
 public class Cafeteria extends Area {
-	
+
 	private int horasPreparacion;
 
 	public Cafeteria(String nombre, int horasPreparacion) {

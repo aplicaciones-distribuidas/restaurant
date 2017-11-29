@@ -1,12 +1,12 @@
 package controlador;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import dao.MesasDAO;
+import dao.SectoresSalonDAO;
 import excepciones.BaseDeDatosException;
+import excepciones.MesaNoExisteException;
 import negocio.Mesa;
-import negocio.MesaCompuesta;
-import negocio.MesaSimple;
 import negocio.SectorSalon;
 
 public class Controlador {
@@ -21,7 +21,7 @@ public class Controlador {
 		return instancia;
 	}
 
-	/*public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
+	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
 		return SectoresSalonDAO.getInstancia().getAll();
 	}
 
@@ -34,7 +34,7 @@ public class Controlador {
 	}
 
 	public void agregarMesa(int numero) throws BaseDeDatosException {
-		Mesa m = new MesaSimple(numero);
+		Mesa m = new Mesa(numero);
 		m.save();
 	}
 
@@ -45,33 +45,16 @@ public class Controlador {
 		SectorSalon s2 = new SectorSalon("B");
 		s2.save();
 
-		Mesa m1 = new MesaSimple(1);
+		Mesa m1 = new Mesa(1);
 		m1.setSectorSalon(s1);
 		m1.save();
 
-		Mesa m2 = new MesaSimple(2);
+		Mesa m2 = new Mesa(2);
 		m2.setSectorSalon(s1);
 		m2.save();
 
-		Mesa m3 = new MesaSimple(3);
-		m3.setSectorSalon(s1);
+		Mesa m3 = new Mesa(3);
+		m3.setSectorSalon(s2);
 		m3.save();
-
-		List<Mesa> simples;
-
-		MesaCompuesta m4 = new MesaCompuesta(4);
-		m4.setSectorSalon(s2);
-		simples = new ArrayList<Mesa>();
-		simples.add(m1);
-		simples.add(m2);
-		m4.setMesas(simples);
-		m4.save();
-
-		MesaCompuesta m5 = new MesaCompuesta(5);
-		m5.setSectorSalon(s2);
-		simples = new ArrayList<Mesa>();
-		simples.add(m3);
-		m5.setMesas(simples);
-		m5.save();
-	}*/
+	}
 }

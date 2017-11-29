@@ -15,16 +15,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cartas")
 public class CartaEntity implements Serializable {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8885061183470400329L;
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private Date fechaDesde;
 	private Date fechaHasta;
 	@OneToMany(cascade = CascadeType.ALL)
@@ -36,8 +32,9 @@ public class CartaEntity implements Serializable {
 		this.fechaHasta = fechaHasta;
 		this.itemsCarta = itemsCarta;
 	}
-	
-	public CartaEntity() {}
+
+	public CartaEntity() {
+	}
 
 	public Date getFechaDesde() {
 		return fechaDesde;
@@ -50,5 +47,5 @@ public class CartaEntity implements Serializable {
 	public List<ItemCartaEntity> getItemsCarta() {
 		return itemsCarta;
 	}
-	
+
 }

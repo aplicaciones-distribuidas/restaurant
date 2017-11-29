@@ -6,7 +6,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("depostitoGeneral")
+@DiscriminatorValue("depositoGeneral")
 public class DepositoGeneralEntity extends DepositoEntity {
 
 	/**

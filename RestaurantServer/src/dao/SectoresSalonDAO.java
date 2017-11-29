@@ -14,7 +14,7 @@ import negocio.Mesa;
 import negocio.SectorSalon;
 
 public class SectoresSalonDAO {
-	/*private static SectoresSalonDAO instancia;
+	private static SectoresSalonDAO instancia;
 
 	private SectoresSalonDAO() {
 	}
@@ -68,5 +68,5 @@ public class SectoresSalonDAO {
 			throw new BaseDeDatosException(e);
 		}
 		return this.toBusiness(all);
-	}*/
+	}
 }

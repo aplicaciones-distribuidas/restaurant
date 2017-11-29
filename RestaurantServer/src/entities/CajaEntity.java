@@ -11,16 +11,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cajas")
 public class CajaEntity implements Serializable {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7159958767282139384L;
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private float monto;
 	private Date ultimoCierre;
 
@@ -28,8 +24,9 @@ public class CajaEntity implements Serializable {
 		this.monto = monto;
 		this.ultimoCierre = ultimoCierre;
 	}
-	
-	public CajaEntity() {}
+
+	public CajaEntity() {
+	}
 
 	public float getMonto() {
 		return monto;

@@ -48,8 +48,8 @@ public class SectorSalon {
 				.size());
 	}
 
-	/*public void save() throws BaseDeDatosException {
+	public void save() throws BaseDeDatosException {
 		SectoresSalonDAO.getInstancia().save(this);
-	}*/
+	}
 
 }
