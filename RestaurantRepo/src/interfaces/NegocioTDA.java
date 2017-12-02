@@ -5,8 +5,11 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
+import dto.EmpleadoView;
 import dto.MesaView;
-import excepciones.BaseDeDatosException;
+import dto.PedidoReposicionView;
+import dto.PedidoView;
+import dto.ReporteView;
 
 public interface NegocioTDA extends Remote {
 	
@@ -34,6 +37,4 @@ public interface NegocioTDA extends Remote {
 	public void cerrarMesa(String sucursal, int nroMesa) throws RemoteException;
 	public void liberarMesa(String sucursal, int nroMesa) throws RemoteException;
 	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException;
-	
-	public void agregarMesa(MesaView mesa) throws BaseDeDatosException, RemoteException;
 }

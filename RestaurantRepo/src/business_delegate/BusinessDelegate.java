@@ -8,16 +8,16 @@ import java.rmi.RemoteException;
 import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
-import interfaces.MesasTDA;
+import interfaces.NegocioTDA;
 
 public class BusinessDelegate {
 	private static BusinessDelegate instancia;
 
-	MesasTDA mesasRemoteObject;
+	NegocioTDA remoteObject;
 
 	private BusinessDelegate() throws ConexionException {
 		try {
-			mesasRemoteObject = (MesasTDA) Naming.lookup("//localhost/mesas");
+			remoteObject = (NegocioTDA) Naming.lookup("//localhost/restaurant");
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			e.printStackTrace();
 			throw new ConexionException();
@@ -35,7 +35,7 @@ public class BusinessDelegate {
 		mesa.setNumero(numero);
 
 		try {
-			mesasRemoteObject.agregarMesa(mesa);
+			remoteObject.agregarMesa("", numero, 1, null); // TODO: use actual parameters
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			throw new ConexionException();
