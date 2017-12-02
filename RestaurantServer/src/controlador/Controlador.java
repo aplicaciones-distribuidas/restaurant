@@ -39,22 +39,19 @@ public class Controlador {
 	}
 
 	public void cargarDatos() throws BaseDeDatosException {
-		SectorSalon s1 = new SectorSalon("A");
-		s1.save();
+		SectorSalon sA = new SectorSalon("A");
+		sA.save();
 
-		SectorSalon s2 = new SectorSalon("B");
-		s2.save();
+		SectorSalon sB = new SectorSalon("B");
+		sB.save();
 
-		Mesa m1 = new Mesa(1);
-		m1.setSectorSalon(s1);
+		Mesa m1 = new Mesa(1, false, 8, sA);
 		m1.save();
 
-		Mesa m2 = new Mesa(2);
-		m2.setSectorSalon(s1);
+		Mesa m2 = new Mesa(2, false, 6, sA);
 		m2.save();
 
-		Mesa m3 = new Mesa(3);
-		m3.setSectorSalon(s2);
+		Mesa m3 = new Mesa(3, false, 8, sB);
 		m3.save();
 	}
 }

@@ -35,7 +35,7 @@ public class MesasDAO {
 		SectorSalon sectorSalon = null;
 		if (includeSectorSalon)
 			sectorSalon = SectoresSalonDAO.getInstancia().toBusiness(entity.getSectorSalon());
-		return new Mesa(entity.getNumero(), entity.isOcupada(), sectorSalon);
+		return new Mesa(entity.getNumero(), entity.isOcupada(), entity.getCapacidad(), sectorSalon);
 	}
 
 	public List<Mesa> toBusiness(List<MesaEntity> entities) {
@@ -52,7 +52,7 @@ public class MesasDAO {
 
 	public MesaEntity toEntity(Mesa business) {
 		SectorSalonEntity sectorSalon = SectoresSalonDAO.getInstancia().toEntity(business.getSectorSalon());
-		return new MesaEntity(business.getNumero(), business.isOcupada(), sectorSalon);
+		return new MesaEntity(business.getNumero(), business.isOcupada(), business.getCapacidad(), sectorSalon);
 	}
 
 	public List<MesaEntity> toEntity(List<Mesa> businesses) {

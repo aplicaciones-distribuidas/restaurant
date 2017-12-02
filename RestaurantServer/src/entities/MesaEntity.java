@@ -15,6 +15,7 @@ public class MesaEntity implements Serializable {
 	@Id
 	private int numero;
 	private boolean ocupada;
+	private int capacidad;
 
 	@OneToOne
 	private SectorSalonEntity sectorSalon;
@@ -26,9 +27,10 @@ public class MesaEntity implements Serializable {
 		this.numero = numero;
 	}
 
-	public MesaEntity(int numero, boolean ocupada, SectorSalonEntity sectorSalon) {
+	public MesaEntity(int numero, boolean ocupada, int capacidad, SectorSalonEntity sectorSalon) {
 		this.numero = numero;
 		this.ocupada = ocupada;
+		this.capacidad = capacidad;
 		this.sectorSalon = sectorSalon;
 	}
 
@@ -37,11 +39,15 @@ public class MesaEntity implements Serializable {
 	}
 
 	public int getNumero() {
-		return numero;
+		return this.numero;
+	}
+
+	public int getCapacidad() {
+		return this.capacidad;
 	}
 
 	public SectorSalonEntity getSectorSalon() {
-		return sectorSalon;
+		return this.sectorSalon;
 	}
 
 }

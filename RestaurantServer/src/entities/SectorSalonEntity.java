@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "sectores_salon")
 public class SectorSalonEntity implements Serializable {
@@ -19,17 +22,23 @@ public class SectorSalonEntity implements Serializable {
 	public SectorSalonEntity() {
 	}
 
-	public SectorSalonEntity(String nombre, List<MesaEntity> mesas) { // TODO: add `List<Empleado> empleados`
+	public SectorSalonEntity(String nombre, List<MesaEntity> mesas, List<EmpleadoEntity> empleados) {
 		this.nombre = nombre;
 		this.mesas = mesas;
+		this.empleados = empleados;
 	}
 
 	@Id
 	@Column(name = "nombre")
 	private String nombre;
 
-	@OneToMany(mappedBy = "sectorSalon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "sectorSalon", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<MesaEntity> mesas;
+
+	@OneToMany(mappedBy = "sectorSalon", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<EmpleadoEntity> empleados;
 
 	public String getNombre() {
 		return nombre;
@@ -46,4 +55,13 @@ public class SectorSalonEntity implements Serializable {
 	public void setMesas(List<MesaEntity> mesas) {
 		this.mesas = mesas;
 	}
+
+	public List<EmpleadoEntity> getEmpleados() {
+		return this.empleados;
+	}
+
+	public void setEmpleados(List<EmpleadoEntity> empleados) {
+		this.empleados = empleados;
+	}
+
 }

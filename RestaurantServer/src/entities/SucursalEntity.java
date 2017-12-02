@@ -24,32 +24,42 @@ public class SucursalEntity implements Serializable {
 	private String nombre;
 	private String ubicacion;
 	private int capacidad;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<CartaEntity> cartas;
+
 	@OneToOne
 	private CajaEntity caja;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<AreaEntity> areas;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<PedidoEntity> pedidos;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<ReservaEntity> reservas;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<TareaEntity> tareas;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<SectorSalonEntity> sectores;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<MesaEntity> mesas;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
 	private List<PedidoReposicionEntity> pedidosReposicion;
+
 	@OneToOne
 	private DepositoEntity deposito;
 

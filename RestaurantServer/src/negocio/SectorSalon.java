@@ -17,12 +17,6 @@ public class SectorSalon {
 		this.nombre = nombre;
 	}
 
-	public SectorSalon(String nombre, List<Mesa> mesas) {
-		super();
-		this.nombre = nombre;
-		this.mesas = mesas;
-	}
-
 	public SectorSalon(String nombre, List<Mesa> mesas, List<Empleado> empleados) {
 		super();
 		this.nombre = nombre;
@@ -44,8 +38,8 @@ public class SectorSalon {
 
 	@Override
 	public String toString() {
-		return String.format("SectorSalon [nombre => %s, cantidad de mesas => %d]", this.getNombre(), this.getMesas()
-				.size());
+		return String.format("SectorSalon [nombre => %s, cantidad de mesas => %d, cantidad de empleados => %d]", this
+				.getNombre(), this.getMesas().size(), this.getEmpleados().size());
 	}
 
 	public void save() throws BaseDeDatosException {

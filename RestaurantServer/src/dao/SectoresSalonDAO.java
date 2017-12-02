@@ -6,10 +6,12 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import entities.EmpleadoEntity;
 import entities.MesaEntity;
 import entities.SectorSalonEntity;
 import excepciones.BaseDeDatosException;
 import hibernate.HibernateUtil;
+import negocio.Empleado;
 import negocio.Mesa;
 import negocio.SectorSalon;
 
@@ -28,7 +30,8 @@ public class SectoresSalonDAO {
 	public SectorSalon toBusiness(SectorSalonEntity entity) {
 		boolean includeSectorSalon = false;
 		List<Mesa> mesas = MesasDAO.getInstancia().toBusiness(entity.getMesas(), includeSectorSalon);
-		return new SectorSalon(entity.getNombre(), mesas); // TODO: add `empleados`
+		List<Empleado> empleados = new ArrayList<Empleado>(); // TODO: translate entity.getEmpleados() to business
+		return new SectorSalon(entity.getNombre(), mesas, empleados);
 	}
 
 	public List<SectorSalon> toBusiness(List<SectorSalonEntity> entities) {
@@ -41,7 +44,9 @@ public class SectoresSalonDAO {
 
 	public SectorSalonEntity toEntity(SectorSalon business) {
 		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntity(business.getMesas());
-		return new SectorSalonEntity(business.getNombre(), mesas); // TODO: add `business.getEmpleados()`
+		List<EmpleadoEntity> empleados = new ArrayList<EmpleadoEntity>(); // TODO: translate business.getEmpleados() to
+																			// entities
+		return new SectorSalonEntity(business.getNombre(), mesas, empleados);
 	}
 
 	public void save(SectorSalon sectorSalon) throws BaseDeDatosException {
