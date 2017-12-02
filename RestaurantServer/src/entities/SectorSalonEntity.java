@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,8 +23,13 @@ public class SectorSalonEntity implements Serializable {
 	public SectorSalonEntity() {
 	}
 
-	public SectorSalonEntity(String nombre, SucursalEntity sucursal, List<MesaEntity> mesas,
+	public SectorSalonEntity(Long id) {
+		this.id = id;
+	}
+
+	public SectorSalonEntity(Long id, String nombre, SucursalEntity sucursal, List<MesaEntity> mesas,
 			List<EmpleadoEntity> empleados) {
+		this.id = id;
 		this.nombre = nombre;
 		this.sucursal = sucursal;
 		this.mesas = mesas;
@@ -31,6 +37,10 @@ public class SectorSalonEntity implements Serializable {
 	}
 
 	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	private Long id;
+
 	@Column(name = "nombre")
 	private String nombre;
 
@@ -44,6 +54,14 @@ public class SectorSalonEntity implements Serializable {
 	@OneToMany(mappedBy = "sectorSalon", cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<EmpleadoEntity> empleados;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNombre() {
 		return nombre;

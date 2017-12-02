@@ -9,22 +9,26 @@ public class Test {
 		try {
 			Controlador.getInstancia().cargarDatos();
 		} catch (Exception e) {
-			System.err.println("Error cargando datos");
+			System.err.print("Error cargando datos");
 			System.err.printf("Mensaje: %s\n", e.getMessage());
 			e.printStackTrace();
 		}
 
 		try {
-			System.out.println("Sucursales:\n");
+			System.out.println("Sucursales:");
 			for (Object s : Controlador.getInstancia().getSucursales())
 				System.out.println(s.toString());
 
-			System.out.println("Sectores Salon:\n");
+			System.out.println("Sectores Salon:");
 			for (Object s : Controlador.getInstancia().getSectoresSalon())
 				System.out.println(s.toString());
 
-			System.out.println("Mesas:\n");
+			System.out.println("Mesas:");
 			for (Object m : Controlador.getInstancia().getMesas())
+				System.out.println(m.toString());
+
+			System.out.println("Mesas disponibles para la sucursal 'Belgrano':");
+			for (Object m : Controlador.getInstancia().getMesasDisponibles("Belgrano"))
 				System.out.println(m.toString());
 		} catch (Exception e) {
 			System.err.println("Error corriendo tests");

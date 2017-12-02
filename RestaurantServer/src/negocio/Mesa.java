@@ -4,20 +4,22 @@ import dao.MesasDAO;
 import excepciones.BaseDeDatosException;
 
 public class Mesa {
+	private Long id;
 	private int numero;
 	private boolean ocupada;
 	private int capacidad;
 	private SectorSalon sectorSalon;
 
-	public Mesa(int numero) {
-		this.numero = numero;
-	}
-
-	public Mesa(int numero, boolean ocupada, int capacidad, SectorSalon sectorSalon) {
+	public Mesa(Long id, int numero, boolean ocupada, int capacidad, SectorSalon sectorSalon) {
+		this.id = id;
 		this.numero = numero;
 		this.ocupada = ocupada;
 		this.capacidad = capacidad;
 		this.sectorSalon = sectorSalon;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public int getNumero() {
@@ -50,12 +52,12 @@ public class Mesa {
 
 	@Override
 	public String toString() {
-		return String.format("Mesa [numero => %d, sectorSalon => %s]", this.getNumero(), this.getSectorSalon()
-				.getNombre());
+		return String.format("Mesa [id => %d, numero => %d, sectorSalon => %s]", this.getId(), this.getNumero(), this
+				.getSectorSalon().getNombre());
 	}
 
 	public void save() throws BaseDeDatosException {
-		this.numero = MesasDAO.getInstancia().save(this);
+		this.id = MesasDAO.getInstancia().save(this);
 	}
 
 }

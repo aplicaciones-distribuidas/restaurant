@@ -8,23 +8,26 @@ import dao.SectoresSalonDAO;
 import excepciones.BaseDeDatosException;
 
 public class SectorSalon {
-
+	private Long id;
 	private String nombre;
 	private Sucursal sucursal;
 	private List<Mesa> mesas = new ArrayList<Mesa>();
 	private List<Empleado> empleados = new ArrayList<Empleado>();
 
 	public SectorSalon(String nombre) {
-		super();
 		this.nombre = nombre;
 	}
 
-	public SectorSalon(String nombre, Sucursal sucursal, List<Mesa> mesas, List<Empleado> empleados) {
-		super();
+	public SectorSalon(Long id, String nombre, Sucursal sucursal, List<Mesa> mesas, List<Empleado> empleados) {
+		this.id = id;
 		this.nombre = nombre;
 		this.sucursal = sucursal;
 		this.mesas = mesas;
 		this.empleados = empleados;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getNombre() {
@@ -49,16 +52,17 @@ public class SectorSalon {
 
 	@Override
 	public String toString() {
-		return String.format("SectorSalon [nombre => %s, cantidad de mesas => %d, cantidad de empleados => %d]", this
-				.getNombre(), this.getMesas().size(), this.getEmpleados().size());
+		return String.format(
+				"SectorSalon [id => %d, nombre => %s, cantidad de mesas => %d, cantidad de empleados => %d]", this
+						.getId(), this.getNombre(), this.getMesas().size(), this.getEmpleados().size());
 	}
 
 	public void save() throws BaseDeDatosException {
-		SectoresSalonDAO.getInstancia().save(this);
+		this.id = SectoresSalonDAO.getInstancia().save(this);
 	}
 
 	public List<Mesa> getMesasDisponibles() throws BaseDeDatosException {
-		return MesasDAO.getInstancia().getDisponiblesBySectorSalon(this.nombre);
+		return MesasDAO.getInstancia().getDisponiblesBySectorSalon(this);
 	}
 
 }

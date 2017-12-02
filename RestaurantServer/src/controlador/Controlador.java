@@ -46,13 +46,8 @@ public class Controlador {
 		return MesasDAO.getInstancia().getByNumero(numero);
 	}
 
-	public void agregarMesa(int numero) throws BaseDeDatosException {
-		Mesa m = new Mesa(numero);
-		m.save();
-	}
-
 	public void cargarDatos() throws BaseDeDatosException {
-		Sucursal sucursal = new Sucursal("El Único", "Puerto Madero", 100);
+		Sucursal sucursal = new Sucursal("Belgrano", "Av. Juramento 1234", 100);
 		sucursal.save();
 
 		SectorSalon sA = new SectorSalon("A");
@@ -63,13 +58,13 @@ public class Controlador {
 		sB.setSucursal(sucursal);
 		sB.save();
 
-		Mesa m1 = new Mesa(1, false, 8, sA);
+		Mesa m1 = new Mesa(null, 1, false, 8, sA);
 		m1.save();
 
-		Mesa m2 = new Mesa(2, false, 6, sA);
+		Mesa m2 = new Mesa(null, 2, false, 6, sA);
 		m2.save();
 
-		Mesa m3 = new Mesa(3, false, 8, sB);
+		Mesa m3 = new Mesa(null, 3, false, 8, sB);
 		m3.save();
 	}
 }

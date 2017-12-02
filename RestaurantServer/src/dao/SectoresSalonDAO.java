@@ -44,7 +44,7 @@ public class SectoresSalonDAO {
 		List<Mesa> mesas = MesasDAO.getInstancia().toBusiness(entity.getMesas(), includeSectorSalon);
 		List<Empleado> empleados = new ArrayList<Empleado>(); // TODO: translate entity.getEmpleados() to business
 
-		return new SectorSalon(entity.getNombre(), sucursal, mesas, empleados);
+		return new SectorSalon(entity.getId(), entity.getNombre(), sucursal, mesas, empleados);
 	}
 
 	public List<SectorSalon> toBusiness(List<SectorSalonEntity> entities) {
@@ -64,7 +64,7 @@ public class SectoresSalonDAO {
 		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntity(business.getMesas());
 		List<EmpleadoEntity> empleados = new ArrayList<EmpleadoEntity>(); // TODO: translate business.getEmpleados() to
 																			// entities
-		return new SectorSalonEntity(business.getNombre(), sucursal, mesas, empleados);
+		return new SectorSalonEntity(business.getId(), business.getNombre(), sucursal, mesas, empleados);
 	}
 
 	public List<SectorSalonEntity> toEntity(List<SectorSalon> businesses) {
@@ -75,7 +75,7 @@ public class SectoresSalonDAO {
 		return entities;
 	}
 
-	public void save(SectorSalon sectorSalon) throws BaseDeDatosException {
+	public Long save(SectorSalon sectorSalon) throws BaseDeDatosException {
 		SectorSalonEntity entity = this.toEntity(sectorSalon);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -86,6 +86,7 @@ public class SectoresSalonDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
 
 	@SuppressWarnings("unchecked")

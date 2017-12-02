@@ -35,7 +35,7 @@ public class MesasDAO {
 		SectorSalon sectorSalon = null;
 		if (includeSectorSalon)
 			sectorSalon = SectoresSalonDAO.getInstancia().toBusiness(entity.getSectorSalon());
-		return new Mesa(entity.getNumero(), entity.isOcupada(), entity.getCapacidad(), sectorSalon);
+		return new Mesa(entity.getId(), entity.getNumero(), entity.isOcupada(), entity.getCapacidad(), sectorSalon);
 	}
 
 	public List<Mesa> toBusiness(List<MesaEntity> entities) {
@@ -52,7 +52,8 @@ public class MesasDAO {
 
 	public MesaEntity toEntity(Mesa business) {
 		SectorSalonEntity sectorSalon = SectoresSalonDAO.getInstancia().toEntity(business.getSectorSalon());
-		return new MesaEntity(business.getNumero(), business.isOcupada(), business.getCapacidad(), sectorSalon);
+		return new MesaEntity(business.getId(), business.getNumero(), business.isOcupada(), business.getCapacidad(),
+				sectorSalon);
 	}
 
 	public List<MesaEntity> toEntity(List<Mesa> businesses) {
@@ -93,12 +94,14 @@ public class MesasDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Mesa> getDisponiblesBySectorSalon(String sectorSalon) throws BaseDeDatosException {
+	public List<Mesa> getDisponiblesBySectorSalon(SectorSalon sectorSalon) throws BaseDeDatosException {
+		SectorSalonEntity sectorSalonEntity = new SectorSalonEntity(sectorSalon.getId());
+
 		List<MesaEntity> all = new ArrayList<MesaEntity>();
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
 			all = session.createQuery("from MesaEntity where sectorSalon = :sectorSalon and ocupada = 0").setParameter(
-					"sectorSalon", sectorSalon).list();
+					"sectorSalon", sectorSalonEntity).list();
 			session.close();
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
@@ -106,7 +109,7 @@ public class MesasDAO {
 		return this.toBusiness(all);
 	}
 
-	public int save(Mesa mesa) throws BaseDeDatosException {
+	public Long save(Mesa mesa) throws BaseDeDatosException {
 		MesaEntity entity = this.toEntity(mesa);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -117,6 +120,7 @@ public class MesasDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
-		return entity.getNumero();
+		return entity.getId();
 	}
+
 }
