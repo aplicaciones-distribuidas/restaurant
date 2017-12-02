@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,8 +22,10 @@ public class SectorSalonEntity implements Serializable {
 	public SectorSalonEntity() {
 	}
 
-	public SectorSalonEntity(String nombre, List<MesaEntity> mesas, List<EmpleadoEntity> empleados) {
+	public SectorSalonEntity(String nombre, SucursalEntity sucursal, List<MesaEntity> mesas,
+			List<EmpleadoEntity> empleados) {
 		this.nombre = nombre;
+		this.sucursal = sucursal;
 		this.mesas = mesas;
 		this.empleados = empleados;
 	}
@@ -31,6 +33,9 @@ public class SectorSalonEntity implements Serializable {
 	@Id
 	@Column(name = "nombre")
 	private String nombre;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	private SucursalEntity sucursal;
 
 	@OneToMany(mappedBy = "sectorSalon", cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -46,6 +51,14 @@ public class SectorSalonEntity implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public SucursalEntity getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(SucursalEntity sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	public List<MesaEntity> getMesas() {

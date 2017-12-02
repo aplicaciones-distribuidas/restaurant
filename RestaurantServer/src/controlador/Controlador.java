@@ -4,10 +4,13 @@ import java.util.List;
 
 import dao.MesasDAO;
 import dao.SectoresSalonDAO;
+import dao.SucursalDAO;
 import excepciones.BaseDeDatosException;
 import excepciones.MesaNoExisteException;
+import excepciones.SucursalNoExisteException;
 import negocio.Mesa;
 import negocio.SectorSalon;
+import negocio.Sucursal;
 
 public class Controlador {
 	private static Controlador instancia;
@@ -19,6 +22,16 @@ public class Controlador {
 		if (instancia == null)
 			instancia = new Controlador();
 		return instancia;
+	}
+
+	public List<Mesa> getMesasDisponibles(String nombreSucursal) throws SucursalNoExisteException,
+			BaseDeDatosException {
+		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
+		return sucursal.getMesasDisponibles();
+	}
+
+	public List<Sucursal> getSucursales() throws BaseDeDatosException {
+		return SucursalDAO.getInstancia().getAll();
 	}
 
 	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
@@ -39,10 +52,15 @@ public class Controlador {
 	}
 
 	public void cargarDatos() throws BaseDeDatosException {
+		Sucursal sucursal = new Sucursal("El Único", "Puerto Madero", 100);
+		sucursal.save();
+
 		SectorSalon sA = new SectorSalon("A");
+		sA.setSucursal(sucursal);
 		sA.save();
 
 		SectorSalon sB = new SectorSalon("B");
+		sB.setSucursal(sucursal);
 		sB.save();
 
 		Mesa m1 = new Mesa(1, false, 8, sA);

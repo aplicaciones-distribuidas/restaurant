@@ -3,12 +3,12 @@ package negocio;
 import java.util.List;
 
 public abstract class Deposito {
-	
+
 	private String nombre;
 	private List<PedidoReposicion> pedidosReposicion;
 	private List<Insumo> insumos;
 	private Empleado empleado;
-	
+
 	public Deposito(String nombre, List<PedidoReposicion> pedidosReposicion, List<Insumo> insumos, Empleado empleado) {
 		this.nombre = nombre;
 		this.pedidosReposicion = pedidosReposicion;
@@ -31,5 +31,5 @@ public abstract class Deposito {
 	public Empleado getEmpleado() {
 		return empleado;
 	}
-	
+
 }

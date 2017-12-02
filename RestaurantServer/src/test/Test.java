@@ -15,6 +15,10 @@ public class Test {
 		}
 
 		try {
+			System.out.println("Sucursales:\n");
+			for (Object s : Controlador.getInstancia().getSucursales())
+				System.out.println(s.toString());
+
 			System.out.println("Sectores Salon:\n");
 			for (Object s : Controlador.getInstancia().getSectoresSalon())
 				System.out.println(s.toString());

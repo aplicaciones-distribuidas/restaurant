@@ -55,7 +55,7 @@ public class Mesa {
 	}
 
 	public void save() throws BaseDeDatosException {
-		MesasDAO.getInstancia().save(this);
+		this.numero = MesasDAO.getInstancia().save(this);
 	}
 
 }

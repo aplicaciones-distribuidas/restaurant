@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "sucursales")
 public class SucursalEntity implements Serializable {
@@ -20,6 +23,10 @@ public class SucursalEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	public Long getId() {
+		return this.id;
+	}
 
 	private String nombre;
 	private String ubicacion;
@@ -48,13 +55,9 @@ public class SucursalEntity implements Serializable {
 	@JoinColumn(name = "idSucursal")
 	private List<TareaEntity> tareas;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idSucursal")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sucursal")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<SectorSalonEntity> sectores;
-
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idSucursal")
-	private List<MesaEntity> mesas;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idSucursal")
@@ -63,10 +66,11 @@ public class SucursalEntity implements Serializable {
 	@OneToOne
 	private DepositoEntity deposito;
 
-	public SucursalEntity(String nombre, String ubicacion, int capacidad, List<CartaEntity> cartas, CajaEntity caja,
-			List<AreaEntity> areas, List<PedidoEntity> pedidos, List<ReservaEntity> reservas, List<TareaEntity> tareas,
-			List<SectorSalonEntity> sectores, List<MesaEntity> mesas, List<PedidoReposicionEntity> pedidosReposicion,
+	public SucursalEntity(Long id, String nombre, String ubicacion, int capacidad, List<CartaEntity> cartas,
+			CajaEntity caja, List<AreaEntity> areas, List<PedidoEntity> pedidos, List<ReservaEntity> reservas,
+			List<TareaEntity> tareas, List<SectorSalonEntity> sectores, List<PedidoReposicionEntity> pedidosReposicion,
 			DepositoEntity deposito) {
+		this.id = id;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		this.capacidad = capacidad;
@@ -77,7 +81,6 @@ public class SucursalEntity implements Serializable {
 		this.reservas = reservas;
 		this.tareas = tareas;
 		this.sectores = sectores;
-		this.mesas = mesas;
 		this.pedidosReposicion = pedidosReposicion;
 		this.deposito = deposito;
 	}
@@ -123,10 +126,6 @@ public class SucursalEntity implements Serializable {
 
 	public List<SectorSalonEntity> getSectores() {
 		return sectores;
-	}
-
-	public List<MesaEntity> getMesas() {
-		return mesas;
 	}
 
 	public List<PedidoReposicionEntity> getPedidosReposicion() {

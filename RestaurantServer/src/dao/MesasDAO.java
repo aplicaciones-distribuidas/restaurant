@@ -92,7 +92,21 @@ public class MesasDAO {
 		return this.toBusiness(entity);
 	}
 
-	public void save(Mesa mesa) throws BaseDeDatosException {
+	@SuppressWarnings("unchecked")
+	public List<Mesa> getDisponiblesBySectorSalon(String sectorSalon) throws BaseDeDatosException {
+		List<MesaEntity> all = new ArrayList<MesaEntity>();
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			all = session.createQuery("from MesaEntity where sectorSalon = :sectorSalon and ocupada = 0").setParameter(
+					"sectorSalon", sectorSalon).list();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+		return this.toBusiness(all);
+	}
+
+	public int save(Mesa mesa) throws BaseDeDatosException {
 		MesaEntity entity = this.toEntity(mesa);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -103,5 +117,6 @@ public class MesasDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getNumero();
 	}
 }
