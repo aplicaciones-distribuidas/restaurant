@@ -11,7 +11,6 @@ public class Tarea {
 	
 	
 	public Tarea(int cantidad, boolean realizada, Date fecha, Producto producto) {
-		super();
 		this.cantidad = cantidad;
 		this.realizada = realizada;
 		this.fecha = fecha;

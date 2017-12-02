@@ -7,9 +7,9 @@ import java.rmi.server.UnicastRemoteObject;
 import controlador.Controlador;
 import dto.MesaView;
 import excepciones.BaseDeDatosException;
-import interfaces.MesasTDA;
+import interfaces.NegocioTDA;
 
-public class MesasManager extends UnicastRemoteObject implements MesasTDA, Serializable {
+public class MesasManager extends UnicastRemoteObject implements NegocioTDA, Serializable {
 	public MesasManager() throws RemoteException {
 		super();
 	}

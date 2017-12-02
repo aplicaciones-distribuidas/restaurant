@@ -12,7 +12,6 @@ public class Empleado {
 	
 	
 	public Empleado(String nombre, String apellido, int porcentajeComision, Rol rol, List<Comision> comisiones) {
-		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.porcentajeComision = porcentajeComision;

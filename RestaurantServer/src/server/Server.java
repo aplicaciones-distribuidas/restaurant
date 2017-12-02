@@ -3,12 +3,12 @@ package server;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
-import interfaces.MesasTDA;
+import interfaces.NegocioTDA;
 import rmi.MesasManager;
 
 public class Server {
 
-	MesasTDA mesasRemoteObject;
+	NegocioTDA mesasRemoteObject;
 
 	public Server() {
 		start();
