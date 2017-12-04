@@ -6,11 +6,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.List;
 
+import controlador.Controlador;
 import dto.EmpleadoView;
 import dto.MesaView;
 import dto.PedidoReposicionView;
 import dto.PedidoView;
 import dto.ReporteView;
+import excepciones.BaseDeDatosException;
+import excepciones.SucursalNoExisteException;
 import interfaces.NegocioTDA;
 
 public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, Serializable {
@@ -51,9 +54,9 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public List<MesaView> mesasDisponibles(String sucursal, int cantPersonas) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MesaView> mesasDisponibles(String sucursal, int cantPersonas) throws RemoteException,
+			SucursalNoExisteException, BaseDeDatosException {
+		return Controlador.getInstancia().getMesasDisponibles(sucursal, cantPersonas);
 	}
 
 	@Override

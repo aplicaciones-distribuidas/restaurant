@@ -1,10 +1,12 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.MesasDAO;
 import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
+import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.MesaNoExisteException;
 import excepciones.SucursalNoExisteException;
@@ -24,10 +26,14 @@ public class Controlador {
 		return instancia;
 	}
 
-	public List<Mesa> getMesasDisponibles(String nombreSucursal) throws SucursalNoExisteException,
+	public List<MesaView> getMesasDisponibles(String nombreSucursal, int cantPersonas) throws SucursalNoExisteException,
 			BaseDeDatosException {
+		List<MesaView> mesas = new ArrayList<MesaView>();
 		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
-		return sucursal.getMesasDisponibles();
+		for (Mesa mesa : sucursal.getMesasDisponibles(cantPersonas)) {
+			mesas.add(mesa.toView());
+		}
+		return mesas;
 	}
 
 	public List<Sucursal> getSucursales() throws BaseDeDatosException {
@@ -64,7 +70,7 @@ public class Controlador {
 		Mesa m2 = new Mesa(null, 2, false, 6, sA);
 		m2.save();
 
-		Mesa m3 = new Mesa(null, 3, false, 8, sB);
+		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
 	}
 }

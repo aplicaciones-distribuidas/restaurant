@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.MesasDAO;
 import dao.SectoresSalonDAO;
+import dto.SectorSalonView;
 import excepciones.BaseDeDatosException;
 
 public class SectorSalon {
@@ -50,6 +51,10 @@ public class SectorSalon {
 		return empleados;
 	}
 
+	public SectorSalonView toView() {
+		return new SectorSalonView(this.id, this.nombre);
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
@@ -61,8 +66,25 @@ public class SectorSalon {
 		this.id = SectoresSalonDAO.getInstancia().save(this);
 	}
 
-	public List<Mesa> getMesasDisponibles() throws BaseDeDatosException {
-		return MesasDAO.getInstancia().getDisponiblesBySectorSalon(this);
+	public List<Mesa> getMesasDisponibles(int cantPersonas) throws BaseDeDatosException {
+		List<Mesa> mesas = new ArrayList<Mesa>();
+		for (Mesa mesa : MesasDAO.getInstancia().getDisponiblesBySectorSalon(this)) {
+			int capacidadMaxima = mesa.getCapacidad();
+			switch (capacidadMaxima) {
+			case 8:
+				capacidadMaxima += 2;
+				break;
+			case 6:
+				capacidadMaxima += 1;
+				break;
+			default:
+				break;
+			}
+			if (capacidadMaxima >= cantPersonas) {
+				mesas.add(mesa);
+			}
+		}
+		return mesas;
 	}
 
 }

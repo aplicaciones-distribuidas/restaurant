@@ -110,10 +110,10 @@ public class Sucursal {
 		this.id = SucursalDAO.getInstancia().save(this);
 	}
 
-	public List<Mesa> getMesasDisponibles() throws BaseDeDatosException {
+	public List<Mesa> getMesasDisponibles(int cantPersonas) throws BaseDeDatosException {
 		List<Mesa> mesas = new ArrayList<Mesa>();
 		for (SectorSalon sector : this.sectores) {
-			mesas.addAll(sector.getMesasDisponibles());
+			mesas.addAll(sector.getMesasDisponibles(cantPersonas));
 		}
 		return mesas;
 	}

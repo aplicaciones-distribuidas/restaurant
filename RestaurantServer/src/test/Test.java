@@ -27,8 +27,8 @@ public class Test {
 			for (Object m : Controlador.getInstancia().getMesas())
 				System.out.println(m.toString());
 
-			System.out.println("Mesas disponibles para la sucursal 'Belgrano':");
-			for (Object m : Controlador.getInstancia().getMesasDisponibles("Belgrano"))
+			System.out.println("Mesas disponibles para 5 personas en la sucursal 'Belgrano':");
+			for (Object m : Controlador.getInstancia().getMesasDisponibles("Belgrano", 5))
 				System.out.println(m.toString());
 		} catch (Exception e) {
 			System.err.println("Error corriendo tests");

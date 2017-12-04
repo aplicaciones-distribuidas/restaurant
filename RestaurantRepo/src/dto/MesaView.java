@@ -4,17 +4,25 @@ import java.io.Serializable;
 
 public class MesaView implements Serializable {
 	private static final long serialVersionUID = -7716280088967048996L;
+	private Long id;
 	private int numero;
 	private boolean ocupada;
+	private SectorSalonView sectorSalon;
 
 	public MesaView() {
-		this.setNumero(0);
-		this.setOcupada(false);
+		this.numero = 0;
+		this.ocupada = false;
 	}
 
-	public MesaView(int numero, boolean ocupada) {
-		this.setNumero(numero);
-		this.setOcupada(ocupada);
+	public MesaView(Long id, int numero, boolean ocupada, SectorSalonView sectorSalon) {
+		this.id = id;
+		this.numero = numero;
+		this.ocupada = ocupada;
+		this.sectorSalon = sectorSalon;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public int getNumero() {
@@ -33,7 +41,9 @@ public class MesaView implements Serializable {
 		this.ocupada = ocupada;
 	}
 
+	@Override
 	public String toString() {
-		return this.numero + " - " + this.ocupada;
+		return String.format("MesaView [id => %d, numero => %d, ocupada => %s, sectorSalon => %s]", this.getId(), this
+				.getNumero(), this.isOcupada(), this.sectorSalon.getNombre());
 	}
 }

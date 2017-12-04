@@ -10,6 +10,8 @@ import dto.MesaView;
 import dto.PedidoReposicionView;
 import dto.PedidoView;
 import dto.ReporteView;
+import excepciones.BaseDeDatosException;
+import excepciones.SucursalNoExisteException;
 
 public interface NegocioTDA extends Remote {
 	
@@ -20,7 +22,7 @@ public interface NegocioTDA extends Remote {
 	
 	public void asignarHorasTrabajo(int horas, Long trabajoId) throws RemoteException;
 	public void reservar(String sucursal, int cantPersonas, Date fecha) throws RemoteException;
-	public List<MesaView> mesasDisponibles(String sucursal, int cantPersonas) throws RemoteException;
+	public List<MesaView> mesasDisponibles(String sucursal, int cantPersonas) throws RemoteException, SucursalNoExisteException, BaseDeDatosException;
 	public void asignarEmpleadoSectorSucursal(Long idEmpleado, String sucursal, int numero) throws RemoteException;
 	public EmpleadoView buscarEmpleado(String nombre, String apellido, String rol) throws RemoteException;
 	public void agregarMesa(String sucursal, int nroMesa, int cantPersonas, EmpleadoView empleado) throws RemoteException;

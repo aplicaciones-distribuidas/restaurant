@@ -1,6 +1,7 @@
 package negocio;
 
 import dao.MesasDAO;
+import dto.MesaView;
 import excepciones.BaseDeDatosException;
 
 public class Mesa {
@@ -48,6 +49,10 @@ public class Mesa {
 
 	public void setSectorSalon(SectorSalon sectorSalon) {
 		this.sectorSalon = sectorSalon;
+	}
+
+	public MesaView toView() {
+		return new MesaView(this.id, this.numero, this.ocupada, this.sectorSalon.toView());
 	}
 
 	@Override
