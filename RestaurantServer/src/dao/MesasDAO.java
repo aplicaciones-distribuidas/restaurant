@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
 import entities.MesaEntity;
@@ -84,10 +83,12 @@ public class MesasDAO {
 			entity = (MesaEntity) session.createQuery("from MesaEntity m where m.numero = :numero").setParameter(
 					"numero", numero).uniqueResult();
 			session.close();
-		} catch (ObjectNotFoundException e) {
-			throw new MesaNoExisteException(numero);
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
+		}
+
+		if (entity == null) {
+			throw new MesaNoExisteException(numero);
 		}
 
 		return this.toBusiness(entity);
@@ -100,8 +101,8 @@ public class MesasDAO {
 		List<MesaEntity> all = new ArrayList<MesaEntity>();
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			all = session.createQuery("from MesaEntity where sectorSalon = :sectorSalon and ocupada = 0").setParameter(
-					"sectorSalon", sectorSalonEntity).list();
+			all = session.createQuery("from MesaEntity m where m.sectorSalon = :sectorSalon and m.ocupada = 0")
+					.setParameter("sectorSalon", sectorSalonEntity).list();
 			session.close();
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);

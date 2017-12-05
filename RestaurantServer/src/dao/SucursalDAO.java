@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
 import entities.SucursalEntity;
@@ -110,13 +109,15 @@ public class SucursalDAO {
 		SucursalEntity entity;
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			entity = (SucursalEntity) session.createQuery("from SucursalEntity m where m.nombre = :nombre")
+			entity = (SucursalEntity) session.createQuery("from SucursalEntity s where s.nombre = :nombre")
 					.setParameter("nombre", nombre).uniqueResult();
 			session.close();
-		} catch (ObjectNotFoundException e) {
-			throw new SucursalNoExisteException(nombre);
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
+		}
+
+		if (entity == null) {
+			throw new SucursalNoExisteException(nombre);
 		}
 
 		return this.toBusiness(entity);

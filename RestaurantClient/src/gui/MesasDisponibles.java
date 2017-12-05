@@ -14,15 +14,19 @@ import javax.swing.JTextField;
 import business_delegate.BusinessDelegate;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
+import excepciones.SucursalNoExisteException;
 
-public class AltaMesa extends JInternalFrame {
+public class MesasDisponibles extends JInternalFrame {
 	private static final long serialVersionUID = -7885298908000683951L;
-	private JLabel lblNumeroMesa;
-	private JTextField txtNumeroMesa;
+	private JLabel lblSucursal;
+	private JTextField txtSucursal;
+	private JLabel lblCantidadPersonas;
+	private JTextField txtCantidadPersonas;
 	private JButton btnAceptar, btnSalir;
 	private JInternalFrame aux;
 
-	public AltaMesa(String titulo, boolean resizable, boolean closable, boolean maximizable, boolean iconifiable) {
+	public MesasDisponibles(String titulo, boolean resizable, boolean closable, boolean maximizable,
+			boolean iconifiable) {
 		super(titulo, resizable, closable, maximizable, iconifiable);
 		configurar();
 		this.setVisible(true);
@@ -32,24 +36,33 @@ public class AltaMesa extends JInternalFrame {
 
 	private void configurar() {
 		this.setLayout(new GridLayout(2, 2));
-		lblNumeroMesa = new JLabel(" Nueva Mesa ");
-		txtNumeroMesa = new JTextField();
+		lblSucursal = new JLabel("Sucursal");
+		txtSucursal = new JTextField();
+		lblCantidadPersonas = new JLabel("Cantidad de Personas");
+		txtCantidadPersonas = new JTextField();
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (txtNumeroMesa.getText() == null || txtNumeroMesa.getText().length() == 0) {
-					JOptionPane.showMessageDialog(aux, "Debe ingresar un numero");
+				String sucursal = txtSucursal.getText();
+				if (sucursal == null || sucursal.length() == 0) {
+					JOptionPane.showMessageDialog(aux, "Debe ingresar una sucursal");
+					return;
+				}
+
+				String cantidadPersonas = txtCantidadPersonas.getText();
+				if (cantidadPersonas == null || cantidadPersonas.length() == 0) {
+					JOptionPane.showMessageDialog(aux, "Debe ingresar una cantidad de personas");
 					return;
 				}
 
 				try {
-					int numero = Integer.parseInt(txtNumeroMesa.getText());
-					BusinessDelegate.getInstancia().agregarMesa(numero);
-				} catch (BaseDeDatosException | ConexionException ex) {
+					int cantPersonas = Integer.parseInt(cantidadPersonas);
+					BusinessDelegate.getInstancia().mesasDisponibles(sucursal, cantPersonas);
+				} catch (BaseDeDatosException | SucursalNoExisteException | ConexionException ex) {
 					JOptionPane.showMessageDialog(aux, ex.getMessage());
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(aux, "Debe ingresar un número");
+					JOptionPane.showMessageDialog(aux, "Cantidad de Personas debe ser un número");
 				}
 			}
 		});
@@ -67,8 +80,10 @@ public class AltaMesa extends JInternalFrame {
 			}
 		});
 
-		this.add(lblNumeroMesa);
-		this.add(txtNumeroMesa);
+		this.add(lblSucursal);
+		this.add(txtSucursal);
+		this.add(lblCantidadPersonas);
+		this.add(txtCantidadPersonas);
 		this.add(btnAceptar);
 		this.add(btnSalir);
 	}

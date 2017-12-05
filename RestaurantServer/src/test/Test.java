@@ -36,6 +36,6 @@ public class Test {
 			e.printStackTrace();
 		}
 
-		// new Server();
+		new Server();
 	}
 }

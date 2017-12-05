@@ -12,13 +12,13 @@ import javax.swing.JMenuItem;
 public class Principal extends JFrame {
 	private static final long serialVersionUID = -7189647070719732198L;
 	private JMenuBar barraMenu;
-	private JMenu mnAlta, mnSalir;
+	private JMenu mnMesas, mnSalir;
 	/* items del menu Mesa */
-	private JMenuItem mnMesa;
+	private JMenuItem mnMesasDisponibles;
 	/* items del menu Salir */
 	private JMenuItem mnSalirItem;
 	private JDesktopPane desktop;
-	private AltaMesa agregarMesa;
+	private MesasDisponibles mesasDisponibles;
 
 	public Principal() {
 		configurar();
@@ -37,29 +37,29 @@ public class Principal extends JFrame {
 				System.exit(0);
 			}
 		});
-		mnMesa.addActionListener(new ActionListener() {
+		mnMesasDisponibles.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				agregarMesa = new AltaMesa("Alta Mesa", false, true, false, true);
-				desktop.add(agregarMesa);
+				mesasDisponibles = new MesasDisponibles("Mesas Disponibles", false, true, false, true);
+				desktop.add(mesasDisponibles);
 			}
 		});
 	}
 
 	private void configurar() {
-		this.setTitle("Inscripciones");
+		this.setTitle("Restaurant");
 		desktop = new JDesktopPane();
 		this.setContentPane(desktop);
 
 		barraMenu = new JMenuBar();
-		mnAlta = new JMenu("Altas");
+		mnMesas = new JMenu("Mesas");
 		mnSalir = new JMenu("Salir");
-		mnMesa = new JMenuItem("Mesa");
+		mnMesasDisponibles = new JMenuItem("Mesas Disponibles");
 		mnSalirItem = new JMenuItem("Salir");
 
-		mnAlta.add(mnMesa);
+		mnMesas.add(mnMesasDisponibles);
 		mnSalir.add(mnSalirItem);
-		barraMenu.add(mnAlta);
+		barraMenu.add(mnMesas);
 		barraMenu.add(mnSalir);
 
 		this.setJMenuBar(barraMenu);
