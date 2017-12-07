@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business_delegate.BusinessDelegate;
@@ -22,7 +24,7 @@ public class MesasDisponibles extends JInternalFrame {
 	private JTextField txtSucursal;
 	private JLabel lblCantidadPersonas;
 	private JTextField txtCantidadPersonas;
-	private JButton btnAceptar, btnSalir;
+	private JButton btnBuscar, btnSalir;
 	private JInternalFrame aux;
 
 	public MesasDisponibles(String titulo, boolean resizable, boolean closable, boolean maximizable,
@@ -35,13 +37,34 @@ public class MesasDisponibles extends JInternalFrame {
 	}
 
 	private void configurar() {
-		this.setLayout(new GridLayout(2, 2));
-		lblSucursal = new JLabel("Sucursal");
-		txtSucursal = new JTextField();
-		lblCantidadPersonas = new JLabel("Cantidad de Personas");
-		txtCantidadPersonas = new JTextField();
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(3, 2));
+
+		lblSucursal = new JLabel("Sucursal", JLabel.TRAILING);
+		txtSucursal = new JTextField(10);
+		lblSucursal.setLabelFor(txtSucursal);
+		p.add(lblSucursal);
+		p.add(txtSucursal);
+
+		lblCantidadPersonas = new JLabel("Cantidad de Personas", JLabel.TRAILING);
+		txtCantidadPersonas = new JTextField(10);
+		lblCantidadPersonas.setLabelFor(txtCantidadPersonas);
+		p.add(lblCantidadPersonas);
+		p.add(txtCantidadPersonas);
+
+		btnBuscar = new JButton("Buscar");
+		btnSalir = new JButton("Salir");
+		p.add(btnBuscar);
+		p.add(btnSalir);
+
+		p.setOpaque(true);
+
+		this.setContentPane(p);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
+		this.setVisible(true);
+
+		btnBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sucursal = txtSucursal.getText();
@@ -67,7 +90,6 @@ public class MesasDisponibles extends JInternalFrame {
 			}
 		});
 
-		btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -79,12 +101,5 @@ public class MesasDisponibles extends JInternalFrame {
 				}
 			}
 		});
-
-		this.add(lblSucursal);
-		this.add(txtSucursal);
-		this.add(lblCantidadPersonas);
-		this.add(txtCantidadPersonas);
-		this.add(btnAceptar);
-		this.add(btnSalir);
 	}
 }

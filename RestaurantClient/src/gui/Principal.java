@@ -13,9 +13,7 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = -7189647070719732198L;
 	private JMenuBar barraMenu;
 	private JMenu mnMesas, mnSalir;
-	/* items del menu Mesa */
 	private JMenuItem mnMesasDisponibles;
-	/* items del menu Salir */
 	private JMenuItem mnSalirItem;
 	private JDesktopPane desktop;
 	private MesasDisponibles mesasDisponibles;
