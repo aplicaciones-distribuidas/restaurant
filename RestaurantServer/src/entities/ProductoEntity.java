@@ -37,20 +37,16 @@ public abstract class ProductoEntity implements Serializable {
 	private float comisionMozo;
 	private Date fecha;
 	private float precio;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idProducto")
-	private List<InsumoProductoEntity> insumosProducto;
 	@OneToOne
 	private AreaEntity area;
 	
 	
-	public ProductoEntity(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, List<InsumoProductoEntity> insumosProducto, AreaEntity area) {
+	public ProductoEntity(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, AreaEntity area) {
 		this.rubro = rubro;
 		this.caducidad = caducidad;
 		this.comisionMozo = comisionMozo;
 		this.fecha = fecha;
 		this.precio = precio;
-		this.insumosProducto = insumosProducto;
 		this.area = area;
 	}
 	
@@ -79,11 +75,6 @@ public abstract class ProductoEntity implements Serializable {
 
 	public float getPrecio() {
 		return precio;
-	}
-
-
-	public List<InsumoProductoEntity> getInsumosProducto() {
-		return insumosProducto;
 	}
 
 

@@ -8,13 +8,18 @@ import java.util.List;
 
 import controlador.Controlador;
 import dto.EmpleadoView;
+import dto.InsumoProductoView;
 import dto.MesaView;
 import dto.PedidoReposicionView;
 import dto.PedidoView;
 import dto.ReporteView;
+import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
+import excepciones.ProveedorNoExisteException;
 import excepciones.SucursalNoExisteException;
+import excepciones.TareaNoExisteException;
 import interfaces.NegocioTDA;
+import negocio.Tarea;
 
 public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, Serializable {
 	public NegocioManager() throws RemoteException {
@@ -42,9 +47,7 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void asignarHorasTrabajo(int horas, Long trabajoId) throws RemoteException {
-		// TODO Auto-generated method stub
-
+	public void asignarHorasTrabajo(int horas, Long trabajoId) throws RemoteException, TareaNoExisteException {
 	}
 
 	@Override
@@ -154,5 +157,20 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void crearPlato(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea)
+			throws RemoteException, AreaNoExisteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio,
+			String nombreArea, List<InsumoProductoView> insumos)
+					throws RemoteException, AreaNoExisteException, ProveedorNoExisteException {
+		// TODO Auto-generated method stub
+		
 	}
 }
