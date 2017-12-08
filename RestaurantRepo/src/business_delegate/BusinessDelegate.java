@@ -6,9 +6,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import dto.MesaOcupacionView;
 import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
+import excepciones.NoHayMesasDisponiblesException;
 import excepciones.SucursalNoExisteException;
 import interfaces.NegocioTDA;
 
@@ -41,4 +43,15 @@ public class BusinessDelegate {
 			throw new ConexionException();
 		}
 	}
+
+	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, int idEmpleado) throws ConexionException,
+			NoHayMesasDisponiblesException, BaseDeDatosException {
+		try {
+			return remoteObject.abrirMesa(sucursal, cantPersonas, idEmpleado);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
 }

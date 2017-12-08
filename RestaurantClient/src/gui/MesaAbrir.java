@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,22 +14,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business_delegate.BusinessDelegate;
+import dto.MesaOcupacionView;
 import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
-import excepciones.SucursalNoExisteException;
+import excepciones.NoHayMesasDisponiblesException;
 
-public class MesasDisponiblesBuscar extends JInternalFrame {
-	private static final long serialVersionUID = -7885298908000683951L;
+public class MesaAbrir extends JInternalFrame {
+	private static final long serialVersionUID = 3623782223140267378L;
 	private JLabel lblSucursal;
 	private JTextField txtSucursal;
 	private JLabel lblCantidadPersonas;
 	private JTextField txtCantidadPersonas;
-	private JButton btnBuscar, btnSalir;
-	private MesasDisponiblesBuscar aux;
+	private JLabel lblEmpleado;
+	private JTextField txtEmpleado;
+	private JButton btnAbrir, btnSalir;
+	private MesaAbrir aux;
 
-	public MesasDisponiblesBuscar() {
-		super("Mesas Disponibles", false, true, false, true);
+	public MesaAbrir() {
+		super("Abrir Mesa", false, true, false, true);
 		configurar();
 		this.setVisible(true);
 		this.pack();
@@ -39,7 +41,7 @@ public class MesasDisponiblesBuscar extends JInternalFrame {
 
 	private void configurar() {
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(3, 2));
+		p.setLayout(new GridLayout(4, 2));
 
 		lblSucursal = new JLabel("Sucursal", JLabel.TRAILING);
 		txtSucursal = new JTextField(10);
@@ -53,9 +55,15 @@ public class MesasDisponiblesBuscar extends JInternalFrame {
 		p.add(lblCantidadPersonas);
 		p.add(txtCantidadPersonas);
 
-		btnBuscar = new JButton("Buscar");
+		lblEmpleado = new JLabel("Empleado", JLabel.TRAILING);
+		txtEmpleado = new JTextField(10);
+		lblEmpleado.setLabelFor(txtEmpleado);
+		p.add(lblEmpleado);
+		p.add(txtEmpleado);
+
+		btnAbrir = new JButton("Abrir");
 		btnSalir = new JButton("Salir");
-		p.add(btnBuscar);
+		p.add(btnAbrir);
 		p.add(btnSalir);
 
 		p.setOpaque(true);
@@ -63,7 +71,7 @@ public class MesasDisponiblesBuscar extends JInternalFrame {
 		this.setContentPane(p);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		btnBuscar.addActionListener(new ActionListener() {
+		btnAbrir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sucursal = txtSucursal.getText();
@@ -78,20 +86,39 @@ public class MesasDisponiblesBuscar extends JInternalFrame {
 					return;
 				}
 
+				int cantPersonas = 0;
 				try {
-					int cantPersonas = Integer.parseInt(cantidadPersonas);
-					List<MesaView> mesas = BusinessDelegate.getInstancia().mesasDisponibles(sucursal, cantPersonas);
-					if (mesas.size() == 0) {
-						JOptionPane.showMessageDialog(aux, "No hay mesas disponibles");
-						return;
-					}
-					MesasDisponiblesLista mesasDisponiblesLista = new MesasDisponiblesLista(mesas);
-					aux.getParent().add(mesasDisponiblesLista);
-					aux.cerrar();
-				} catch (BaseDeDatosException | SucursalNoExisteException | ConexionException ex) {
-					JOptionPane.showMessageDialog(aux, ex.getMessage());
+					cantPersonas = Integer.parseInt(cantidadPersonas);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Cantidad de Personas debe ser un número");
+				}
+
+				String empleado = txtEmpleado.getText();
+				if (empleado == null || empleado.length() == 0) {
+					JOptionPane.showMessageDialog(aux, "Debe ingresar un empleado");
+					return;
+				}
+
+				int idEmpleado = 0;
+				try {
+					idEmpleado = Integer.parseInt(empleado);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(aux, "Empleado debe ser un número");
+				}
+
+				try {
+					MesaOcupacionView mesaOcupacion = BusinessDelegate.getInstancia().abrirMesa(sucursal, cantPersonas,
+							idEmpleado);
+					String mesasAsignadas = "";
+					for (MesaView mesa : mesaOcupacion.getMesaItems()) {
+						if (mesasAsignadas.length() > 0)
+							mesasAsignadas += ", ";
+						mesasAsignadas += mesa.getNumero();
+					}
+					JOptionPane.showMessageDialog(aux, "Mesas asignadas: " + mesasAsignadas);
+					aux.cerrar();
+				} catch (BaseDeDatosException | ConexionException | NoHayMesasDisponiblesException ex) {
+					JOptionPane.showMessageDialog(aux, ex.getMessage());
 				}
 			}
 		});

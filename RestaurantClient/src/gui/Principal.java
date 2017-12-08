@@ -14,9 +14,11 @@ public class Principal extends JFrame {
 	private JMenuBar barraMenu;
 	private JMenu mnMesas, mnSalir;
 	private JMenuItem mnMesasDisponibles;
+	private JMenuItem mnAbrirMesa;
 	private JMenuItem mnSalirItem;
 	private JDesktopPane desktop;
 	private MesasDisponiblesBuscar mesasDisponibles;
+	private MesaAbrir mesaAbrir;
 
 	public Principal() {
 		configurar();
@@ -42,6 +44,13 @@ public class Principal extends JFrame {
 				desktop.add(mesasDisponibles);
 			}
 		});
+		mnAbrirMesa.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mesaAbrir = new MesaAbrir();
+				desktop.add(mesaAbrir);
+			}
+		});
 	}
 
 	private void configurar() {
@@ -52,10 +61,12 @@ public class Principal extends JFrame {
 		barraMenu = new JMenuBar();
 		mnMesas = new JMenu("Mesas");
 		mnSalir = new JMenu("Salir");
-		mnMesasDisponibles = new JMenuItem("Buscar Mesas Disponibles");
+		mnMesasDisponibles = new JMenuItem("Mesas Disponibles");
+		mnAbrirMesa = new JMenuItem("Abrir Mesa");
 		mnSalirItem = new JMenuItem("Salir");
 
 		mnMesas.add(mnMesasDisponibles);
+		mnMesas.add(mnAbrirMesa);
 		mnSalir.add(mnSalirItem);
 		barraMenu.add(mnMesas);
 		barraMenu.add(mnSalir);
