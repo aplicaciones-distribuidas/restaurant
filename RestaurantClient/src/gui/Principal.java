@@ -16,7 +16,7 @@ public class Principal extends JFrame {
 	private JMenuItem mnMesasDisponibles;
 	private JMenuItem mnSalirItem;
 	private JDesktopPane desktop;
-	private MesasDisponibles mesasDisponibles;
+	private MesasDisponiblesBuscar mesasDisponibles;
 
 	public Principal() {
 		configurar();
@@ -38,7 +38,7 @@ public class Principal extends JFrame {
 		mnMesasDisponibles.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mesasDisponibles = new MesasDisponibles("Mesas Disponibles", false, true, false, true);
+				mesasDisponibles = new MesasDisponiblesBuscar();
 				desktop.add(mesasDisponibles);
 			}
 		});
@@ -52,7 +52,7 @@ public class Principal extends JFrame {
 		barraMenu = new JMenuBar();
 		mnMesas = new JMenu("Mesas");
 		mnSalir = new JMenu("Salir");
-		mnMesasDisponibles = new JMenuItem("Mesas Disponibles");
+		mnMesasDisponibles = new JMenuItem("Buscar Mesas Disponibles");
 		mnSalirItem = new JMenuItem("Salir");
 
 		mnMesas.add(mnMesasDisponibles);

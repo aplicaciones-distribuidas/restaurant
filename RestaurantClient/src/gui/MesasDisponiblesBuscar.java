@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,22 +15,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business_delegate.BusinessDelegate;
+import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
 import excepciones.SucursalNoExisteException;
 
-public class MesasDisponibles extends JInternalFrame {
+public class MesasDisponiblesBuscar extends JInternalFrame {
 	private static final long serialVersionUID = -7885298908000683951L;
 	private JLabel lblSucursal;
 	private JTextField txtSucursal;
 	private JLabel lblCantidadPersonas;
 	private JTextField txtCantidadPersonas;
 	private JButton btnBuscar, btnSalir;
-	private JInternalFrame aux;
+	private MesasDisponiblesBuscar aux;
 
-	public MesasDisponibles(String titulo, boolean resizable, boolean closable, boolean maximizable,
-			boolean iconifiable) {
-		super(titulo, resizable, closable, maximizable, iconifiable);
+	public MesasDisponiblesBuscar() {
+		super("Buscar Mesas Disponibles", false, true, false, true);
 		configurar();
 		this.setVisible(true);
 		this.pack();
@@ -61,8 +62,6 @@ public class MesasDisponibles extends JInternalFrame {
 
 		this.setContentPane(p);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
-		this.setVisible(true);
 
 		btnBuscar.addActionListener(new ActionListener() {
 			@Override
@@ -81,7 +80,14 @@ public class MesasDisponibles extends JInternalFrame {
 
 				try {
 					int cantPersonas = Integer.parseInt(cantidadPersonas);
-					BusinessDelegate.getInstancia().mesasDisponibles(sucursal, cantPersonas);
+					List<MesaView> mesas = BusinessDelegate.getInstancia().mesasDisponibles(sucursal, cantPersonas);
+					if (mesas.size() == 0) {
+						JOptionPane.showMessageDialog(aux, "No hay mesas disponibles");
+						return;
+					}
+					MesasDisponiblesLista mesasDisponiblesLista = new MesasDisponiblesLista(mesas);
+					aux.getParent().add(mesasDisponiblesLista);
+					aux.cerrar();
 				} catch (BaseDeDatosException | SucursalNoExisteException | ConexionException ex) {
 					JOptionPane.showMessageDialog(aux, ex.getMessage());
 				} catch (NumberFormatException ex) {
@@ -93,13 +99,17 @@ public class MesasDisponibles extends JInternalFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					aux.setClosed(true);
-				} catch (PropertyVetoException ex) {
-					ex.printStackTrace();
-					JOptionPane.showMessageDialog(aux, "Error al salir");
-				}
+				aux.cerrar();
 			}
 		});
+	}
+
+	private void cerrar() {
+		try {
+			this.setClosed(true);
+		} catch (PropertyVetoException ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Error al cerrar ventana");
+		}
 	}
 }

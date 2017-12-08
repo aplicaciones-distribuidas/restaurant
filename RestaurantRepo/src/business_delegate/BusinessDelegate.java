@@ -41,16 +41,4 @@ public class BusinessDelegate {
 			throw new ConexionException();
 		}
 	}
-
-	public void agregarMesa(int numero) throws ConexionException, BaseDeDatosException {
-		MesaView mesa = new MesaView();
-		mesa.setNumero(numero);
-
-		try {
-			remoteObject.agregarMesa("", numero, 1, null); // TODO: use actual parameters
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			throw new ConexionException();
-		}
-	}
 }

@@ -41,6 +41,10 @@ public class MesaView implements Serializable {
 		this.ocupada = ocupada;
 	}
 
+	public SectorSalonView getSectorSalon() {
+		return sectorSalon;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("MesaView [id => %d, numero => %d, ocupada => %s, sectorSalon => %s]", this.getId(), this
