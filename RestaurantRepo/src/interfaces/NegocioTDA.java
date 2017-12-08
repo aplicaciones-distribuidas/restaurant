@@ -42,13 +42,13 @@ public interface NegocioTDA extends Remote {
 	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, int idEmpleado) throws RemoteException,
 			NoHayMesasDisponiblesException;
 
-	public void lanzarPedido(String sucursal, int nroMesa) throws RemoteException;
+	public void lanzarPedido(String sucursal, int idMesaOcupacion) throws RemoteException;
 
-	public void realizarReclamo(String sucursal, int nroMesa, String reclamo) throws RemoteException;
+	public void realizarReclamo(String sucursal, int idMesaOcupacion, String reclamo) throws RemoteException;
 
 	public void marcarComandaRealizada(int nroPedido) throws RemoteException;
 
-	public void facturarMesa(String sucursal, int nroMesa) throws RemoteException;
+	public void facturarMesa(String sucursal, int idMesaOcupacion) throws RemoteException;
 
 	public PedidoReposicionView buscarPedidoReposicion() throws RemoteException;
 
@@ -62,11 +62,11 @@ public interface NegocioTDA extends Remote {
 
 	public void actualizarStock(Long idProducto, int cantidad) throws RemoteException;
 
-	public void cerrarMesa(String sucursal, int nroMesa) throws RemoteException;
+	public void cerrarMesa(String sucursal, int idMesaOcupacion) throws RemoteException;
 
-	public void liberarMesa(String sucursal, int nroMesa) throws RemoteException;
+	public void liberarMesa(String sucursal, int idMesaOcupacion) throws RemoteException;
 
-	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException;
+	public void registrarCobro(String sucursal, int idMesaOcupacion) throws RemoteException;
 
 	// PARA PRESENTACION TPO SEGUN DOC DE GODIO
 

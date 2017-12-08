@@ -83,13 +83,13 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void lanzarPedido(String sucursal, int nroMesa) throws RemoteException {
+	public void lanzarPedido(String sucursal, int idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void realizarReclamo(String sucursal, int nroMesa, String reclamo) throws RemoteException {
+	public void realizarReclamo(String sucursal, int idMesaOcupacion, String reclamo) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
@@ -101,7 +101,7 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void facturarMesa(String sucursal, int nroMesa) throws RemoteException {
+	public void facturarMesa(String sucursal, int idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
@@ -143,19 +143,19 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void cerrarMesa(String sucursal, int nroMesa) throws RemoteException {
+	public void cerrarMesa(String sucursal, int idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void liberarMesa(String sucursal, int nroMesa) throws RemoteException {
+	public void liberarMesa(String sucursal, int idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException {
+	public void registrarCobro(String sucursal, int idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
