@@ -7,19 +7,25 @@ import java.util.Date;
 import java.util.List;
 
 import controlador.Controlador;
+import dao.AreaDAO;
+import dao.InsumoDAO;
+import dao.ProductoDAO;
 import dto.EmpleadoView;
-import dto.InsumoProductoView;
 import dto.MesaView;
 import dto.PedidoReposicionView;
 import dto.PedidoView;
 import dto.ReporteView;
 import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
-import excepciones.ProveedorNoExisteException;
+import excepciones.InsumoNoExisteException;
+import excepciones.RubroNoExisteException;
 import excepciones.SucursalNoExisteException;
 import excepciones.TareaNoExisteException;
 import interfaces.NegocioTDA;
-import negocio.Tarea;
+import negocio.Area;
+import negocio.Directo;
+import negocio.Insumo;
+import negocio.InsumoProducto;
 
 public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, Serializable {
 	public NegocioManager() throws RemoteException {
@@ -75,34 +81,27 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void agregarMesa(String sucursal, int nroMesa, int cantPersonas, EmpleadoView empleado)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void lanzarPedido(String sucursal, int nroMesa) throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void realizarReclamo(String sucursal, int nroMesa, String reclamo) throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void marcarComandaRealizada(int nroPedido) throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void facturarMesa(String sucursal, int nroMesa) throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -126,51 +125,47 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	@Override
 	public void verificarStock() throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void generarOrdenCompra() throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void actualizarStock(Long idProducto, int cantidad) throws RemoteException {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void cerrarMesa(String sucursal, int nroMesa) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void liberarMesa(String sucursal, int nroMesa) throws RemoteException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void crearPlato(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea)
-			throws RemoteException, AreaNoExisteException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio,
-			String nombreArea, List<InsumoProductoView> insumos)
-					throws RemoteException, AreaNoExisteException, ProveedorNoExisteException {
-		// TODO Auto-generated method stub
+	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio,
+			String nombreArea, int idInsumo, float cantInsumo)
+					throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
+		
+		Area area = AreaDAO.getInstancia().getByNombre(nombreArea);
+		Insumo insumo = InsumoDAO.getInstancia().getById(idInsumo);
+		
+		Directo productoDirecto = new Directo(rubro, caducidad, comisionMozo, fecha, precio, area, new InsumoProducto(cantInsumo, insumo));
+		
+		ProductoDAO.getInstancia().save(productoDirecto);
+		
 		
 	}
+
+	
 }
