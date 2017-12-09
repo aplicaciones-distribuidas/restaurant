@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.List;
 
 import dto.MesaOcupacionView;
@@ -58,6 +59,16 @@ public class BusinessDelegate {
 			NoHayMesasDisponiblesException, BaseDeDatosException {
 		try {
 			return remoteObject.abrirMesa(sucursal, cantPersonas, idEmpleado);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
+	public void reservarMesa(String sucursal, int cantPersonas, Date fecha) throws ConexionException,
+			NoHayMesasDisponiblesException, BaseDeDatosException {
+		try {
+			remoteObject.reservar(sucursal, cantPersonas, fecha);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			throw new ConexionException();
