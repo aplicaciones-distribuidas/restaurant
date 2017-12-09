@@ -50,9 +50,7 @@ public class SucursalDAO {
 		List<Reserva> reservas = new ArrayList<Reserva>(); // TODO: translate entity.getReservas() to business
 		List<Tarea> tareas = new ArrayList<Tarea>(); // TODO: translate entity.getTareas() to business
 		List<SectorSalon> sectores = SectoresSalonDAO.getInstancia().toBusiness(entity.getSectores(), false);
-		List<PedidoReposicion> pedidosReposicion = new ArrayList<PedidoReposicion>(); // TODO: translate
-																						// entity.getPedidosReposicion()
-																						// to business
+		List<PedidoReposicion> pedidosReposicion = new ArrayList<PedidoReposicion>(); // TODO: translate entity.getPedidosReposicion() to business
 		Deposito deposito = null; // TODO: translate entity.getDeposito() to business
 		return new Sucursal(entity.getId(), entity.getNombre(), entity.getUbicacion(), entity.getCapacidad(), cartas,
 				caja, areas, pedidos, reservas, tareas, sectores, pedidosReposicion, deposito);
@@ -71,13 +69,10 @@ public class SucursalDAO {
 		CajaEntity caja = null; // TODO: translate business.getCaja() to entity
 		List<AreaEntity> areas = new ArrayList<AreaEntity>(); // TODO: translate business.getArea() to entity
 		List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>(); // TODO: translate business.getPedidos() to entity
-		List<ReservaEntity> reservas = new ArrayList<ReservaEntity>(); // TODO: translate business.getReservas() to
-																		// entity
+		List<ReservaEntity> reservas = new ArrayList<ReservaEntity>(); // TODO: translate business.getReservas() to entity
 		List<TareaEntity> tareas = new ArrayList<TareaEntity>(); // TODO: translate business.getTareas() to entity
 		List<SectorSalonEntity> sectores = SectoresSalonDAO.getInstancia().toEntity(business.getSectores());
-		List<PedidoReposicionEntity> pedidosReposicion = new ArrayList<PedidoReposicionEntity>(); // TODO: translate
-		// business.getPedidosReposicion()
-		// to entity
+		List<PedidoReposicionEntity> pedidosReposicion = new ArrayList<PedidoReposicionEntity>(); // TODO: translate business.getPedidosReposicion() to entity
 		DepositoEntity deposito = null;// TODO: translate business.getDeposito() to entity
 
 		return new SucursalEntity(business.getId(), business.getNombre(), business.getUbicacion(), business

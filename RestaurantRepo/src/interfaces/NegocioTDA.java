@@ -47,9 +47,6 @@ public interface NegocioTDA extends Remote {
 	public void liberarMesa(String sucursal, int idMesaOcupacion) throws RemoteException;
 	public void registrarCobro(String sucursal, int idMesaOcupacion) throws RemoteException;
 
-	public void liberarMesa(String sucursal, int nroMesa) throws RemoteException;
-	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException;
-
 	// PARA PRESENTACION TPO SEGUN DOC DE GODIO
 	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException;
 	/*public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumos) throws RemoteException, AreaNoExisteException, ProveedorNoExisteException;

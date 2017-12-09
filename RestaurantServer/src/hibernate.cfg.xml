@@ -30,8 +30,6 @@
 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 
 		<mapping class="entities.AreaEntity" />
-		<mapping class="entities.BarraEntity" />
-		<mapping class="entities.CafeteriaEntity" />
 		<mapping class="entities.CajaEntity" />
 		<mapping class="entities.CartaEntity" />
 		<mapping class="entities.ItemCartaEntity" />
@@ -39,7 +37,6 @@
 		<mapping class="entities.InsumoProductoEntity" />
 		<mapping class="entities.InsumoEntity" />
 		<mapping class="entities.ProveedorEntity" />
-		<mapping class="entities.CocinaEntity" />
 		<mapping class="entities.ComandaEntity" />
 		<mapping class="entities.ItemPedidoEntity" />
 		<mapping class="entities.ComisionEntity" />
