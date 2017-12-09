@@ -20,6 +20,15 @@ public class MesaOcupacion {
 		this.factura = factura;
 	}
 
+	public MesaOcupacion(Date fechaIngreso, Date fechaEgreso, Boolean proximaLiberarse, Integer cantidadPersonas, List<Mesa> mesaItems, Factura factura) {
+		this.fechaIngreso = fechaIngreso;
+		this.fechaEgreso = fechaEgreso;
+		this.proximaLiberarse = proximaLiberarse;
+		this.cantidadPersonas = cantidadPersonas;
+		this.mesaItems = mesaItems;
+		this.factura = factura;
+	}
+
 	private Long id;
 	private Date fechaIngreso;
 	private Date fechaEgreso;
