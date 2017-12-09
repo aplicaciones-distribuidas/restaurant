@@ -73,15 +73,15 @@ public class MesaAgregarProducto extends JInternalFrame {
 					return;
 				}
 
-				int idProducto = 0;
+				Long idProducto;
 				try {
-					idProducto = Integer.parseInt(producto);
+					idProducto = Long.parseLong(producto);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Producto debe ser un número");
 					return;
 				}
 
-				int cantProducto = 0;
+				int cantProducto;
 				try {
 					cantProducto = Integer.parseInt(cantidadProducto);
 				} catch (NumberFormatException ex) {

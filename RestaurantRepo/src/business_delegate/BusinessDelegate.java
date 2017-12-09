@@ -55,7 +55,7 @@ public class BusinessDelegate {
 		}
 	}
 
-	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, int idEmpleado) throws ConexionException,
+	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, Long idEmpleado) throws ConexionException,
 			NoHayMesasDisponiblesException, BaseDeDatosException {
 		try {
 			return remoteObject.abrirMesa(sucursal, cantPersonas, idEmpleado);
@@ -75,14 +75,13 @@ public class BusinessDelegate {
 		}
 	}
 
-	public void agregarProductoAMesa(Long idMesaOcupacion, int idProducto, int cantidadProducto) throws ConexionException, BaseDeDatosException {
-		// TODO: implement
-		//		try {
-		//			remoteObject.reservar(sucursal, cantPersonas, fecha);
-		//		} catch (RemoteException e) {
-		//			e.printStackTrace();
-		//			throw new ConexionException();
-		//		}
+	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws ConexionException, BaseDeDatosException {
+		try {
+			remoteObject.agregarProductoAMesa(idMesaOcupacion, idProducto, cantidadProducto);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
 	}
 
 }

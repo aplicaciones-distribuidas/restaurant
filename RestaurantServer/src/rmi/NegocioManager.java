@@ -10,19 +10,8 @@ import controlador.Controlador;
 import dao.AreaDAO;
 import dao.InsumoDAO;
 import dao.ProductoDAO;
-import dto.EmpleadoView;
-import dto.MesaOcupacionView;
-import dto.MesaView;
-import dto.PedidoReposicionView;
-import dto.PedidoView;
-import dto.ReporteView;
-import excepciones.AreaNoExisteException;
-import excepciones.BaseDeDatosException;
-import excepciones.NoHayMesasDisponiblesException;
-import excepciones.InsumoNoExisteException;
-import excepciones.RubroNoExisteException;
-import excepciones.SucursalNoExisteException;
-import excepciones.TareaNoExisteException;
+import dto.*;
+import excepciones.*;
 import interfaces.NegocioTDA;
 import negocio.Area;
 import negocio.Directo;
@@ -56,6 +45,8 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 
 	@Override
 	public void asignarHorasTrabajo(int horas, Long trabajoId) throws RemoteException, TareaNoExisteException {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -89,20 +80,26 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, int idEmpleado) throws RemoteException,
+	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, Long idEmpleado) throws RemoteException,
 			NoHayMesasDisponiblesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void lanzarPedido(String sucursal, int idMesaOcupacion) throws RemoteException {
+	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void realizarReclamo(String sucursal, int idMesaOcupacion, String reclamo) throws RemoteException {
+	public void lanzarPedido(Long idMesaOcupacion) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void realizarReclamo(Long idMesaOcupacion, String reclamo) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
@@ -114,7 +111,7 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void facturarMesa(String sucursal, int idMesaOcupacion) throws RemoteException {
+	public void facturarMesa(Long idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
@@ -156,23 +153,30 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void cerrarMesa(String sucursal, int idMesaOcupacion) throws RemoteException {
+	public void cerrarMesa(Long idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void liberarMesa(String sucursal, int idMesaOcupacion) throws RemoteException {
+	public void cobrarMesa(Long idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void registrarCobro(String sucursal, int idMesaOcupacion) throws RemoteException {
+	public void liberarMesa(Long idMesaOcupacion) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
+	public ComisionesMozosView getComisionesMozos(String sucursal) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio,
 								  String nombreArea, int idInsumo, float cantInsumo)
 			throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
@@ -183,5 +187,11 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 		Directo productoDirecto = new Directo(rubro, caducidad, comisionMozo, fecha, precio, area, new InsumoProducto(cantInsumo, insumo));
 
 		ProductoDAO.getInstancia().save(productoDirecto);
+	}
+
+	@Override
+	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumos) throws RemoteException, AreaNoExisteException, ProveedorNoExisteException {
+		// TODO Auto-generated method stub
+
 	}
 }

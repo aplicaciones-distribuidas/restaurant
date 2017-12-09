@@ -86,11 +86,12 @@ public class MesaAbrir extends JInternalFrame {
 					return;
 				}
 
-				int cantPersonas = 0;
+				int cantPersonas;
 				try {
 					cantPersonas = Integer.parseInt(cantidadPersonas);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Cantidad de Personas debe ser un número");
+					return;
 				}
 
 				String empleado = txtEmpleado.getText();
@@ -99,9 +100,9 @@ public class MesaAbrir extends JInternalFrame {
 					return;
 				}
 
-				int idEmpleado = 0;
+				Long idEmpleado;
 				try {
-					idEmpleado = Integer.parseInt(empleado);
+					idEmpleado = Long.parseLong(empleado);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Empleado debe ser un número");
 					return;
