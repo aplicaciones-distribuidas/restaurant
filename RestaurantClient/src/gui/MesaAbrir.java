@@ -104,6 +104,7 @@ public class MesaAbrir extends JInternalFrame {
 					idEmpleado = Integer.parseInt(empleado);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Empleado debe ser un número");
+					return;
 				}
 
 				try {

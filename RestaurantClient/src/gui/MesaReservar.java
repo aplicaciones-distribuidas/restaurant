@@ -83,6 +83,7 @@ public class MesaReservar extends JInternalFrame {
 					cantPersonas = Integer.parseInt(cantidadPersonas);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(aux, "Cantidad de Personas debe ser un número");
+					return;
 				}
 
 				String fecha = txtFecha.getText();

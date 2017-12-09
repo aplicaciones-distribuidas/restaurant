@@ -75,4 +75,14 @@ public class BusinessDelegate {
 		}
 	}
 
+	public void agregarProductoAMesa(Long idMesaOcupacion, int idProducto, int cantidadProducto) throws ConexionException, BaseDeDatosException {
+		// TODO: implement
+		//		try {
+		//			remoteObject.reservar(sucursal, cantPersonas, fecha);
+		//		} catch (RemoteException e) {
+		//			e.printStackTrace();
+		//			throw new ConexionException();
+		//		}
+	}
+
 }

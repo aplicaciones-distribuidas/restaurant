@@ -72,7 +72,8 @@ public class MesasOcupadasLista extends JInternalFrame {
 			btnProductos.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("Agregar productos a mesa " + mesaOcupacion.toString());
+					MesaAgregarProducto mesaAgregarProducto = new MesaAgregarProducto(mesaOcupacion.getId());
+					aux.getParent().add(mesaAgregarProducto);
 				}
 			});
 

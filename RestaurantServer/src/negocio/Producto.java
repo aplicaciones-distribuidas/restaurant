@@ -3,15 +3,15 @@ package negocio;
 import java.util.Date;
 
 public abstract class Producto {
-	
+
 	private String rubro;
 	private int caducidad;
 	private float comisionMozo;
 	private Date fecha;
 	private float precio;
 	private Area area;
-	
-	
+
+
 	public Producto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, Area area) {
 		this.rubro = rubro;
 		this.caducidad = caducidad;
@@ -50,5 +50,5 @@ public abstract class Producto {
 	public Area getArea() {
 		return area;
 	}
-	
+
 }
