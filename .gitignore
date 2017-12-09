@@ -24,5 +24,9 @@ hs_err_pid*
 .metadata
 .recommenders
 
+# IDEA stuff
+.idea/
+*.iml
+
 # Other
 .DS_Store
