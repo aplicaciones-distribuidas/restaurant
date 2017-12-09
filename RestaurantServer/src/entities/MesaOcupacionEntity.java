@@ -39,12 +39,15 @@ public class MesaOcupacionEntity implements Serializable {
 	private int cantidadPersonas;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "mesas_ocupacion_mesas", joinColumns = {
-		@JoinColumn(table = "mesas_ocupacion", name = "mesas_ocupacion_id", referencedColumnName = "id")
-	},
-	inverseJoinColumns = {
-		@JoinColumn(table = "mesas", name = "mesa_numero", referencedColumnName = "numero")
-	})
+	@JoinTable(
+		name = "mesas_ocupacion_mesas",
+		joinColumns = {
+			@JoinColumn(table = "mesas_ocupacion", name = "mesas_ocupacion_id", referencedColumnName = "id")
+		},
+		inverseJoinColumns = {
+			@JoinColumn(table = "mesas", name = "mesa_id", referencedColumnName = "id")
+		}
+	)
 	private List<MesaEntity> mesaItems;
 
 	@OneToOne
@@ -53,14 +56,19 @@ public class MesaOcupacionEntity implements Serializable {
 	public MesaOcupacionEntity() {
 	}
 
-	public MesaOcupacionEntity(Date fechaIngreso, Date fechaEgreso, boolean proximaLiberarse, int cantidadPersonas,
-			List<MesaEntity> mesaItems, FacturaEntity factura) {
+	public MesaOcupacionEntity(Long id, Date fechaIngreso, Date fechaEgreso, boolean proximaLiberarse,
+			int cantidadPersonas, List<MesaEntity> mesaItems, FacturaEntity factura) {
+		this.id = id;
 		this.fechaIngreso = fechaIngreso;
 		this.fechaEgreso = fechaEgreso;
 		this.proximaLiberarse = proximaLiberarse;
 		this.cantidadPersonas = cantidadPersonas;
 		this.mesaItems = mesaItems;
 		this.factura = factura;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public Date getFechaEgreso() {

@@ -64,6 +64,12 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
+	public List<MesaOcupacionView> mesasOcupadas(String sucursal) throws RemoteException, SucursalNoExisteException,
+			BaseDeDatosException {
+		return Controlador.getInstancia().getMesasOcupadas(sucursal);
+	}
+
+	@Override
 	public void asignarEmpleadoSectorSucursal(Long idEmpleado, String sucursal, int numero) throws RemoteException {
 		// TODO Auto-generated method stub
 

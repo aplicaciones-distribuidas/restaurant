@@ -35,6 +35,9 @@ public interface NegocioTDA extends Remote {
 	public List<MesaView> mesasDisponibles(String sucursal, int cantPersonas) throws RemoteException,
 			SucursalNoExisteException, BaseDeDatosException;
 
+	public List<MesaOcupacionView> mesasOcupadas(String sucursal) throws RemoteException, SucursalNoExisteException,
+			BaseDeDatosException;
+
 	public void asignarEmpleadoSectorSucursal(Long idEmpleado, String sucursal, int numero) throws RemoteException;
 
 	public EmpleadoView buscarEmpleado(String nombre, String apellido, String rol) throws RemoteException;

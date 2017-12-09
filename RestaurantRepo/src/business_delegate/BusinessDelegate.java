@@ -44,6 +44,16 @@ public class BusinessDelegate {
 		}
 	}
 
+	public List<MesaOcupacionView> mesasOcupadas(String sucursal) throws ConexionException, SucursalNoExisteException,
+			BaseDeDatosException {
+		try {
+			return remoteObject.mesasOcupadas(sucursal);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
 	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, int idEmpleado) throws ConexionException,
 			NoHayMesasDisponiblesException, BaseDeDatosException {
 		try {

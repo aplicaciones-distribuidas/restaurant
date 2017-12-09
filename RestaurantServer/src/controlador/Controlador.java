@@ -6,11 +6,13 @@ import java.util.List;
 import dao.MesasDAO;
 import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
+import dto.MesaOcupacionView;
 import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.MesaNoExisteException;
 import excepciones.SucursalNoExisteException;
 import negocio.Mesa;
+import negocio.MesaOcupacion;
 import negocio.SectorSalon;
 import negocio.Sucursal;
 
@@ -34,6 +36,16 @@ public class Controlador {
 			mesas.add(mesa.toView());
 		}
 		return mesas;
+	}
+
+	public List<MesaOcupacionView> getMesasOcupadas(String nombreSucursal) throws SucursalNoExisteException,
+			BaseDeDatosException {
+		List<MesaOcupacionView> mesasOcupacion = new ArrayList<MesaOcupacionView>();
+		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
+		for (MesaOcupacion mesa : sucursal.getMesasOcupadas()) {
+			mesasOcupacion.add(mesa.toView());
+		}
+		return mesasOcupacion;
 	}
 
 	public List<Sucursal> getSucursales() throws BaseDeDatosException {

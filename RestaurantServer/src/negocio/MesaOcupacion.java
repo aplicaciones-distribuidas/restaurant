@@ -1,12 +1,23 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dto.MesaOcupacionView;
+import dto.MesaView;
+
 public class MesaOcupacion {
 
-	public MesaOcupacion(List<Mesa> mesaItems, Factura factura) {
+	public MesaOcupacion(Long id, Date fechaIngreso, Date fechaEgreso, boolean proximaLiberarse, int cantidadPersonas,
+			List<Mesa> mesaItems, Factura factura) {
+		this.id = id;
+		this.fechaIngreso = fechaIngreso;
+		this.fechaEgreso = fechaEgreso;
+		this.proximaLiberarse = proximaLiberarse;
+		this.cantidadPersonas = cantidadPersonas;
 		this.mesaItems = mesaItems;
+		this.factura = factura;
 	}
 
 	private Long id;
@@ -71,6 +82,14 @@ public class MesaOcupacion {
 
 	public void setFactura(Factura factura) {
 		this.factura = factura;
+	}
+
+	public MesaOcupacionView toView() {
+		List<MesaView> mesas = new ArrayList<MesaView>();
+		for (Mesa mesa : this.mesaItems) {
+			mesas.add(mesa.toView());
+		}
+		return new MesaOcupacionView(this.id, mesas);
 	}
 
 	@Override

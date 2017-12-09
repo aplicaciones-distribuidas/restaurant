@@ -118,4 +118,12 @@ public class Sucursal {
 		return mesas;
 	}
 
+	public List<MesaOcupacion> getMesasOcupadas() throws BaseDeDatosException {
+		List<MesaOcupacion> mesasOcupacion = new ArrayList<MesaOcupacion>();
+		for (SectorSalon sector : this.sectores) {
+			mesasOcupacion.addAll(sector.getMesasOcupadas());
+		}
+		return mesasOcupacion;
+	}
+
 }

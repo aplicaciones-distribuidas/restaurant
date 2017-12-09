@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.MesasDAO;
+import dao.MesasOcupacionDAO;
 import dao.SectoresSalonDAO;
 import dto.SectorSalonView;
 import excepciones.BaseDeDatosException;
@@ -85,6 +86,10 @@ public class SectorSalon {
 			}
 		}
 		return mesas;
+	}
+
+	public List<MesaOcupacion> getMesasOcupadas() throws BaseDeDatosException {
+		return MesasOcupacionDAO.getInstancia().getOcupadasBySectorSalon(this);
 	}
 
 }
