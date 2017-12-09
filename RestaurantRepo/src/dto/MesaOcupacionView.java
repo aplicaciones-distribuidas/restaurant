@@ -21,4 +21,8 @@ public class MesaOcupacionView implements Serializable {
 		return mesaItems;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("MesaOcupacionView [id => %d]", this.getId());
+	}
 }

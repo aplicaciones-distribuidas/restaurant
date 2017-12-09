@@ -30,10 +30,6 @@ public class MesasOcupacionDAO {
 	}
 
 	public MesaOcupacion toBusiness(MesaOcupacionEntity entity) {
-		return toBusiness(entity, true);
-	}
-
-	public MesaOcupacion toBusiness(MesaOcupacionEntity entity, boolean includeSectorSalon) {
 		List<Mesa> mesas = MesasDAO.getInstancia().toBusiness(entity.getMesaItems());
 		Factura factura = null; // TODO: translate entity.getFactura() to business
 		return new MesaOcupacion(entity.getId(), entity.getFechaIngreso(), entity.getFechaEgreso(), entity
@@ -41,13 +37,9 @@ public class MesasOcupacionDAO {
 	}
 
 	public List<MesaOcupacion> toBusiness(List<MesaOcupacionEntity> entities) {
-		return this.toBusiness(entities, true);
-	}
-
-	public List<MesaOcupacion> toBusiness(List<MesaOcupacionEntity> entities, boolean includeSectorSalon) {
 		List<MesaOcupacion> business = new ArrayList<MesaOcupacion>();
 		for (MesaOcupacionEntity entity : entities) {
-			business.add(this.toBusiness(entity, includeSectorSalon));
+			business.add(this.toBusiness(entity));
 		}
 		return business;
 	}
@@ -57,7 +49,7 @@ public class MesasOcupacionDAO {
 		FacturaEntity factura = null; // TODO: translate business.getFactura() to entity
 		return new MesaOcupacionEntity(business.getId(), new java.sql.Date(business.getFechaIngreso().getTime()),
 				new java.sql.Date(business.getFechaEgreso().getTime()), business.getProximaLiberarse(), business
-						.getCantidadPersonas(), mesas, factura);
+				.getCantidadPersonas(), mesas, factura);
 	}
 
 	public List<MesaOcupacionEntity> toEntity(List<MesaOcupacion> businesses) {
@@ -88,6 +80,7 @@ public class MesasOcupacionDAO {
 		List<MesaOcupacionEntity> all = new ArrayList<MesaOcupacionEntity>();
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
+			// TODO: prevent duplicates
 			all = session.createQuery(
 					"select mo from MesaOcupacionEntity mo join mo.mesaItems m where mo.fechaEgreso is null and m.sectorSalon = :sectorSalon")
 					.setParameter("sectorSalon", sectorSalonEntity).list();
