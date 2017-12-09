@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Empleado {
@@ -8,7 +9,7 @@ public class Empleado {
 	private String apellido;
 	private int porcentajeComision;
 	private Rol rol;
-	private List<Comision> comisiones;
+	private List<Comision> comisiones = new ArrayList<>();
 	
 	
 	public Empleado(String nombre, String apellido, int porcentajeComision, Rol rol, List<Comision> comisiones) {

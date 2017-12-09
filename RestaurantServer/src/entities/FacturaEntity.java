@@ -57,7 +57,7 @@ public class FacturaEntity implements Serializable {
 		return comisionMozo;
 	}
 
-	public boolean isCobrado() {
+	public boolean getCobrado() {
 		return cobrado;
 	}
 

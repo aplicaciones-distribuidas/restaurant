@@ -10,7 +10,7 @@ import dto.MesaView;
 public class MesaOcupacion {
 
 	public MesaOcupacion(Long id, Date fechaIngreso, Date fechaEgreso, boolean proximaLiberarse, int cantidadPersonas,
-			List<Mesa> mesaItems, Factura factura) {
+			List<Mesa> mesaItems, Factura factura, Empleado empleado) {
 		this.id = id;
 		this.fechaIngreso = fechaIngreso;
 		this.fechaEgreso = fechaEgreso;
@@ -18,15 +18,17 @@ public class MesaOcupacion {
 		this.cantidadPersonas = cantidadPersonas;
 		this.mesaItems = mesaItems;
 		this.factura = factura;
+		this.empleado = empleado;
 	}
 
-	public MesaOcupacion(Date fechaIngreso, Date fechaEgreso, Boolean proximaLiberarse, Integer cantidadPersonas, List<Mesa> mesaItems, Factura factura) {
+	public MesaOcupacion(Date fechaIngreso, Date fechaEgreso, Boolean proximaLiberarse, Integer cantidadPersonas, List<Mesa> mesaItems, Factura factura, Empleado empleado) {
 		this.fechaIngreso = fechaIngreso;
 		this.fechaEgreso = fechaEgreso;
 		this.proximaLiberarse = proximaLiberarse;
 		this.cantidadPersonas = cantidadPersonas;
 		this.mesaItems = mesaItems;
 		this.factura = factura;
+		this.empleado = empleado;
 	}
 
 	private Long id;
@@ -36,6 +38,7 @@ public class MesaOcupacion {
 	private Integer cantidadPersonas;
 	private List<Mesa> mesaItems;
 	private Factura factura;
+	private Empleado empleado;
 
 	public Long getId() {
 		return id;
@@ -91,6 +94,10 @@ public class MesaOcupacion {
 
 	public void setFactura(Factura factura) {
 		this.factura = factura;
+	}
+	
+	public Empleado getEmpleado() {
+		return this.empleado;
 	}
 
 	public MesaOcupacionView toView() {

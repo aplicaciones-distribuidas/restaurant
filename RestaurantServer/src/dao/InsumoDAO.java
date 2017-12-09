@@ -22,11 +22,11 @@ public class InsumoDAO {
 	}
 
 	public Insumo toBusiness(InsumoEntity entity) {
-		return new Insumo(entity.getClasificacion(), entity.getNombre(), entity.getCantidadMinima(), entity.getFechaVencimiento(), entity.getFechaCompra(), ProveedorDAO.getInstancia().toBusiness(entity.getProveedor()));
+		return new Insumo(entity.getClasificacion(), entity.getNombre(), entity.getCantidadMinima(), entity.getFechaVencimiento(), entity.getFechaCompra(), ProveedorDAO.getInstancia().toBusiness(entity.getProveedor()), entity.getCantidad());
 	}
 
 	public InsumoEntity toEntity(Insumo business) {
-		return new InsumoEntity(business.getClasificacion(), business.getNombre(), business.getCantidadMinima(), business.getFechaVencimiento(), business.getFechaCompra(), ProveedorDAO.getInstancia().toEntity(business.getProveedor()));
+		return new InsumoEntity(business.getClasificacion(), business.getNombre(), business.getCantidadMinima(), business.getFechaVencimiento(), business.getFechaCompra(), ProveedorDAO.getInstancia().toEntity(business.getProveedor()), business.getCantidad());
 	}
 
 
@@ -54,6 +54,19 @@ public class InsumoDAO {
 			Session session = HibernateUtil.getInstancia().getSession();
 			session.beginTransaction();
 			session.save(entity);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+	}
+	
+	public void update(Insumo insumo) throws BaseDeDatosException {
+		InsumoEntity entity = this.toEntity(insumo);
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			session.beginTransaction();
+			session.update(entity);
 			session.getTransaction().commit();
 			session.close();
 		} catch (HibernateException e) {

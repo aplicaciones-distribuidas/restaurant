@@ -8,11 +8,15 @@ import org.hibernate.Session;
 
 import entities.DirectoEntity;
 import entities.InsumoProductoEntity;
+import entities.ProductoEntity;
 import entities.SemiElaboradoEntity;
 import excepciones.BaseDeDatosException;
+import excepciones.InsumoNoExisteException;
+import excepciones.ProductoNoExisteException;
 import hibernate.HibernateUtil;
 import negocio.Directo;
 import negocio.InsumoProducto;
+import negocio.Producto;
 import negocio.SemiElaborado;
 
 public class ProductoDAO {
@@ -117,6 +121,30 @@ public class ProductoDAO {
 			session.close();
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
+		}
+	}
+	
+	public Producto getById(Long id) throws BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException {
+		ProductoEntity entity;
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			entity = (ProductoEntity) session.createQuery("from ProductoEntity s where s.id = :id")
+					.setParameter("id", id).uniqueResult();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+
+		if (entity == null) {
+			throw new InsumoNoExisteException();
+		}
+		
+		try {
+			DirectoEntity directoEntity = (DirectoEntity) entity;
+			return this.toBusiness(directoEntity);
+		} catch (Exception e) {
+			SemiElaboradoEntity semiElaboradoEntity = (SemiElaboradoEntity) entity;
+			return this.toBusiness(semiElaboradoEntity);
 		}
 	}
 
