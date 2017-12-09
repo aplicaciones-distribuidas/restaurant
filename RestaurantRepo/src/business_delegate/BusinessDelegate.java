@@ -84,4 +84,31 @@ public class BusinessDelegate {
 		}
 	}
 
+	public void cerrarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
+		try {
+			remoteObject.cerrarMesa(idMesaOcupacion);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
+	public void cobrarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
+		try {
+			remoteObject.cobrarMesa(idMesaOcupacion);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
+	public void liberarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
+		try {
+			remoteObject.liberarMesa(idMesaOcupacion);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
 }

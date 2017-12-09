@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
 
+import business_delegate.BusinessDelegate;
 import dto.MesaOcupacionView;
 import dto.MesaView;
+import excepciones.BaseDeDatosException;
+import excepciones.ConexionException;
 
 import javax.swing.*;
 
@@ -80,21 +83,39 @@ public class MesasOcupadasLista extends JInternalFrame {
 			btnCerrar.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("Cerrar mesa " + mesaOcupacion.toString());
+					try {
+						BusinessDelegate.getInstancia().cerrarMesa(mesaOcupacion.getId());
+						JOptionPane.showMessageDialog(aux, "Mesa cerrada correctamente");
+						aux.cerrar();
+					} catch (BaseDeDatosException | ConexionException ex) {
+						JOptionPane.showMessageDialog(aux, ex.getMessage());
+					}
 				}
 			});
 
 			btnCobrar.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("Cobrar mesa " + mesaOcupacion.toString());
+					try {
+						BusinessDelegate.getInstancia().cobrarMesa(mesaOcupacion.getId());
+						JOptionPane.showMessageDialog(aux, "Mesa cobrada correctamente");
+						aux.cerrar();
+					} catch (BaseDeDatosException | ConexionException ex) {
+						JOptionPane.showMessageDialog(aux, ex.getMessage());
+					}
 				}
 			});
 
 			btnLiberar.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("Liberar mesa " + mesaOcupacion.toString());
+					try {
+						BusinessDelegate.getInstancia().liberarMesa(mesaOcupacion.getId());
+						JOptionPane.showMessageDialog(aux, "Mesa liberada correctamente");
+						aux.cerrar();
+					} catch (BaseDeDatosException | ConexionException ex) {
+						JOptionPane.showMessageDialog(aux, ex.getMessage());
+					}
 				}
 			});
 		}
