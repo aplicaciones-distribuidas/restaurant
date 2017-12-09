@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import dto.EmpleadoView;
-import dto.InsumoProductoView;
 import dto.MesaOcupacionView;
 import dto.MesaView;
 import dto.PedidoReposicionView;
@@ -15,7 +14,8 @@ import dto.ReporteView;
 import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
 import excepciones.NoHayMesasDisponiblesException;
-import excepciones.ProveedorNoExisteException;
+import excepciones.InsumoNoExisteException;
+import excepciones.RubroNoExisteException;
 import excepciones.SucursalNoExisteException;
 import excepciones.TareaNoExisteException;
 
@@ -47,8 +47,16 @@ public interface NegocioTDA extends Remote {
 	public void liberarMesa(String sucursal, int idMesaOcupacion) throws RemoteException;
 	public void registrarCobro(String sucursal, int idMesaOcupacion) throws RemoteException;
 
+	public void liberarMesa(String sucursal, int nroMesa) throws RemoteException;
+	public void registrarCobro(String sucursal, int nroMesa) throws RemoteException;
+
 	// PARA PRESENTACION TPO SEGUN DOC DE GODIO
-	public void crearPlato(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea) throws RemoteException, AreaNoExisteException;
-	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumos) throws RemoteException, AreaNoExisteException, ProveedorNoExisteException;
+	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException;
+	/*public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumos) throws RemoteException, AreaNoExisteException, ProveedorNoExisteException;
+	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, int idEmpleado) throws RemoteException, NoHayMesasDisponiblesException;
+	public void agregarPlatoAMesa(String sucursal, int nroMesa, int nroPlato) throws RemoteException;
+	public void cerrarMesa(String sucursal, int nroMesa) throws RemoteException;
+	public void cobrarMesa(String sucursal, int nroMesa) throws RemoteException;
+	public ComisionesMozosView getComisionesMozos(String sucursal) throws RemoteException;*/
 
 }

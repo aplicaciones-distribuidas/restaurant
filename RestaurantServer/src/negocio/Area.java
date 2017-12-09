@@ -1,14 +1,14 @@
 package negocio;
 
-public abstract class Area {
+public class Area {
 
-	private String nombre;
+	private AreaEnum nombre;
 
-	public Area(String nombre) {
+	public Area(AreaEnum nombre) {
 		this.nombre = nombre;
 	}
 
-	public String getNombre() {
+	public AreaEnum getNombre() {
 		return nombre;
 	}
 
