@@ -3,14 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "empleados")
@@ -28,12 +21,15 @@ public class EmpleadoEntity implements Serializable {
 	@OneToOne
 	private RolEntity rol;
 
+	@ManyToOne
+	private SectorSalonEntity sectorSalon;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idEmpleado")
 	private List<ComisionEntity> comisiones;
 
 	public EmpleadoEntity(String nombre, String apellido, int porcentajeComision, RolEntity rol,
-			List<ComisionEntity> comisiones) {
+						  List<ComisionEntity> comisiones) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.porcentajeComision = porcentajeComision;
@@ -64,4 +60,11 @@ public class EmpleadoEntity implements Serializable {
 		return comisiones;
 	}
 
+	public SectorSalonEntity getSectorSalon() {
+		return sectorSalon;
+	}
+
+	public void setSectorSalon(SectorSalonEntity sectorSalon) {
+		this.sectorSalon = sectorSalon;
+	}
 }
