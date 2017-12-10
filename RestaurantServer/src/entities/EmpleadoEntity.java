@@ -32,17 +32,13 @@ public class EmpleadoEntity implements Serializable {
 	@JoinColumn(name = "idEmpleado")
 	private List<ComisionEntity> comisiones;
 
-	@OneToOne
-	private SectorSalonEntity sectorSalon;
-
 	public EmpleadoEntity(String nombre, String apellido, int porcentajeComision, RolEntity rol,
-			List<ComisionEntity> comisiones, SectorSalonEntity sectorSalon) {
+			List<ComisionEntity> comisiones) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.porcentajeComision = porcentajeComision;
 		this.rol = rol;
 		this.comisiones = comisiones;
-		this.sectorSalon = sectorSalon;
 	}
 
 	public EmpleadoEntity() {
@@ -66,10 +62,6 @@ public class EmpleadoEntity implements Serializable {
 
 	public List<ComisionEntity> getComisiones() {
 		return comisiones;
-	}
-
-	public SectorSalonEntity getSectorSalon() {
-		return this.sectorSalon;
 	}
 
 }

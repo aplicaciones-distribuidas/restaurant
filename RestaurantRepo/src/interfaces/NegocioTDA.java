@@ -5,8 +5,26 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
-import dto.*;
-import excepciones.*;
+import dto.ComisionesMozosView;
+import dto.EmpleadoView;
+import dto.InsumoProductoView;
+import dto.MesaOcupacionView;
+import dto.MesaView;
+import dto.PedidoReposicionView;
+import dto.PedidoView;
+import dto.ReporteView;
+import excepciones.AreaNoExisteException;
+import excepciones.BaseDeDatosException;
+import excepciones.EmpleadoNoExisteException;
+import excepciones.FormaDePagoNoExisteException;
+import excepciones.InsumoNoExisteException;
+import excepciones.MesaOcupacionNoExisteException;
+import excepciones.NoHayMesasDisponiblesException;
+import excepciones.ProductoNoExisteException;
+import excepciones.ProductoSinStockException;
+import excepciones.RubroNoExisteException;
+import excepciones.SucursalNoExisteException;
+import excepciones.TareaNoExisteException;
 
 public interface NegocioTDA extends Remote {
 
@@ -34,13 +52,13 @@ public interface NegocioTDA extends Remote {
 
 	// PARA PRESENTACION TPO SEGUN DOC DE GODIO
 	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException;
-	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumos) throws RemoteException, AreaNoExisteException, ProveedorNoExisteException;
-	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, Long idEmpleado) throws RemoteException, NoHayMesasDisponiblesException;
-	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws RemoteException;
-	public void cerrarMesa(Long idMesaOcupacion) throws RemoteException;
-	public void cobrarMesa(Long idMesaOcupacion) throws RemoteException;
-	public void facturarMesa(Long idMesaOcupacion) throws RemoteException;
-	public void liberarMesa(Long idMesaOcupacion) throws RemoteException;
+	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumosView) throws RemoteException, AreaNoExisteException, BaseDeDatosException, InsumoNoExisteException;
+	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, Long idEmpleado) throws RemoteException, NoHayMesasDisponiblesException, BaseDeDatosException, SucursalNoExisteException, EmpleadoNoExisteException;
+	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws RemoteException, BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException, MesaOcupacionNoExisteException, ProductoSinStockException;
+	public void cerrarMesa(Long idMesaOcupacion, Long idFormaDePago) throws RemoteException, BaseDeDatosException, MesaOcupacionNoExisteException, FormaDePagoNoExisteException; // cerrar mesa implica facturarla, cobrarla y liberarla, se unifican todos en uno
+	//public void cobrarMesa(Long idMesaOcupacion) throws RemoteException; 
+	//public void facturarMesa(Long idMesaOcupacion) throws RemoteException;
+	//public void liberarMesa(Long idMesaOcupacion) throws RemoteException;
 	public ComisionesMozosView getComisionesMozos(String sucursal) throws RemoteException;
 
 }

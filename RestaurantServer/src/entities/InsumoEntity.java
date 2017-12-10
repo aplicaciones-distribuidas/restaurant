@@ -29,15 +29,17 @@ public class InsumoEntity implements Serializable {
 	private Date fechaCompra;
 	@OneToOne
 	private ProveedorEntity proveedor;
+	private float cantidad;
 	
 
-	public InsumoEntity(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, ProveedorEntity proveedor) {
+	public InsumoEntity(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, ProveedorEntity proveedor, float cantidad) {
 		this.clasificacion = clasificacion;
 		this.nombre = nombre;
 		this.cantidadMinima = cantidadMinima;
 		this.fechaVencimiento = fechaVencimiento;
 		this.fechaCompra = fechaCompra;
 		this.proveedor = proveedor;
+		this.cantidad = cantidad;
 	}
 	
 	public InsumoEntity() {}
@@ -64,6 +66,10 @@ public class InsumoEntity implements Serializable {
 
 	public ProveedorEntity getProveedor() {
 		return proveedor;
+	}
+
+	public float getCantidad() {
+		return cantidad;
 	}
 
 }

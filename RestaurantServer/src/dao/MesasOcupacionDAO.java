@@ -33,7 +33,7 @@ public class MesasOcupacionDAO {
 		List<Mesa> mesas = MesasDAO.getInstancia().toBusiness(entity.getMesaItems());
 		Factura factura = null; // TODO: translate entity.getFactura() to business
 		return new MesaOcupacion(entity.getId(), entity.getFechaIngreso(), entity.getFechaEgreso(), entity
-				.isProximaLiberarse(), entity.getCantidadPersonas(), mesas, factura);
+				.isProximaLiberarse(), entity.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toBusiness(entity.getEmpleado()));
 	}
 
 	public List<MesaOcupacion> toBusiness(List<MesaOcupacionEntity> entities) {
@@ -46,10 +46,10 @@ public class MesasOcupacionDAO {
 
 	public MesaOcupacionEntity toEntity(MesaOcupacion business) {
 		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntity(business.getMesaItems());
-		FacturaEntity factura = null; // TODO: translate business.getFactura() to entity
+		FacturaEntity factura = FacturaDAO.getInstancia().toEntity(business.getFactura());
 		return new MesaOcupacionEntity(business.getId(), new java.sql.Date(business.getFechaIngreso().getTime()),
 				new java.sql.Date(business.getFechaEgreso().getTime()), business.getProximaLiberarse(), business
-				.getCantidadPersonas(), mesas, factura);
+				.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toEntity(business.getEmpleado()));
 	}
 
 	public List<MesaOcupacionEntity> toEntity(List<MesaOcupacion> businesses) {
@@ -103,6 +103,19 @@ public class MesasOcupacionDAO {
 			throw new BaseDeDatosException(e);
 		}
 		return entity.getId();
+	}
+	
+	public void update(MesaOcupacion mesa) throws BaseDeDatosException {
+		MesaOcupacionEntity entity = this.toEntity(mesa);
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			session.beginTransaction();
+			session.update(entity);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
 	}
 
 }

@@ -44,5 +44,29 @@ public class Factura {
 	public FormaPago getFormaPago() {
 		return formaPago;
 	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setComisionMozo(float comisionMozo) {
+		this.comisionMozo = comisionMozo;
+	}
+
+	public void setCobrado(boolean cobrado) {
+		this.cobrado = cobrado;
+	}
+
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
+
+	public void setItemsFactura(List<ItemFactura> itemsFactura) {
+		this.itemsFactura = itemsFactura;
+	}
+
+	public void setFormaPago(FormaPago formaPago) {
+		this.formaPago = formaPago;
+	}
 	
 }
