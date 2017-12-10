@@ -28,7 +28,7 @@ public class MesasOcupadasLista extends JInternalFrame {
 
 	private void configurar(List<MesaOcupacionView> mesasOcupacion) {
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(mesasOcupacion.size() + 1, 6));
+		p.setLayout(new GridLayout(mesasOcupacion.size() + 1, 4));
 
 		JLabel lblTituloNumero = new JLabel("Mesas");
 		p.add(lblTituloNumero);
@@ -42,11 +42,11 @@ public class MesasOcupadasLista extends JInternalFrame {
 		JLabel lblTituloCerrar = new JLabel("Cerrar");
 		p.add(lblTituloCerrar);
 
-		JLabel lblTituloCobrar = new JLabel("Cobrar");
-		p.add(lblTituloCobrar);
+//		JLabel lblTituloCobrar = new JLabel("Cobrar");
+//		p.add(lblTituloCobrar);
 
-		JLabel lblTituloLiberar = new JLabel("Liberar");
-		p.add(lblTituloLiberar);
+//		JLabel lblTituloLiberar = new JLabel("Liberar");
+//		p.add(lblTituloLiberar);
 
 		for (MesaOcupacionView mesaOcupacion : mesasOcupacion) {
 			String mesasAsignadas = "";
@@ -66,11 +66,11 @@ public class MesasOcupadasLista extends JInternalFrame {
 			JButton btnCerrar = new JButton("Cerrar");
 			p.add(btnCerrar);
 
-			JButton btnCobrar = new JButton("Cobrar");
-			p.add(btnCobrar);
+//			JButton btnCobrar = new JButton("Cobrar");
+//			p.add(btnCobrar);
 
-			JButton btnLiberar = new JButton("Liberar");
-			p.add(btnLiberar);
+//			JButton btnLiberar = new JButton("Liberar");
+//			p.add(btnLiberar);
 
 			btnProductos.addActionListener(new ActionListener() {
 				@Override
@@ -83,41 +83,36 @@ public class MesasOcupadasLista extends JInternalFrame {
 			btnCerrar.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					try {
-						BusinessDelegate.getInstancia().cerrarMesa(mesaOcupacion.getId());
-						JOptionPane.showMessageDialog(aux, "Mesa cerrada correctamente");
-						aux.cerrar();
-					} catch (BaseDeDatosException | ConexionException ex) {
-						JOptionPane.showMessageDialog(aux, ex.getMessage());
-					}
+					MesaCerrar mesaCerrar = new MesaCerrar(mesaOcupacion.getId());
+					aux.getParent().add(mesaCerrar);
 				}
 			});
 
-			btnCobrar.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-						BusinessDelegate.getInstancia().cobrarMesa(mesaOcupacion.getId());
-						JOptionPane.showMessageDialog(aux, "Mesa cobrada correctamente");
-						aux.cerrar();
-					} catch (BaseDeDatosException | ConexionException ex) {
-						JOptionPane.showMessageDialog(aux, ex.getMessage());
-					}
-				}
-			});
+//			btnCobrar.addActionListener(new ActionListener() {
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					try {
+//						BusinessDelegate.getInstancia().cobrarMesa(mesaOcupacion.getId());
+//						JOptionPane.showMessageDialog(aux, "Mesa cobrada correctamente");
+//						aux.cerrar();
+//					} catch (BaseDeDatosException | ConexionException ex) {
+//						JOptionPane.showMessageDialog(aux, ex.getMessage());
+//					}
+//				}
+//			});
 
-			btnLiberar.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-						BusinessDelegate.getInstancia().liberarMesa(mesaOcupacion.getId());
-						JOptionPane.showMessageDialog(aux, "Mesa liberada correctamente");
-						aux.cerrar();
-					} catch (BaseDeDatosException | ConexionException ex) {
-						JOptionPane.showMessageDialog(aux, ex.getMessage());
-					}
-				}
-			});
+//			btnLiberar.addActionListener(new ActionListener() {
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					try {
+//						BusinessDelegate.getInstancia().liberarMesa(mesaOcupacion.getId());
+//						JOptionPane.showMessageDialog(aux, "Mesa liberada correctamente");
+//						aux.cerrar();
+//					} catch (BaseDeDatosException | ConexionException ex) {
+//						JOptionPane.showMessageDialog(aux, ex.getMessage());
+//					}
+//				}
+//			});
 		}
 
 		p.setOpaque(true);

@@ -1,8 +1,7 @@
 package gui;
 
 import business_delegate.BusinessDelegate;
-import excepciones.BaseDeDatosException;
-import excepciones.ConexionException;
+import excepciones.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,7 +92,7 @@ public class MesaAgregarProducto extends JInternalFrame {
 					BusinessDelegate.getInstancia().agregarProductoAMesa(aux.idMesaOcupacion, idProducto, cantProducto);
 					JOptionPane.showMessageDialog(aux, "Producto agregado correctamente");
 					aux.cerrar();
-				} catch (BaseDeDatosException | ConexionException ex) {
+				} catch (BaseDeDatosException | ProductoNoExisteException | InsumoNoExisteException | MesaOcupacionNoExisteException | ProductoSinStockException | ConexionException ex) {
 					JOptionPane.showMessageDialog(aux, ex.getMessage());
 				}
 			}

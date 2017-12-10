@@ -118,47 +118,47 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	@Override
 	public MesaOcupacionView abrirMesa(String nombreSucursal, int cantPersonas, Long idEmpleado) throws RemoteException,
 			NoHayMesasDisponiblesException, BaseDeDatosException, SucursalNoExisteException, EmpleadoNoExisteException {
-		
+
 		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
 		Empleado empleado = EmpleadoDAO.getInstancia().getById(idEmpleado);
-		
+
 		//filtro los sectores salon de la sucursal elegida
 		List<SectorSalon> sectoresSalon = SectoresSalonDAO.getInstancia().getAll();
-		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>(); 
-		for(SectorSalon ss : sectoresSalon) {
+		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>();
+		for (SectorSalon ss : sectoresSalon) {
 			if (ss.getSucursal().getNombre().equals(sucursal.getNombre())) sectoresSalonDeLaSucursal.add(ss);
 		}
 		//filtro los sectores salon que tengan al empleado elegido
 		List<SectorSalon> sectoresSalonEmpleado = new ArrayList<>();
-		for(SectorSalon ss : sectoresSalonDeLaSucursal) {
+		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
 			if (ss.getEmpleados().contains(empleado)) sectoresSalonEmpleado.add(ss);
 		}
 
 		//mesas disponibles
 		List<Mesa> mesasDisponibles = new ArrayList<>();
-		
-		for(SectorSalon ss : sectoresSalonEmpleado) {
+
+		for (SectorSalon ss : sectoresSalonEmpleado) {
 			if (!ss.getMesasDisponibles(cantPersonas).isEmpty()) {
 				mesasDisponibles.addAll(ss.getMesasDisponibles(cantPersonas));
 				break;
 			}
 		}
-		
+
 		if (mesasDisponibles.isEmpty()) throw new NoHayMesasDisponiblesException();
-		
+
 		//hay mesas dispobibles, entonces se marcan las mesas como ocupadas y se crea un objeto MesaOcupacion
-		for(Mesa mesa : mesasDisponibles) mesa.setOcupada(true);
-		
+		for (Mesa mesa : mesasDisponibles) mesa.setOcupada(true);
+
 		MesaOcupacion mesaOcupacion = new MesaOcupacion(new Date(), null, false, cantPersonas, mesasDisponibles, null, empleado);
-		
+
 		//guardar el objeto mesa ocupacion
 		MesasOcupacionDAO.getInstancia().save(mesaOcupacion);
-		
+
 		//update de mesas
-		for(Mesa mesa : mesasDisponibles) MesasDAO.getInstancia().save(mesa);
-		
+		for (Mesa mesa : mesasDisponibles) MesasDAO.getInstancia().save(mesa);
+
 		return mesaOcupacion.toView();
-		
+
 	}
 
 	@Override
@@ -167,28 +167,28 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 		Producto producto = ProductoDAO.getInstancia().getById(idProducto);
 		Directo productoDirecto = null;
 		SemiElaborado productoSemiElaborado = null;
-		
+
 		try {
 			productoDirecto = (Directo) producto;
 		} catch (Exception e) {
 			productoSemiElaborado = (SemiElaborado) producto;
 		}
-		
-		
+
+
 		//buscar la mesaocupacion y sino existe tirar una mesaocupacionNoExisteException
 		MesaOcupacion mesaOcupacion = null;
-		for(MesaOcupacion mo : MesasOcupacionDAO.getInstancia().getAll()) {
+		for (MesaOcupacion mo : MesasOcupacionDAO.getInstancia().getAll()) {
 			if (mo.getId().equals(idMesaOcupacion)) {
 				mesaOcupacion = mo;
 				break;
 			}
 		}
-		
+
 		if (mesaOcupacion == null) throw new MesaOcupacionNoExisteException();
-		
+
 		//validar que el producto tenga el stock que se solicita sino ProductoSinStockException, si tiene, descontar el stock y actualizar los insumos
 		if (productoDirecto != null) { // es directo
-			
+
 			if (productoDirecto.getInsumoProducto().getInsumo().getCantidad() >= productoDirecto.getInsumoProducto().getCantidad()) { // hay stock
 				// descuento stock y actualizo insumo
 				productoDirecto.getInsumoProducto().getInsumo().setCantidad(productoDirecto.getInsumoProducto().getInsumo().getCantidad() - productoDirecto.getInsumoProducto().getCantidad());
@@ -196,40 +196,40 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 			} else { // no hay stock
 				throw new ProductoSinStockException();
 			}
-			
+
 		} else { // es semielaborado
 			boolean tieneStock = true;
-			
-			for(InsumoProducto ip : productoSemiElaborado.getInsumosProducto()) {
+
+			for (InsumoProducto ip : productoSemiElaborado.getInsumosProducto()) {
 				if (ip.getInsumo().getCantidad() < ip.getCantidad()) {
 					tieneStock = false;
 					break;
 				}
 			}
-			
+
 			if (!tieneStock) throw new ProductoSinStockException();
-			
+
 			// si llega aca es porque todos los insumos del semielaborado tienen stock suficiente, entonces descuento stock y actualizo insumos
-			for(InsumoProducto ip : productoSemiElaborado.getInsumosProducto()) {
+			for (InsumoProducto ip : productoSemiElaborado.getInsumosProducto()) {
 				ip.getInsumo().setCantidad(ip.getInsumo().getCantidad() - ip.getCantidad());
 				InsumoDAO.getInstancia().update(ip.getInsumo());
 			}
 		}
-		
+
 		//agregar a mesa ocupacion, factura, el producto y la cantidad que se agregaron (y actualizar el objeto mesaocupacion)
 		if (mesaOcupacion.getFactura() == null) { //es el primer plato que se agrega y no tiene factura creada
 			List<ItemFactura> itemsFactura = new ArrayList<>();
-			itemsFactura.add( new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
+			itemsFactura.add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
 			Factura factura = new Factura(new Date(), producto.getComisionMozo(), false, producto.getPrecio(), itemsFactura, null);
 			mesaOcupacion.setFactura(factura);
 		} else { // ya tiene platos y por lo tanto tiene factura con al menos 1 item creada, se agrega el nuevo item y se actualizan los valores
 			Factura factura = mesaOcupacion.getFactura();
 			factura.setComisionMozo(factura.getComisionMozo() + producto.getComisionMozo());
 			factura.getItemsFactura().add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			factura.setMonto(factura.getMonto()+producto.getPrecio());
+			factura.setMonto(factura.getMonto() + producto.getPrecio());
 			mesaOcupacion.setFactura(factura);
 		}
-		
+
 		MesasOcupacionDAO.getInstancia().update(mesaOcupacion);
 	}
 
@@ -292,18 +292,18 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	public void cerrarMesa(Long idMesaOcupacion, Long idFormaDePago) throws RemoteException, BaseDeDatosException, MesaOcupacionNoExisteException, FormaDePagoNoExisteException {
 		//buscar la forma de pago y sino tirar un FormaDePagoNoExisteException
 		FormaPago formaDePago = FormaPagoDAO.getInstancia().getById(idFormaDePago);
-		
+
 		// buscar la mesa ocupacion y sino tirar un mesaOcupacionNoExiste exception
 		MesaOcupacion mesaOcupacion = null;
-		for(MesaOcupacion mo : MesasOcupacionDAO.getInstancia().getAll()) {
+		for (MesaOcupacion mo : MesasOcupacionDAO.getInstancia().getAll()) {
 			if (mo.getId().equals(idMesaOcupacion)) {
 				mesaOcupacion = mo;
 				break;
 			}
 		}
-		
+
 		if (mesaOcupacion == null) throw new MesaOcupacionNoExisteException();
-		
+
 		//actualizar valores de MesaOcupacion
 		mesaOcupacion.setFechaEgreso(new Date());
 		mesaOcupacion.setProximaLiberarse(true);
@@ -315,7 +315,7 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 
 		//actualizar el empleado con la comision
 		mesaOcupacion.getEmpleado().getComisiones().add(new Comision(mesaOcupacion.getFactura().getComisionMozo(), new Date()));
-				
+
 		MesasOcupacionDAO.getInstancia().update(mesaOcupacion);
 
 	}
@@ -344,15 +344,15 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	public void crearPlatoSemielaborado(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, List<InsumoProductoView> insumosView) throws RemoteException, AreaNoExisteException, BaseDeDatosException, InsumoNoExisteException {
 		Area area = AreaDAO.getInstancia().getByNombre(nombreArea);
 		List<InsumoProducto> insumos = new ArrayList<>();
-		
+
 		for (InsumoProductoView insumo : insumosView) {
 			insumos.add(
 					new InsumoProducto(insumo.getCantidad(), InsumoDAO.getInstancia().getById(insumo.getInsumoId()))
-					);
+			);
 		}
-		
+
 		SemiElaborado semiElaborado = new SemiElaborado(rubro, caducidad, comisionMozo, fecha, precio, insumos, area);
-		
+
 		ProductoDAO.getInstancia().save(semiElaborado);
 
 	}

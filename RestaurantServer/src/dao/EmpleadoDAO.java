@@ -28,21 +28,21 @@ public class EmpleadoDAO {
 
 	public Empleado toBusiness(EmpleadoEntity entity) {
 		List<Comision> comisiones = new ArrayList<>();
-		
-		for(ComisionEntity comision : entity.getComisiones()) {
+
+		for (ComisionEntity comision : entity.getComisiones()) {
 			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision));
 		}
-		
+
 		return new Empleado(entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones);
 	}
 
 	public EmpleadoEntity toEntity(Empleado business) {
 		List<ComisionEntity> comisiones = new ArrayList<>();
-		
-		for(Comision comision : business.getComisiones()) {
+
+		for (Comision comision : business.getComisiones()) {
 			comisiones.add(ComisionDAO.getInstancia().toEntity(comision));
 		}
-		
+
 		return new EmpleadoEntity(business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones);
 	}
 

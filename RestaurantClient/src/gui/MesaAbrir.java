@@ -16,9 +16,7 @@ import javax.swing.JTextField;
 import business_delegate.BusinessDelegate;
 import dto.MesaOcupacionView;
 import dto.MesaView;
-import excepciones.BaseDeDatosException;
-import excepciones.ConexionException;
-import excepciones.NoHayMesasDisponiblesException;
+import excepciones.*;
 
 public class MesaAbrir extends JInternalFrame {
 	private static final long serialVersionUID = 3623782223140267378L;
@@ -119,7 +117,7 @@ public class MesaAbrir extends JInternalFrame {
 					}
 					JOptionPane.showMessageDialog(aux, "Mesas asignadas: " + mesasAsignadas);
 					aux.cerrar();
-				} catch (BaseDeDatosException | ConexionException | NoHayMesasDisponiblesException ex) {
+				} catch (ConexionException | BaseDeDatosException | NoHayMesasDisponiblesException | SucursalNoExisteException | EmpleadoNoExisteException ex) {
 					JOptionPane.showMessageDialog(aux, ex.getMessage());
 				}
 			}

@@ -9,10 +9,7 @@ import java.util.List;
 
 import dto.MesaOcupacionView;
 import dto.MesaView;
-import excepciones.BaseDeDatosException;
-import excepciones.ConexionException;
-import excepciones.NoHayMesasDisponiblesException;
-import excepciones.SucursalNoExisteException;
+import excepciones.*;
 import interfaces.NegocioTDA;
 
 public class BusinessDelegate {
@@ -55,8 +52,7 @@ public class BusinessDelegate {
 		}
 	}
 
-	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, Long idEmpleado) throws ConexionException,
-			NoHayMesasDisponiblesException, BaseDeDatosException {
+	public MesaOcupacionView abrirMesa(String sucursal, int cantPersonas, Long idEmpleado) throws ConexionException, BaseDeDatosException, NoHayMesasDisponiblesException, SucursalNoExisteException, EmpleadoNoExisteException {
 		try {
 			return remoteObject.abrirMesa(sucursal, cantPersonas, idEmpleado);
 		} catch (RemoteException e) {
@@ -75,7 +71,7 @@ public class BusinessDelegate {
 		}
 	}
 
-	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws ConexionException, BaseDeDatosException {
+	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws ConexionException, BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException, MesaOcupacionNoExisteException, ProductoSinStockException {
 		try {
 			remoteObject.agregarProductoAMesa(idMesaOcupacion, idProducto, cantidadProducto);
 		} catch (RemoteException e) {
@@ -84,31 +80,31 @@ public class BusinessDelegate {
 		}
 	}
 
-	public void cerrarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
+	public void cerrarMesa(Long idMesaOcupacion, Long idFormaDePago) throws ConexionException, BaseDeDatosException, MesaOcupacionNoExisteException, FormaDePagoNoExisteException {
 		try {
-			remoteObject.cerrarMesa(idMesaOcupacion);
+			remoteObject.cerrarMesa(idMesaOcupacion, idFormaDePago);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			throw new ConexionException();
 		}
 	}
 
-	public void cobrarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
-		try {
-			remoteObject.cobrarMesa(idMesaOcupacion);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			throw new ConexionException();
-		}
-	}
-
-	public void liberarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
-		try {
-			remoteObject.liberarMesa(idMesaOcupacion);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			throw new ConexionException();
-		}
-	}
+//	public void cobrarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
+//		try {
+//			remoteObject.cobrarMesa(idMesaOcupacion);
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//			throw new ConexionException();
+//		}
+//	}
+//
+//	public void liberarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
+//		try {
+//			remoteObject.liberarMesa(idMesaOcupacion);
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//			throw new ConexionException();
+//		}
+//	}
 
 }
