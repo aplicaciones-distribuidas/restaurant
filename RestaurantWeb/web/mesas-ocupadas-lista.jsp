@@ -51,6 +51,12 @@
                     mesasAsignadas += m.getNumero();
                     sectorSalon = m.getSectorSalon().getNombre();
                 }
+
+                float montoTotal = 0;
+
+                if (mesa.getFactura() != null) {
+                    montoTotal = mesa.getFactura().getMonto();
+                }
         %>
 
         <tr>
@@ -64,7 +70,9 @@
                 <button class="btn-agregar-producto-mesa" mesa-ocupacion-id="<%=mesa.getId()%>">Agregar</button>
             </td>
             <td>
-                <button class="btn-cerrar-mesa" mesa-ocupacion-id="<%=mesa.getId()%>">Cerrar</button>
+                <button class="btn-cerrar-mesa" mesa-ocupacion-id="<%=mesa.getId()%>"
+                        mesa-monto-total="<%=montoTotal%>">Cerrar
+                </button>
             </td>
         </tr>
 
@@ -119,7 +127,7 @@
             <tr>
                 <td>Total a pagar</td>
                 <td>
-                    <label>$X,XX</label>
+                    <label class="mesa_cerrar_monto">$ 0.00</label>
                 </td>
             </tr>
             <tr>
@@ -162,6 +170,8 @@
             $('#section-cerrar-mesa').show();
             var mesaOcupacionId = $(this).attr('mesa-ocupacion-id');
             $('#section-cerrar-mesa input[name=mesa_ocupacion_id]').val(mesaOcupacionId);
+            var mesaMontoTotal = $(this).attr('mesa-monto-total');
+            $('#section-cerrar-mesa .mesa_cerrar_monto').html('$ ' + mesaMontoTotal);
         });
 
         $('.btn-cancelar').click(function () {
