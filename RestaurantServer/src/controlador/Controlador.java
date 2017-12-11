@@ -283,7 +283,7 @@ public class Controlador {
 			for (Comision c : e.getComisiones()) {
 				comision += c.getMonto();
 			}
-			comisionView.add(new ComisionView(e.getNombre(), e.getApellido(), comision * e.getPorcentajeComision()));
+			comisionView.add(new ComisionView(e.getNombre(), e.getApellido(), comision * (e.getPorcentajeComision()/100)));
 		}
 
 		return comisionView;
