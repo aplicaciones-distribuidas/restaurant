@@ -46,7 +46,7 @@ public class Controlador {
 		List<SucursalView> sucursalesView = new ArrayList<>();
 
 		for (Sucursal sucursal : sucursales) {
-			sucursalesView.add(new SucursalView(sucursal.getNombre(), sucursal.getUbicacion(), sucursal.getCapacidad()));
+			sucursalesView.add(new SucursalView(sucursal.getId(), sucursal.getNombre(), sucursal.getUbicacion(), sucursal.getCapacidad()));
 		}
 
 		return sucursalesView;
@@ -256,7 +256,7 @@ public class Controlador {
 		semiElaborado.save();
 	}
 
-	public void cargarDatos() throws BaseDeDatosException {
+	public void cargarDatos() throws BaseDeDatosException, SucursalNoExisteException, NoHayMesasDisponiblesException, EmpleadoNoExisteException {
 		Sucursal sucursal = new Sucursal("Belgrano", "Av. Juramento 1234", 100);
 		sucursal.save();
 
@@ -284,5 +284,7 @@ public class Controlador {
 
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
+
+		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
 	}
 }
