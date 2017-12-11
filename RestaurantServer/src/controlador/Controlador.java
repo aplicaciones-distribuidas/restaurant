@@ -371,8 +371,8 @@ public class Controlador {
 		//InsumoProductoDAO.getInstancia().save(insumoProducto3);
 
 		Directo directo1 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto1);
-		Directo directo2 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto2);
-		Directo directo3 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto3);
+		Directo directo2 = new Directo(null, "plato", 10, 10, new Date(), 100, areaBarra, insumoProducto2);
+		Directo directo3 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCafeteria, insumoProducto3);
 
 		ProductoDAO.getInstancia().save(directo1);
 		ProductoDAO.getInstancia().save(directo2);

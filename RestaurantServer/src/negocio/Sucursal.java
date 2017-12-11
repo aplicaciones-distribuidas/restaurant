@@ -3,7 +3,6 @@ package negocio;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
 import dao.SucursalDAO;
 import excepciones.BaseDeDatosException;
 
