@@ -33,7 +33,7 @@ public class InsumoEntity implements Serializable {
 	private float cantidad;
 	
 
-	public InsumoEntity(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, ProveedorEntity proveedor, float cantidad) {
+	public InsumoEntity(Long id, String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, ProveedorEntity proveedor, float cantidad) {
 		this.clasificacion = clasificacion;
 		this.nombre = nombre;
 		this.cantidadMinima = cantidadMinima;
@@ -41,6 +41,7 @@ public class InsumoEntity implements Serializable {
 		this.fechaCompra = fechaCompra;
 		this.proveedor = proveedor;
 		this.cantidad = cantidad;
+		this.id = id;
 	}
 	
 	public InsumoEntity() {}
@@ -71,6 +72,10 @@ public class InsumoEntity implements Serializable {
 
 	public float getCantidad() {
 		return cantidad;
+	}
+	
+	public Long getId() {
+		return this.id;
 	}
 
 }

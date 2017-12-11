@@ -26,7 +26,7 @@ public class InsumoProductoEntity implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private InsumoEntity insumo;
 
-	public InsumoProductoEntity(float cantidad, InsumoEntity insumo) {
+	public InsumoProductoEntity(Long id, float cantidad, InsumoEntity insumo) {
 		this.cantidad = cantidad;
 		this.insumo = insumo;
 	}
@@ -39,6 +39,10 @@ public class InsumoProductoEntity implements Serializable {
 
 	public InsumoEntity getInsumo() {
 		return insumo;
+	}
+	
+	public Long getId() {
+		return this.id;
 	}
 
 }

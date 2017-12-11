@@ -26,7 +26,7 @@ public class FacturaEntity implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idFactura")
 	private List<ItemFacturaEntity> itemsFactura;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private FormaPagoEntity formaPago;
 
 	public FacturaEntity(Date fecha, float comisionMozo, boolean cobrado, float monto,

@@ -21,11 +21,11 @@ public class InsumoProductoDAO {
 	}
 
 	public InsumoProducto toBusiness(InsumoProductoEntity entity) {
-		return new InsumoProducto(entity.getCantidad(), InsumoDAO.getInstancia().toBusiness(entity.getInsumo()));
+		return new InsumoProducto(entity.getId(), entity.getCantidad(), InsumoDAO.getInstancia().toBusiness(entity.getInsumo()));
 	}
 
 	public InsumoProductoEntity toEntity(InsumoProducto business) {
-		return new InsumoProductoEntity(business.getCantidad(), InsumoDAO.getInstancia().toEntity(business.getInsumo()));
+		return new InsumoProductoEntity(business.getId(), business.getCantidad(), InsumoDAO.getInstancia().toEntity(business.getInsumo()));
 	}
 
 	public void save(InsumoProducto ip) throws BaseDeDatosException {

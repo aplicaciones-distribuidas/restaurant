@@ -22,11 +22,11 @@ public class InsumoDAO {
 	}
 
 	public Insumo toBusiness(InsumoEntity entity) {
-		return new Insumo(entity.getClasificacion(), entity.getNombre(), entity.getCantidadMinima(), entity.getFechaVencimiento(), entity.getFechaCompra(), ProveedorDAO.getInstancia().toBusiness(entity.getProveedor()), entity.getCantidad());
+		return new Insumo(entity.getId(), entity.getClasificacion(), entity.getNombre(), entity.getCantidadMinima(), entity.getFechaVencimiento(), entity.getFechaCompra(), ProveedorDAO.getInstancia().toBusiness(entity.getProveedor()), entity.getCantidad());
 	}
 
 	public InsumoEntity toEntity(Insumo business) {
-		return new InsumoEntity(business.getClasificacion(), business.getNombre(), business.getCantidadMinima(), business.getFechaVencimiento(), business.getFechaCompra(), ProveedorDAO.getInstancia().toEntity(business.getProveedor()), business.getCantidad());
+		return new InsumoEntity(business.getId(), business.getClasificacion(), business.getNombre(), business.getCantidadMinima(), business.getFechaVencimiento(), business.getFechaCompra(), ProveedorDAO.getInstancia().toEntity(business.getProveedor()), business.getCantidad());
 	}
 
 

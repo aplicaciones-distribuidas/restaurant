@@ -53,7 +53,7 @@ public class ProductoDAO {
 				business.getFecha(),
 				business.getPrecio(),
 				AreaDAO.getInstancia().toEntity(business.getArea()),
-				new InsumoProductoEntity(business.getInsumoProducto().getCantidad(), InsumoDAO.getInstancia().toEntity(business.getInsumoProducto().getInsumo()))
+				new InsumoProductoEntity(business.getInsumoProducto().getId(), business.getInsumoProducto().getCantidad(), InsumoDAO.getInstancia().toEntity(business.getInsumoProducto().getInsumo()))
 		);
 	}
 
@@ -85,7 +85,7 @@ public class ProductoDAO {
 
 		for (InsumoProducto insumo : business.getInsumosProducto()) {
 			insumos.add(
-					new InsumoProductoEntity(insumo.getCantidad(), InsumoDAO.getInstancia().toEntity(insumo.getInsumo()))
+					new InsumoProductoEntity(insumo.getId(), insumo.getCantidad(), InsumoDAO.getInstancia().toEntity(insumo.getInsumo()))
 			);
 		}
 
