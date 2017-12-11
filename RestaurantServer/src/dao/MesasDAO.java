@@ -54,11 +54,25 @@ public class MesasDAO {
 		return new MesaEntity(business.getId(), business.getNumero(), business.isOcupada(), business.getCapacidad(),
 				sectorSalon);
 	}
+	
+	public MesaEntity toEntityWithoutMesaSector(Mesa business) {
+		SectorSalonEntity sectorSalon = null;
+		return new MesaEntity(business.getId(), business.getNumero(), business.isOcupada(), business.getCapacidad(),
+				sectorSalon);
+	}
 
 	public List<MesaEntity> toEntity(List<Mesa> businesses) {
 		List<MesaEntity> entities = new ArrayList<MesaEntity>();
 		for (Mesa business : businesses) {
 			entities.add(this.toEntity(business));
+		}
+		return entities;
+	}
+	
+	public List<MesaEntity> toEntityWithoutMesaSector(List<Mesa> businesses) {
+		List<MesaEntity> entities = new ArrayList<MesaEntity>();
+		for (Mesa business : businesses) {
+			entities.add(this.toEntityWithoutMesaSector(business));
 		}
 		return entities;
 	}

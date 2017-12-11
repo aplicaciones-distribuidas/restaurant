@@ -71,7 +71,7 @@ public class SucursalDAO {
 		List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>(); // TODO: translate business.getPedidos() to entity
 		List<ReservaEntity> reservas = new ArrayList<ReservaEntity>(); // TODO: translate business.getReservas() to entity
 		List<TareaEntity> tareas = new ArrayList<TareaEntity>(); // TODO: translate business.getTareas() to entity
-		List<SectorSalonEntity> sectores = SectoresSalonDAO.getInstancia().toEntity(business.getSectores());
+		List<SectorSalonEntity> sectores = business.getSectores() != null || business.getSectores().isEmpty() ? new ArrayList<>() : SectoresSalonDAO.getInstancia().toEntity(business.getSectores());
 		List<PedidoReposicionEntity> pedidosReposicion = new ArrayList<PedidoReposicionEntity>(); // TODO: translate business.getPedidosReposicion() to entity
 		DepositoEntity deposito = null;// TODO: translate business.getDeposito() to entity
 

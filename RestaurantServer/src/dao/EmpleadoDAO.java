@@ -37,6 +37,16 @@ public class EmpleadoDAO {
 
 		return new Empleado(entity.getId(), entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones, SectoresSalonDAO.getInstancia().toBusiness(entity.getSectorSalon()));
 	}
+	
+	public Empleado toBusinessWithoutSectoresSalon(EmpleadoEntity entity) {
+		List<Comision> comisiones = new ArrayList<>();
+
+		for (ComisionEntity comision : entity.getComisiones()) {
+			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision));
+		}
+
+		return new Empleado(entity.getId(), entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones, null);
+	}
 
 	public EmpleadoEntity toEntity(Empleado business) {
 		List<ComisionEntity> comisiones = new ArrayList<>();
@@ -46,6 +56,16 @@ public class EmpleadoDAO {
 		}
 
 		return new EmpleadoEntity(business.getId(), business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones, SectoresSalonDAO.getInstancia().toEntity(business.getSectorSalon()));
+	}
+	
+	public EmpleadoEntity toEntityWithoutSectoresSalon(Empleado business) {
+		List<ComisionEntity> comisiones = new ArrayList<>();
+
+		for (Comision comision : business.getComisiones()) {
+			comisiones.add(ComisionDAO.getInstancia().toEntity(comision));
+		}
+
+		return new EmpleadoEntity(business.getId(), business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones, null);
 	}
 
 

@@ -52,7 +52,7 @@ public class Mesa {
 	}
 
 	public MesaView toView() {
-		return new MesaView(this.id, this.numero, this.ocupada, this.sectorSalon.toView());
+		return new MesaView(this.id, this.numero, this.ocupada, this.sectorSalon != null ? this.sectorSalon.toView() : null);
 	}
 
 	@Override

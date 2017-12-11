@@ -56,8 +56,10 @@ public class Controlador {
 		return SectoresSalonDAO.getInstancia().getAll();
 	}
 
-	public List<Mesa> getMesas() throws BaseDeDatosException {
-		return MesasDAO.getInstancia().getAll();
+	public List<MesaView> getMesas() throws BaseDeDatosException {
+		List<MesaView> mesas = new ArrayList<>();
+		for (Mesa m : MesasDAO.getInstancia().getAll()) mesas.add(m.toView());
+		return  mesas;
 	}
 
 	public Mesa buscarMesa(int numero) throws BaseDeDatosException, MesaNoExisteException {
@@ -77,7 +79,9 @@ public class Controlador {
 		//filtro los sectores salon que tengan al empleado elegido
 		List<SectorSalon> sectoresSalonEmpleado = new ArrayList<>();
 		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
-			if (ss.getEmpleados().contains(empleado)) sectoresSalonEmpleado.add(ss);
+			for (Empleado e : ss.getEmpleados()) {
+				if (e.getNombre().equals(empleado.getNombre()) && e.getApellido().equals(empleado.getApellido())) sectoresSalonEmpleado.add(ss);	
+			}
 		}
 
 		//mesas disponibles
@@ -98,7 +102,7 @@ public class Controlador {
 		MesaOcupacion mesaOcupacion = new MesaOcupacion(new Date(), null, false, cantPersonas, mesasDisponibles, null, empleado);
 
 		//guardar el objeto mesa ocupacion
-		MesasOcupacionDAO.getInstancia().save(mesaOcupacion);
+		MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(mesaOcupacion);
 
 		//update de mesas
 		for (Mesa mesa : mesasDisponibles) MesasDAO.getInstancia().save(mesa);
