@@ -21,7 +21,7 @@ public class PlatoDirectoServlet extends HttpServlet {
 		float comisionMozo = Float.parseFloat(request.getParameter("comision_mozo"));
 		Date fecha = null;
 		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 			fecha = formatter.parse(request.getParameter("fecha"));
 		} catch (ParseException e) {
 			response.sendError(500, e.getMessage());
