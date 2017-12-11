@@ -289,6 +289,6 @@ public class Controlador {
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
 
-		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
+		//this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
 	}
 }
