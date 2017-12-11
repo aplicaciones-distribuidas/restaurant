@@ -22,6 +22,10 @@
     <ul>
         <li><a href="comisiones">Obtener comisiones</a></li>
     </ul>
+    <li>Platos</li>
+    <ul>
+        <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
+    </ul>
 </ul>
 <h3>
     Comisiones para la sucursal <%=request.getAttribute("sucursal")%>

@@ -15,17 +15,19 @@ import javax.swing.*;
 public class Principal extends JFrame {
 	private static final long serialVersionUID = -7189647070719732198L;
 	private JMenuBar barraMenu;
-	private JMenu mnMesas, mnSalir;
+	private JMenu mnMesas, mnComisiones, mnSalir;
 	private JMenuItem mnMesasDisponibles;
 	private JMenuItem mnMesasOcupadas;
 	private JMenuItem mnAbrirMesa;
 	private JMenuItem mnReservarMesa;
+	private JMenuItem mnVerComisiones;
 	private JMenuItem mnSalirItem;
 	private JDesktopPane desktop;
 	private MesasDisponiblesBuscar mesasDisponibles;
 	private MesasOcupadasBuscar mesasOcupadasBuscar;
 	private MesaAbrir mesaAbrir;
 	private MesaReservar mesaReservar;
+	private ComisionesBuscar comisionesBuscar;
 	private String[] sucursales = {};
 
 	public Principal() {
@@ -75,6 +77,13 @@ public class Principal extends JFrame {
 				desktop.add(mesaReservar);
 			}
 		});
+		mnVerComisiones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comisionesBuscar = new ComisionesBuscar(aux.sucursales);
+				desktop.add(comisionesBuscar);
+			}
+		});
 	}
 
 	private void traerDatos() {
@@ -98,19 +107,23 @@ public class Principal extends JFrame {
 
 		barraMenu = new JMenuBar();
 		mnMesas = new JMenu("Mesas");
+		mnComisiones = new JMenu("Comisiones");
 		mnSalir = new JMenu("Salir");
 		mnMesasDisponibles = new JMenuItem("Mesas Disponibles");
 		mnMesasOcupadas = new JMenuItem("Mesas Ocupadas");
 		mnAbrirMesa = new JMenuItem("Abrir Mesa");
 		mnReservarMesa = new JMenuItem("Reservar Mesa");
+		mnVerComisiones = new JMenuItem("Ver Comisiones");
 		mnSalirItem = new JMenuItem("Salir");
 
 		mnMesas.add(mnMesasDisponibles);
 		mnMesas.add(mnMesasOcupadas);
 		mnMesas.add(mnAbrirMesa);
 		mnMesas.add(mnReservarMesa);
+		mnComisiones.add(mnVerComisiones);
 		mnSalir.add(mnSalirItem);
 		barraMenu.add(mnMesas);
+		barraMenu.add(mnComisiones);
 		barraMenu.add(mnSalir);
 
 		this.setJMenuBar(barraMenu);

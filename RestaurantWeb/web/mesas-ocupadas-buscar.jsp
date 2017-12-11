@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
-<%@ page import="dto.MesaOcupacionView" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dto.SucursalView" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,6 +21,10 @@
     <li>Comisiones</li>
     <ul>
         <li><a href="comisiones">Obtener comisiones</a></li>
+    </ul>
+    <li>Platos</li>
+    <ul>
+        <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
     </ul>
 </ul>
 <form action="mesas-ocupadas" method="post">

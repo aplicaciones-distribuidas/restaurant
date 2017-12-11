@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
-<%@ page import="dto.SucursalView" %>
-<%@ page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -27,38 +25,58 @@
         <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
     </ul>
 </ul>
-<form action="mesa-abrir" method="post">
+<form action="plato-directo-crear" method="post">
     <table>
         <tr>
-            <td>Sucursal</td>
+            <td>Rubro</td>
             <td>
-                <select name="sucursal" id="sucursal">
-                    <%
-                        List<SucursalView> sucursales = (List<SucursalView>) request.getAttribute("sucursales");
-
-                        for (SucursalView sucursal : sucursales) {
-                    %>
-                    <option value="<%=sucursal.getNombre()%>"><%=sucursal.getNombre()%>
-                    </option>
-                    <%
-                        }
-                    %>
-                </select>
-        </tr>
-        <tr>
-            <td>Cantidad de Personas</td>
-            <td>
-                <input name="cantidad_de_personas" type="text">
+                <input name="rubro" type="text">
             </td>
         </tr>
         <tr>
-            <td>Empleado</td>
+            <td>Caducidad</td>
             <td>
-                <input name="empleado_id" type="text">
+                <input name="caducidad" type="text">
             </td>
         </tr>
         <tr>
-            <td colspan="2" align="right"><input type="submit" value="Abrir"/></td>
+            <td>Comisión Mozo</td>
+            <td>
+                <input name="comision_mozo" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>Fecha</td>
+            <td>
+                <input name="fecha" type="date">
+            </td>
+        </tr>
+        <tr>
+            <td>Precio</td>
+            <td>
+                <input name="precio" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>Área</td>
+            <td>
+                <input name="area" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>Insumo</td>
+            <td>
+                <input name="insumo_id" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>Cantidad de Insumo</td>
+            <td>
+                <input name="cantidad_insumo" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right"><input type="submit" value="Crear"/></td>
         </tr>
     </table>
 </form>
