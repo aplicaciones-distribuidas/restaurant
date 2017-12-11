@@ -7,15 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import controlador.Controlador;
-import dto.ComisionView;
-import dto.EmpleadoView;
-import dto.InsumoProductoView;
-import dto.MesaOcupacionView;
-import dto.MesaView;
-import dto.PedidoReposicionView;
-import dto.PedidoView;
-import dto.ReporteView;
-import dto.SucursalView;
+import dto.*;
 import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
@@ -184,5 +176,10 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	@Override
 	public List<EmpleadoView> getEmpleadosBySucursal(String nombreSucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException {
 		return Controlador.getInstancia().getEmpleadosBySucursal(nombreSucursal);
+	}
+
+	@Override
+	public List<FormaPagoView> getFormasDePago() throws RemoteException, BaseDeDatosException {
+		return Controlador.getInstancia().getFormasDePago();
 	}
 }

@@ -1,5 +1,6 @@
 package controlador;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,12 +14,7 @@ import dao.MesasOcupacionDAO;
 import dao.ProductoDAO;
 import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
-import dto.ComisionView;
-import dto.EmpleadoView;
-import dto.InsumoProductoView;
-import dto.MesaOcupacionView;
-import dto.MesaView;
-import dto.SucursalView;
+import dto.*;
 import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
@@ -103,6 +99,15 @@ public class Controlador {
 			empleados.add(empleado.toView());
 		}
 		return empleados;
+	}
+
+	public List<FormaPagoView> getFormasDePago() throws BaseDeDatosException {
+		List<FormaPago> formasDePago = FormaPagoDAO.getInstancia().getAll();
+		List<FormaPagoView> formasDePagoView = new ArrayList<>();
+		for (FormaPago formaPago : formasDePago) {
+			formasDePagoView.add(formaPago.toView());
+		}
+		return formasDePagoView;
 	}
 
 	public List<MesaView> getMesas() throws BaseDeDatosException {
@@ -385,9 +390,8 @@ public class Controlador {
 		ProductoDAO.getInstancia().save(directo2);
 		ProductoDAO.getInstancia().save(directo3);
 
-		FormaPago fp = new FormaPago("debito", 1, "santander", 10);
-		FormaPagoDAO.getInstancia().save(fp);
-
+		FormaPago fp = new FormaPago(null, "debito", 1, "santander", 10);
+		fp.save();
 
 		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
 	}

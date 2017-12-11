@@ -2,6 +2,7 @@
 <%@ page import="dto.MesaOcupacionView" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dto.MesaView" %>
+<%@ page import="dto.FormaPagoView" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -60,10 +61,10 @@
                 <%=sectorSalon%>
             </td>
             <td>
-                <button id="btn-agregar-producto-mesa" mesa-ocupacion-id="<%=mesa.getId()%>">Agregar</button>
+                <button class="btn-agregar-producto-mesa" mesa-ocupacion-id="<%=mesa.getId()%>">Agregar</button>
             </td>
             <td>
-                <button id="btn-cerrar-mesa" mesa-ocupacion-id="<%=mesa.getId()%>">Cerrar</button>
+                <button class="btn-cerrar-mesa" mesa-ocupacion-id="<%=mesa.getId()%>">Cerrar</button>
             </td>
         </tr>
 
@@ -124,7 +125,19 @@
             <tr>
                 <td>Forma de pago</td>
                 <td>
-                    <input name="forma_de_pago_id" type="text">
+                    <select name="forma_de_pago_id" id="forma_de_pago_id">
+                        <%
+                            List<FormaPagoView> formasDePago = (List<FormaPagoView>) request.getAttribute("formasDePago");
+
+                            for (FormaPagoView formaDePago : formasDePago) {
+                        %>
+                        <option value="<%=formaDePago.getId()%>">
+                            <%=formaDePago.getBanco()%>
+                        </option>
+                        <%
+                            }
+                        %>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -137,14 +150,14 @@
 
 <script>
     $(function () {
-        $('#btn-agregar-producto-mesa').click(function () {
+        $('.btn-agregar-producto-mesa').click(function () {
             $('#section-mesas-ocupadas').hide();
             $('#section-agregar-producto-mesa').show();
             var mesaOcupacionId = $(this).attr('mesa-ocupacion-id');
             $('#section-agregar-producto-mesa input[name=mesa_ocupacion_id]').val(mesaOcupacionId);
         });
 
-        $('#btn-cerrar-mesa').click(function () {
+        $('.btn-cerrar-mesa').click(function () {
             $('#section-mesas-ocupadas').hide();
             $('#section-cerrar-mesa').show();
             var mesaOcupacionId = $(this).attr('mesa-ocupacion-id');

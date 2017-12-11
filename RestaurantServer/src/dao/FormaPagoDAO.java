@@ -1,5 +1,7 @@
 package dao;
 
+import entities.MesaEntity;
+import negocio.Mesa;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -8,6 +10,9 @@ import excepciones.BaseDeDatosException;
 import excepciones.FormaDePagoNoExisteException;
 import hibernate.HibernateUtil;
 import negocio.FormaPago;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FormaPagoDAO {
 	private static FormaPagoDAO instancia;
@@ -22,13 +27,20 @@ public class FormaPagoDAO {
 	}
 
 	public FormaPago toBusiness(FormaPagoEntity entity) {
-		return new FormaPago(entity.getTipo(), entity.getNumeroCupon(), entity.getBanco(), entity.getMonto());
+		return new FormaPago(entity.getId(), entity.getTipo(), entity.getNumeroCupon(), entity.getBanco(), entity.getMonto());
+	}
+
+	public List<FormaPago> toBusiness(List<FormaPagoEntity> entities) {
+		List<FormaPago> formasPago = new ArrayList<>();
+		for (FormaPagoEntity entity : entities) {
+			formasPago.add(this.toBusiness(entity));
+		}
+		return formasPago;
 	}
 
 	public FormaPagoEntity toEntity(FormaPago business) {
-		return new FormaPagoEntity(business.getTipo(), business.getNumeroCupon(), business.getBanco(), business.getMonto());
+		return new FormaPagoEntity(business.getId(), business.getTipo(), business.getNumeroCupon(), business.getBanco(), business.getMonto());
 	}
-
 
 	public FormaPago getById(Long id) throws BaseDeDatosException, FormaDePagoNoExisteException {
 		FormaPagoEntity entity;
@@ -48,7 +60,20 @@ public class FormaPagoDAO {
 		return this.toBusiness(entity);
 	}
 
-	public void save(FormaPago formaDePago) throws BaseDeDatosException {
+	@SuppressWarnings("unchecked")
+	public List<FormaPago> getAll() throws BaseDeDatosException {
+		List<FormaPagoEntity> all = new ArrayList<>();
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			all = session.createQuery("from FormaPagoEntity").list();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+		return this.toBusiness(all);
+	}
+
+	public Long save(FormaPago formaDePago) throws BaseDeDatosException {
 		FormaPagoEntity entity = this.toEntity(formaDePago);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -59,6 +84,7 @@ public class FormaPagoDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
 
 }

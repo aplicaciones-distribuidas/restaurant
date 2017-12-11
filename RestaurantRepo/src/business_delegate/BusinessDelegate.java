@@ -124,4 +124,13 @@ public class BusinessDelegate {
 		}
 	}
 
+	public List<FormaPagoView> getFormasDePago() throws ConexionException, BaseDeDatosException {
+		try {
+			return remoteObject.getFormasDePago();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
 }

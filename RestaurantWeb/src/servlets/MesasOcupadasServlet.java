@@ -1,6 +1,7 @@
 package servlets;
 
 import business_delegate.BusinessDelegate;
+import dto.FormaPagoView;
 import dto.MesaOcupacionView;
 import dto.SucursalView;
 import excepciones.BaseDeDatosException;
@@ -25,7 +26,9 @@ public class MesasOcupadasServlet extends HttpServlet {
 				response.sendError(404, "No hay mesas ocupadas");
 				return;
 			}
+			List<FormaPagoView> formasDePago = BusinessDelegate.getInstancia().getFormasDePago();
 			request.setAttribute("mesas", mesas);
+			request.setAttribute("formasDePago", formasDePago);
 			request.getRequestDispatcher("/mesas-ocupadas-lista.jsp").forward(request, response);
 			response.setStatus(200);
 		} catch (BaseDeDatosException | SucursalNoExisteException | ConexionException ex) {

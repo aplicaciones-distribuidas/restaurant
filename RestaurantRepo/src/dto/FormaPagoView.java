@@ -1,17 +1,17 @@
-package negocio;
+package dto;
 
-import dao.FormaPagoDAO;
-import dto.FormaPagoView;
-import excepciones.BaseDeDatosException;
+import java.io.Serializable;
 
-public class FormaPago {
+public class FormaPagoView implements Serializable {
+	private static final long serialVersionUID = 3784504762649506411L;
+
 	private Long id;
 	private String tipo;
 	private int numeroCupon;
 	private String banco;
 	private float monto;
 
-	public FormaPago(Long id, String tipo, int numeroCupon, String banco, float monto) {
+	public FormaPagoView(Long id, String tipo, int numeroCupon, String banco, float monto) {
 		this.id = id;
 		this.tipo = tipo;
 		this.numeroCupon = numeroCupon;
@@ -41,13 +41,4 @@ public class FormaPago {
 	public float getMonto() {
 		return monto;
 	}
-
-	public void save() throws BaseDeDatosException {
-		this.id = FormaPagoDAO.getInstancia().save(this);
-	}
-
-	public FormaPagoView toView() {
-		return new FormaPagoView(this.id, this.tipo, this.numeroCupon, this.banco, this.monto);
-	}
-
 }
