@@ -24,20 +24,26 @@ public class EmpleadoEntity implements Serializable {
 	@ManyToOne
 	private SectorSalonEntity sectorSalon;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idEmpleado")
 	private List<ComisionEntity> comisiones;
 
-	public EmpleadoEntity(String nombre, String apellido, int porcentajeComision, RolEntity rol,
-						  List<ComisionEntity> comisiones) {
+	public EmpleadoEntity(Long id, String nombre, String apellido, int porcentajeComision, RolEntity rol,
+						  List<ComisionEntity> comisiones, SectorSalonEntity sectorSalon) {
+		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.porcentajeComision = porcentajeComision;
 		this.rol = rol;
 		this.comisiones = comisiones;
+		this.sectorSalon = sectorSalon;
 	}
 
 	public EmpleadoEntity() {
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getNombre() {

@@ -22,13 +22,12 @@ public class RolDAO {
 	}
 
 	public Rol toBusiness(RolEntity entity) {
-		return new Rol(entity.getNombre());
+		return new Rol(entity.getId(), entity.getNombre());
 	}
 
 	public RolEntity toEntity(Rol business) {
-		return new RolEntity(business.getNombre());
+		return new RolEntity(business.getId(), business.getNombre());
 	}
-
 
 	public Rol getByNombre(String nombre) throws BaseDeDatosException, RolNoExisteException {
 		RolEntity entity;
@@ -48,7 +47,7 @@ public class RolDAO {
 		return this.toBusiness(entity);
 	}
 
-	public void save(Rol rol) throws BaseDeDatosException {
+	public Long save(Rol rol) throws BaseDeDatosException {
 		RolEntity entity = this.toEntity(rol);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -59,6 +58,7 @@ public class RolDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
 
 }

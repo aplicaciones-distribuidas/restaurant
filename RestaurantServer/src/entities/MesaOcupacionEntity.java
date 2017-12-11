@@ -37,7 +37,7 @@ public class MesaOcupacionEntity implements Serializable {
 
 	@Column(name = "cantidad_personas")
 	private int cantidadPersonas;
-	
+
 	@OneToOne
 	private EmpleadoEntity empleado;
 
@@ -106,7 +106,7 @@ public class MesaOcupacionEntity implements Serializable {
 	public FacturaEntity getFactura() {
 		return factura;
 	}
-	
+
 	public EmpleadoEntity getEmpleado() {
 		return this.empleado;
 	}

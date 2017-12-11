@@ -31,7 +31,12 @@ public class MesasOcupacionDAO {
 
 	public MesaOcupacion toBusiness(MesaOcupacionEntity entity) {
 		List<Mesa> mesas = MesasDAO.getInstancia().toBusiness(entity.getMesaItems());
-		Factura factura = FacturaDAO.getInstancia().toBusiness(entity.getFactura());
+
+		Factura factura = null;
+		if (entity.getFactura() != null) {
+			factura = FacturaDAO.getInstancia().toBusiness(entity.getFactura());
+		}
+
 		return new MesaOcupacion(entity.getId(), entity.getFechaIngreso(), entity.getFechaEgreso(), entity
 				.isProximaLiberarse(), entity.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toBusiness(entity.getEmpleado()));
 	}
@@ -104,7 +109,7 @@ public class MesasOcupacionDAO {
 		}
 		return entity.getId();
 	}
-	
+
 	public void update(MesaOcupacion mesa) throws BaseDeDatosException {
 		MesaOcupacionEntity entity = this.toEntity(mesa);
 		try {

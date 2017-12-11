@@ -35,7 +35,7 @@ public class EmpleadoDAO {
 			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision));
 		}
 
-		return new Empleado(entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones);
+		return new Empleado(entity.getId(), entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones, SectoresSalonDAO.getInstancia().toBusiness(entity.getSectorSalon()));
 	}
 
 	public EmpleadoEntity toEntity(Empleado business) {
@@ -45,7 +45,7 @@ public class EmpleadoDAO {
 			comisiones.add(ComisionDAO.getInstancia().toEntity(comision));
 		}
 
-		return new EmpleadoEntity(business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones);
+		return new EmpleadoEntity(business.getId(), business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones, SectoresSalonDAO.getInstancia().toEntity(business.getSectorSalon()));
 	}
 
 
@@ -67,7 +67,7 @@ public class EmpleadoDAO {
 		return this.toBusiness(entity);
 	}
 
-	public void save(Empleado empleado) throws BaseDeDatosException {
+	public Long save(Empleado empleado) throws BaseDeDatosException {
 		EmpleadoEntity entity = this.toEntity(empleado);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -78,8 +78,9 @@ public class EmpleadoDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Empleado> getAll() throws BaseDeDatosException {
 		List<EmpleadoEntity> all = new ArrayList<EmpleadoEntity>();

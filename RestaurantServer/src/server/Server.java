@@ -16,10 +16,10 @@ public class Server {
 
 	private void start() {
 		try {
-			LocateRegistry.createRegistry(1099);
+			LocateRegistry.createRegistry(1098);
 			remoteObject = new NegocioManager();
-			Naming.rebind("//localhost/restaurant", remoteObject);
-			System.out.println("Binded to //localhost/restaurant");
+			Naming.rebind("//localhost:1098/restaurant", remoteObject);
+			System.out.println("Binded to //localhost:1098/restaurant");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
