@@ -27,7 +27,7 @@
         <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
     </ul>
 </ul>
-<h3>Obtener Comisiones</h3>
+<h3>Comisiones</h3>
 <form action="comisiones" method="post">
     <table>
         <tr>

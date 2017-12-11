@@ -27,6 +27,7 @@
         <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
     </ul>
 </ul>
+<h3>Abrir Mesa</h3>
 <form action="mesa-abrir" method="post">
     <table>
         <tr>

@@ -27,6 +27,7 @@
         <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
     </ul>
 </ul>
+<h3>Mesas Ocupadas</h3>
 <form action="mesas-ocupadas" method="post">
     <table>
         <tr>
