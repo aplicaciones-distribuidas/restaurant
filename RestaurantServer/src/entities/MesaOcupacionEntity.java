@@ -38,7 +38,7 @@ public class MesaOcupacionEntity implements Serializable {
 	@Column(name = "cantidad_personas")
 	private int cantidadPersonas;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private EmpleadoEntity empleado;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -53,7 +53,7 @@ public class MesaOcupacionEntity implements Serializable {
 	)
 	private List<MesaEntity> mesaItems;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private FacturaEntity factura;
 
 	public MesaOcupacionEntity() {

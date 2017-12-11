@@ -53,7 +53,7 @@ public class MesasOcupacionDAO {
 		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntity(business.getMesaItems());
 		FacturaEntity factura = FacturaDAO.getInstancia().toEntity(business.getFactura());
 		return new MesaOcupacionEntity(business.getId(), new java.sql.Date(business.getFechaIngreso().getTime()),
-				new java.sql.Date(business.getFechaEgreso().getTime()), business.getProximaLiberarse(), business
+				business.getFechaEgreso() == null ? null : new java.sql.Date(business.getFechaEgreso().getTime()), business.getProximaLiberarse(), business
 				.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toEntity(business.getEmpleado()));
 	}
 	

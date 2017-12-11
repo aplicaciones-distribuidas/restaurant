@@ -43,7 +43,7 @@ public class FacturaDAO {
 			ItemFactura itemFactura = new ItemFactura(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
 			itemsFactura.add(itemFactura);
 		}
-		return new Factura(entity.getFecha(),entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
+		return new Factura(entity.getFecha(),entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, entity.getFormaPago() == null ? null : FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
 	}
 
 	public FacturaEntity toEntity(Factura business) {
@@ -63,7 +63,7 @@ public class FacturaDAO {
 			}
 		}
 		
-		return new FacturaEntity(business.getFecha(),business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, FormaPagoDAO.getInstancia().toEntity(business.getFormaPago()));
+		return new FacturaEntity(business.getFecha(),business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, null);
 	}
 
 	public void save(Factura factura) throws BaseDeDatosException {

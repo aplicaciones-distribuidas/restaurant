@@ -4,10 +4,51 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dao.*;
-import dto.*;
-import excepciones.*;
-import negocio.*;
+import dao.AreaDAO;
+import dao.EmpleadoDAO;
+import dao.FacturaDAO;
+import dao.FormaPagoDAO;
+import dao.InsumoDAO;
+import dao.MesasDAO;
+import dao.MesasOcupacionDAO;
+import dao.ProductoDAO;
+import dao.SectoresSalonDAO;
+import dao.SucursalDAO;
+import dto.ComisionView;
+import dto.InsumoProductoView;
+import dto.MesaOcupacionView;
+import dto.MesaView;
+import dto.SucursalView;
+import excepciones.AreaNoExisteException;
+import excepciones.BaseDeDatosException;
+import excepciones.EmpleadoNoExisteException;
+import excepciones.FormaDePagoNoExisteException;
+import excepciones.InsumoNoExisteException;
+import excepciones.MesaNoExisteException;
+import excepciones.MesaOcupacionNoExisteException;
+import excepciones.NoHayMesasDisponiblesException;
+import excepciones.ProductoNoExisteException;
+import excepciones.ProductoSinStockException;
+import excepciones.RubroNoExisteException;
+import excepciones.SucursalNoExisteException;
+import negocio.Area;
+import negocio.AreaEnum;
+import negocio.Comision;
+import negocio.Directo;
+import negocio.Empleado;
+import negocio.Factura;
+import negocio.FormaPago;
+import negocio.Insumo;
+import negocio.InsumoProducto;
+import negocio.ItemFactura;
+import negocio.Mesa;
+import negocio.MesaOcupacion;
+import negocio.Producto;
+import negocio.Proveedor;
+import negocio.Rol;
+import negocio.SectorSalon;
+import negocio.SemiElaborado;
+import negocio.Sucursal;
 
 public class Controlador {
 	private static Controlador instancia;
@@ -201,6 +242,7 @@ public class Controlador {
 		//actualizar valores de MesaOcupacion
 		mesaOcupacion.setFechaEgreso(new Date());
 		mesaOcupacion.setProximaLiberarse(true);
+		//mesaOcupacion.setFactura(new Factura(new Date(), 0, true, 0, null, formaDePago));
 		mesaOcupacion.getFactura().setCobrado(true);
 		mesaOcupacion.getFactura().setFormaPago(formaDePago);
 		mesaOcupacion.getFactura().setFecha(new Date());
@@ -325,6 +367,9 @@ public class Controlador {
 		ProductoDAO.getInstancia().save(directo1);
 		ProductoDAO.getInstancia().save(directo2);
 		ProductoDAO.getInstancia().save(directo3);
+		
+		FormaPago fp = new FormaPago("debito", 1, "santander", 10);
+		FormaPagoDAO.getInstancia().save(fp);
 
 
 		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());

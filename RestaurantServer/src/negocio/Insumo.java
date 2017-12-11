@@ -11,6 +11,7 @@ public class Insumo {
 	private Date fechaCompra;
 	private Proveedor proveedor;
 	private float cantidad;
+	private Long id;
 	
 
 	public Insumo(String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, Proveedor proveedor, float cantidad) {
@@ -21,6 +22,17 @@ public class Insumo {
 		this.fechaCompra = fechaCompra;
 		this.proveedor = proveedor;
 		this.cantidad = cantidad;
+	}
+	
+	public Insumo(Long id, String clasificacion, String nombre, int cantidadMinima, Date fechaVencimiento, Date fechaCompra, Proveedor proveedor, float cantidad) {
+		this.clasificacion = clasificacion;
+		this.nombre = nombre;
+		this.cantidadMinima = cantidadMinima;
+		this.fechaVencimiento = fechaVencimiento;
+		this.fechaCompra = fechaCompra;
+		this.proveedor = proveedor;
+		this.cantidad = cantidad;
+		this.id = id;
 	}
 
 	public String getClasificacion() {
@@ -61,6 +73,10 @@ public class Insumo {
 
 	public void setCantidad(float cantidad) {
 		this.cantidad = cantidad;
+	}
+	
+	public Long getId() {
+		return this.id;
 	}
 
 }
