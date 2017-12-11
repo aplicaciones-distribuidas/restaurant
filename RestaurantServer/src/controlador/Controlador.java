@@ -1,6 +1,5 @@
 package controlador;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -363,32 +362,21 @@ public class Controlador {
 		areaCafeteria.save();
 
 		Proveedor proveedor1 = new Proveedor("proveedor 1", "43028730", "calle falsa 123");
-		//Long proveedorId = ProveedorDAO.getInstancia().save(proveedor1);
-		//proveedor1.setId(proveedorId);
 
 		Insumo insumo1 = new Insumo("insumo 1", "arroz", 10, new Date(), new Date(), proveedor1, 15);
 		Insumo insumo2 = new Insumo("insumo 2", "pure", 10, new Date(), new Date(), proveedor1, 15);
 		Insumo insumo3 = new Insumo("insumo 3", "papas", 10, new Date(), new Date(), proveedor1, 15);
 
-		//InsumoDAO.getInstancia().save(insumo1);
-		//InsumoDAO.getInstancia().save(insumo2);
-		//InsumoDAO.getInstancia().save(insumo3);
-
 		InsumoProducto insumoProducto1 = new InsumoProducto(10, insumo1);
 		InsumoProducto insumoProducto2 = new InsumoProducto(10, insumo2);
 		InsumoProducto insumoProducto3 = new InsumoProducto(10, insumo3);
 
-		//InsumoProductoDAO.getInstancia().save(insumoProducto1);
-		//InsumoProductoDAO.getInstancia().save(insumoProducto2);
-		//InsumoProductoDAO.getInstancia().save(insumoProducto3);
-
 		Directo directo1 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto1);
+		directo1.save();
 		Directo directo2 = new Directo(null, "plato", 10, 10, new Date(), 100, areaBarra, insumoProducto2);
+		directo2.save();
 		Directo directo3 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCafeteria, insumoProducto3);
-
-		ProductoDAO.getInstancia().save(directo1);
-		ProductoDAO.getInstancia().save(directo2);
-		ProductoDAO.getInstancia().save(directo3);
+		directo3.save();
 
 		FormaPago fp = new FormaPago(null, "debito", 1, "santander", 10);
 		fp.save();
