@@ -59,7 +59,7 @@ public class Controlador {
 	public List<MesaView> getMesas() throws BaseDeDatosException {
 		List<MesaView> mesas = new ArrayList<>();
 		for (Mesa m : MesasDAO.getInstancia().getAll()) mesas.add(m.toView());
-		return  mesas;
+		return mesas;
 	}
 
 	public Mesa buscarMesa(int numero) throws BaseDeDatosException, MesaNoExisteException {
@@ -80,7 +80,8 @@ public class Controlador {
 		List<SectorSalon> sectoresSalonEmpleado = new ArrayList<>();
 		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
 			for (Empleado e : ss.getEmpleados()) {
-				if (e.getNombre().equals(empleado.getNombre()) && e.getApellido().equals(empleado.getApellido())) sectoresSalonEmpleado.add(ss);	
+				if (e.getNombre().equals(empleado.getNombre()) && e.getApellido().equals(empleado.getApellido()))
+					sectoresSalonEmpleado.add(ss);
 			}
 		}
 
@@ -289,6 +290,6 @@ public class Controlador {
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
 
-		//this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
+		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
 	}
 }
