@@ -23,7 +23,8 @@
         <li><a href="comisiones">Obtener comisiones</a></li>
     </ul>
 </ul>
-<form action="mesa-abrir" method="post">
+<h3>Obtener Comisiones</h3>
+<form action="comisiones" method="post">
     <table>
         <tr>
             <td>Sucursal</td>
@@ -42,19 +43,7 @@
                 </select>
         </tr>
         <tr>
-            <td>Cantidad de Personas</td>
-            <td>
-                <input name="cantidad_de_personas" type="text">
-            </td>
-        </tr>
-        <tr>
-            <td>Empleado</td>
-            <td>
-                <input name="empleado_id" type="text">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right"><input type="submit" value="Abrir"/></td>
+            <td colspan="2" align="right"><input type="submit" value="Ver"/></td>
         </tr>
     </table>
 </form>

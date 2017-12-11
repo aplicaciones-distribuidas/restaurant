@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
-<%@ page import="dto.SucursalView" %>
 <%@ page import="java.util.List" %>
+<%@ page import="dto.ComisionView" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,39 +23,37 @@
         <li><a href="comisiones">Obtener comisiones</a></li>
     </ul>
 </ul>
-<form action="mesa-abrir" method="post">
+<h3>
+    Comisiones para la sucursal <%=request.getAttribute("sucursal")%>
+</h3>
+<form action="comisiones" method="post">
     <table>
         <tr>
-            <td>Sucursal</td>
-            <td>
-                <select name="sucursal" id="sucursal">
-                    <%
-                        List<SucursalView> sucursales = (List<SucursalView>) request.getAttribute("sucursales");
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Comisión</th>
+        </tr>
+        <%
+            List<ComisionView> comisiones = (List<ComisionView>) request.getAttribute("comisiones");
 
-                        for (SucursalView sucursal : sucursales) {
-                    %>
-                    <option value="<%=sucursal.getNombre()%>"><%=sucursal.getNombre()%>
-                    </option>
-                    <%
-                        }
-                    %>
-                </select>
-        </tr>
+            for (ComisionView comision : comisiones) {
+        %>
+
         <tr>
-            <td>Cantidad de Personas</td>
             <td>
-                <input name="cantidad_de_personas" type="text">
+                <%=comision.getNombre()%>
+            </td>
+            <td>
+                <%=comision.getApellido()%>
+            </td>
+            <td>
+                <%=comision.getComision()%>
             </td>
         </tr>
-        <tr>
-            <td>Empleado</td>
-            <td>
-                <input name="empleado_id" type="text">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right"><input type="submit" value="Abrir"/></td>
-        </tr>
+
+        <%
+            }
+        %>
     </table>
 </form>
 </body>
