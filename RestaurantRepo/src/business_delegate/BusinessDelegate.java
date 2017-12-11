@@ -19,7 +19,7 @@ public class BusinessDelegate {
 
 	private BusinessDelegate() throws ConexionException {
 		try {
-			remoteObject = (NegocioTDA) Naming.lookup("//localhost/restaurant");
+			remoteObject = (NegocioTDA) Naming.lookup("//localhost:1098/restaurant");
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			e.printStackTrace();
 			throw new ConexionException();
