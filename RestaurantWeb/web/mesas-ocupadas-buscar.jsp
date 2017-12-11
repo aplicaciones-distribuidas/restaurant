@@ -12,10 +12,17 @@
 
 <body>
 <ul>
-    <li><a href="mesas-disponibles">Mesas Disponibles</a></li>
-    <li><a href="mesas-ocupadas">Mesas Ocupadas</a></li>
-    <li><a href="mesa-abrir">Abrir Mesa</a></li>
-    <li><a href="mesa-reservar">Reservar Mesa</a></li>
+    <li>Mesas</li>
+    <ul>
+        <li><a href="mesas-disponibles">Mesas Disponibles</a></li>
+        <li><a href="mesas-ocupadas">Mesas Ocupadas</a></li>
+        <li><a href="mesa-abrir">Abrir Mesa</a></li>
+        <li><a href="mesa-reservar">Reservar Mesa</a></li>
+    </ul>
+    <li>Comisiones</li>
+    <ul>
+        <li><a href="comisiones">Obtener comisiones</a></li>
+    </ul>
 </ul>
 <form action="mesas-ocupadas" method="post">
     <table>

@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
+import dto.ComisionView;
 import dto.MesaOcupacionView;
 import dto.MesaView;
 import dto.SucursalView;
@@ -99,22 +100,13 @@ public class BusinessDelegate {
 		}
 	}
 
-//	public void cobrarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
-//		try {
-//			remoteObject.cobrarMesa(idMesaOcupacion);
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//			throw new ConexionException();
-//		}
-//	}
-//
-//	public void liberarMesa(Long idMesaOcupacion) throws ConexionException, BaseDeDatosException {
-//		try {
-//			remoteObject.liberarMesa(idMesaOcupacion);
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//			throw new ConexionException();
-//		}
-//	}
+	public List<ComisionView> getComisionesMozos(String sucursal) throws ConexionException, BaseDeDatosException, SucursalNoExisteException {
+		try {
+			return remoteObject.getComisionesMozos(sucursal);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
 
 }
