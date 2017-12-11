@@ -2,6 +2,7 @@ package entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -11,7 +12,7 @@ import javax.persistence.OneToOne;
 public class DirectoEntity extends ProductoEntity {
 	private static final long serialVersionUID = 1208157806455955532L;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private InsumoProductoEntity insumoProducto;
 
 	public DirectoEntity(Long id, String rubro, int caducidad, float comisionMozo, Date fecha, float precio, AreaEntity area, InsumoProductoEntity insumoProducto) {

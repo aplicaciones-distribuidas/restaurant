@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class InsumoEntity implements Serializable {
 	private int cantidadMinima;
 	private Date fechaVencimiento;
 	private Date fechaCompra;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private ProveedorEntity proveedor;
 	private float cantidad;
 	

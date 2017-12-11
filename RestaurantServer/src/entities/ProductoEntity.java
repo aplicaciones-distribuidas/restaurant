@@ -33,7 +33,7 @@ public abstract class ProductoEntity implements Serializable {
 	private float comisionMozo;
 	private Date fecha;
 	private float precio;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private AreaEntity area;
 
 	public ProductoEntity(Long id, String rubro, int caducidad, float comisionMozo, Date fecha, float precio, AreaEntity area) {

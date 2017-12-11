@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class InsumoProductoEntity implements Serializable {
 	private Long id;
 	
 	private float cantidad;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private InsumoEntity insumo;
 
 	public InsumoProductoEntity(float cantidad, InsumoEntity insumo) {
