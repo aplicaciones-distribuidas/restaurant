@@ -289,6 +289,43 @@ public class Controlador {
 
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
+		
+		Area areaCocina = new Area(AreaEnum.cocina);
+		Area areaBarra = new Area(AreaEnum.barra);
+		Area areaCafeteria = new Area(AreaEnum.cafeteria);
+		
+		AreaDAO.getInstancia().save(areaCafeteria);
+		AreaDAO.getInstancia().save(areaBarra);
+		AreaDAO.getInstancia().save(areaCocina);
+		
+		Proveedor proveedor1 = new Proveedor("proveedor 1", "43028730", "calle falsa 123");
+		Long proveedorId = ProveedorDAO.getInstancia().save(proveedor1);
+		proveedor1.setId(proveedorId);
+		
+		Insumo insumo1 = new Insumo("insumo 1", "arroz", 10, new Date(), new Date(), proveedor1, 15);
+		Insumo insumo2 = new Insumo("insumo 2", "pure", 10, new Date(), new Date(), proveedor1, 15);
+		Insumo insumo3 = new Insumo("insumo 3", "papas", 10, new Date(), new Date(), proveedor1, 15);
+		
+		InsumoDAO.getInstancia().save(insumo1);
+		InsumoDAO.getInstancia().save(insumo2);
+		InsumoDAO.getInstancia().save(insumo3);
+		
+		InsumoProducto insumoProducto1 = new InsumoProducto(10, insumo1);
+		InsumoProducto insumoProducto2 = new InsumoProducto(10, insumo2);
+		InsumoProducto insumoProducto3 = new InsumoProducto(10, insumo3);
+		
+		InsumoProductoDAO.getInstancia().save(insumoProducto1);
+		InsumoProductoDAO.getInstancia().save(insumoProducto2);
+		InsumoProductoDAO.getInstancia().save(insumoProducto3);
+		
+		Directo directo1 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto1);
+		Directo directo2 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto2);
+		Directo directo3 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto3);
+		
+		ProductoDAO.getInstancia().save(directo1);
+		ProductoDAO.getInstancia().save(directo2);
+		ProductoDAO.getInstancia().save(directo3);
+
 
 		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
 	}

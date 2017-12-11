@@ -30,6 +30,12 @@ public class ProveedorEntity implements Serializable {
 		this.direccion = direccion;
 	}
 	
+	public ProveedorEntity(Long id, String nombre, String telefono, String direccion) {
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.direccion = direccion;
+	}
+	
 	public ProveedorEntity() {}
 
 	public String getNombre() {
@@ -42,6 +48,10 @@ public class ProveedorEntity implements Serializable {
 
 	public String getDireccion() {
 		return direccion;
+	}
+
+	public Long getId() {
+		return id;
 	}
 	
 }
