@@ -1,6 +1,7 @@
 package gui;
 
 import business_delegate.BusinessDelegate;
+import dto.MesaOcupacionView;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
 import excepciones.FormaDePagoNoExisteException;
@@ -21,12 +22,12 @@ public class MesaCerrar extends JInternalFrame {
 	private JButton btnCerrar, btnSalir;
 	private MesaCerrar aux;
 
-	private Long idMesaOcupacion;
+	private MesaOcupacionView mesaOcupacionView;
 
-	public MesaCerrar(Long idMesaOcupacion) {
+	public MesaCerrar(MesaOcupacionView mesaOcupacionView) {
 		super("Cerrar Mesa", false, true, false, true);
 
-		this.idMesaOcupacion = idMesaOcupacion;
+		this.mesaOcupacionView = mesaOcupacionView;
 
 		configurar();
 		this.setVisible(true);
@@ -38,8 +39,14 @@ public class MesaCerrar extends JInternalFrame {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(3, 2));
 
+		float montoTotal = 0;
+
+		if (this.mesaOcupacionView.getFactura() != null) {
+			montoTotal = this.mesaOcupacionView.getFactura().getMonto();
+		}
+
 		lblTotal = new JLabel("Total", JLabel.TRAILING);
-		lblTotalValor = new JLabel("$ X,XX"); // TODO: get value from server
+		lblTotalValor = new JLabel("$ " + montoTotal);
 		lblTotal.setLabelFor(lblTotalValor);
 		p.add(lblTotal);
 		p.add(lblTotalValor);
@@ -78,7 +85,7 @@ public class MesaCerrar extends JInternalFrame {
 				}
 
 				try {
-					BusinessDelegate.getInstancia().cerrarMesa(aux.idMesaOcupacion, idFormaDePago);
+					BusinessDelegate.getInstancia().cerrarMesa(aux.mesaOcupacionView.getId(), idFormaDePago);
 					JOptionPane.showMessageDialog(aux, "Mesa cerrada correctamente");
 					aux.cerrar();
 				} catch (BaseDeDatosException | MesaOcupacionNoExisteException | FormaDePagoNoExisteException | ConexionException ex) {

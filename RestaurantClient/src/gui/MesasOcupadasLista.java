@@ -6,11 +6,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
 
-import business_delegate.BusinessDelegate;
 import dto.MesaOcupacionView;
 import dto.MesaView;
-import excepciones.BaseDeDatosException;
-import excepciones.ConexionException;
 
 import javax.swing.*;
 
@@ -42,12 +39,6 @@ public class MesasOcupadasLista extends JInternalFrame {
 		JLabel lblTituloCerrar = new JLabel("Cerrar");
 		p.add(lblTituloCerrar);
 
-//		JLabel lblTituloCobrar = new JLabel("Cobrar");
-//		p.add(lblTituloCobrar);
-
-//		JLabel lblTituloLiberar = new JLabel("Liberar");
-//		p.add(lblTituloLiberar);
-
 		for (MesaOcupacionView mesaOcupacion : mesasOcupacion) {
 			String mesasAsignadas = "";
 			String sectorSalon = "";
@@ -66,53 +57,23 @@ public class MesasOcupadasLista extends JInternalFrame {
 			JButton btnCerrar = new JButton("Cerrar");
 			p.add(btnCerrar);
 
-//			JButton btnCobrar = new JButton("Cobrar");
-//			p.add(btnCobrar);
-
-//			JButton btnLiberar = new JButton("Liberar");
-//			p.add(btnLiberar);
-
 			btnProductos.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					MesaAgregarProducto mesaAgregarProducto = new MesaAgregarProducto(mesaOcupacion.getId());
 					aux.getParent().add(mesaAgregarProducto);
+					aux.cerrar();
 				}
 			});
 
 			btnCerrar.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					MesaCerrar mesaCerrar = new MesaCerrar(mesaOcupacion.getId());
+					MesaCerrar mesaCerrar = new MesaCerrar(mesaOcupacion);
 					aux.getParent().add(mesaCerrar);
+					aux.cerrar();
 				}
 			});
-
-//			btnCobrar.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					try {
-//						BusinessDelegate.getInstancia().cobrarMesa(mesaOcupacion.getId());
-//						JOptionPane.showMessageDialog(aux, "Mesa cobrada correctamente");
-//						aux.cerrar();
-//					} catch (BaseDeDatosException | ConexionException ex) {
-//						JOptionPane.showMessageDialog(aux, ex.getMessage());
-//					}
-//				}
-//			});
-
-//			btnLiberar.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					try {
-//						BusinessDelegate.getInstancia().liberarMesa(mesaOcupacion.getId());
-//						JOptionPane.showMessageDialog(aux, "Mesa liberada correctamente");
-//						aux.cerrar();
-//					} catch (BaseDeDatosException | ConexionException ex) {
-//						JOptionPane.showMessageDialog(aux, ex.getMessage());
-//					}
-//				}
-//			});
 		}
 
 		p.setOpaque(true);
