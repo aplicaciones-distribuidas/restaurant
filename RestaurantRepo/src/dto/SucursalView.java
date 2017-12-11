@@ -1,7 +1,9 @@
 package dto;
 
-public class SucursalView {
+import java.io.Serializable;
 
+public class SucursalView implements Serializable {
+	private static final long serialVersionUID = -1877463355094662434L;
 	private Long id;
 	private String nombre;
 	private String ubicacion;
