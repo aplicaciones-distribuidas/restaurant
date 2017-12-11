@@ -28,7 +28,7 @@ public class PlatoDirectoServlet extends HttpServlet {
 		}
 		float precio = Float.parseFloat(request.getParameter("precio"));
 		String nombreArea = request.getParameter("area");
-		int idInsumo = Integer.parseInt(request.getParameter("insumo_id"));
+		Long idInsumo = Long.parseLong(request.getParameter("insumo_id"));
 		float cantInsumo = Float.parseFloat(request.getParameter("cantidad_insumo"));
 
 		try {

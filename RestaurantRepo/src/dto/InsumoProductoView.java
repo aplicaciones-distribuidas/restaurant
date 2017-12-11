@@ -2,10 +2,10 @@ package dto;
 
 public class InsumoProductoView {
 	private float cantidad;
-	private int insumoId;
-	
-	
-	public InsumoProductoView(float cantidad, int insumoId) {
+	private Long insumoId;
+
+
+	public InsumoProductoView(float cantidad, Long insumoId) {
 		super();
 		this.cantidad = cantidad;
 		this.insumoId = insumoId;
@@ -17,9 +17,8 @@ public class InsumoProductoView {
 	}
 
 
-	public int getInsumoId() {
+	public Long getInsumoId() {
 		return insumoId;
 	}
 
-	
 }

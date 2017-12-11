@@ -291,7 +291,7 @@ public class Controlador {
 		return comisionView;
 	}
 
-	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
+	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, Long idInsumo, float cantInsumo) throws AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
 		Area area = AreaDAO.getInstancia().getByNombre(nombreArea);
 		Insumo insumo = InsumoDAO.getInstancia().getById(idInsumo);
 
@@ -317,6 +317,9 @@ public class Controlador {
 		Sucursal sucursal = new Sucursal("Belgrano", "Av. Juramento 1234", 100);
 		sucursal.save();
 
+		Sucursal sucursal2 = new Sucursal("Caballito", "Av. Pedro Goyena 432", 85);
+		sucursal2.save();
+
 		SectorSalon sA = new SectorSalon("A");
 		sA.setSucursal(sucursal);
 		sA.save();
@@ -324,6 +327,10 @@ public class Controlador {
 		SectorSalon sB = new SectorSalon("B");
 		sB.setSucursal(sucursal);
 		sB.save();
+
+		SectorSalon sZ = new SectorSalon("Z");
+		sZ.setSucursal(sucursal2);
+		sZ.save();
 
 		Rol mozo = new Rol(null, "mozo");
 		mozo.save();
@@ -333,6 +340,9 @@ public class Controlador {
 		Empleado empleado = new Empleado(null, "José", "Pérez", 10, mozo, comisiones, sA);
 		empleado.save();
 
+		Empleado empleado2 = new Empleado(null, "Pepe", "González", 12, mozo, comisiones, sZ);
+		empleado2.save();
+
 		Mesa m1 = new Mesa(null, 1, false, 8, sA);
 		m1.save();
 
@@ -341,7 +351,7 @@ public class Controlador {
 
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
-		
+
 		Area areaCocina = new Area("cocina");
 		Area areaBarra = new Area("barra");
 		Area areaCafeteria = new Area("cafeteria");
@@ -377,7 +387,7 @@ public class Controlador {
 		ProductoDAO.getInstancia().save(directo1);
 		ProductoDAO.getInstancia().save(directo2);
 		ProductoDAO.getInstancia().save(directo3);
-		
+
 		FormaPago fp = new FormaPago("debito", 1, "santander", 10);
 		FormaPagoDAO.getInstancia().save(fp);
 

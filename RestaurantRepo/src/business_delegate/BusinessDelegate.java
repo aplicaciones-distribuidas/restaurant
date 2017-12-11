@@ -106,7 +106,7 @@ public class BusinessDelegate {
 		}
 	}
 
-	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws ConexionException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
+	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, Long idInsumo, float cantInsumo) throws ConexionException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
 		try {
 			remoteObject.crearPlatoDirecto(rubro, caducidad, comisionMozo, fecha, precio, nombreArea, idInsumo, cantInsumo);
 		} catch (RemoteException e) {

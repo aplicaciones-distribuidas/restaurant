@@ -61,7 +61,11 @@
         <tr>
             <td>Área</td>
             <td>
-                <input name="area" type="text">
+                <select name="area" id="area">
+                    <option value="barra">Barra</option>
+                    <option value="cafeteria">Cafeteria</option>
+                    <option value="cocina">Cocina</option>
+                </select>
             </td>
         </tr>
         <tr>

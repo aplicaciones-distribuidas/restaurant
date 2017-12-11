@@ -29,8 +29,7 @@ public class InsumoDAO {
 		return new InsumoEntity(business.getId(), business.getClasificacion(), business.getNombre(), business.getCantidadMinima(), business.getFechaVencimiento(), business.getFechaCompra(), ProveedorDAO.getInstancia().toEntity(business.getProveedor()), business.getCantidad());
 	}
 
-
-	public Insumo getById(int id) throws BaseDeDatosException, InsumoNoExisteException {
+	public Insumo getById(Long id) throws BaseDeDatosException, InsumoNoExisteException {
 		InsumoEntity entity;
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -60,7 +59,7 @@ public class InsumoDAO {
 			throw new BaseDeDatosException(e);
 		}
 	}
-	
+
 	public void update(Insumo insumo) throws BaseDeDatosException {
 		InsumoEntity entity = this.toEntity(insumo);
 		try {

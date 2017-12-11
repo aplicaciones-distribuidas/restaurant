@@ -167,7 +167,7 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	}
 
 	@Override
-	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
+	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, Long idInsumo, float cantInsumo) throws RemoteException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
 		Controlador.getInstancia().crearPlatoDirecto(rubro, caducidad, comisionMozo, fecha, precio, nombreArea, idInsumo, cantInsumo);
 	}
 
