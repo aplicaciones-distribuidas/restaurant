@@ -3,6 +3,7 @@ package negocio;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
 import excepciones.BaseDeDatosException;
 
@@ -131,6 +132,16 @@ public class Sucursal {
 			empleados.addAll(sector.getEmpleados());
 		}
 		return empleados;
+	}
+
+	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
+		//filtro los sectores salon de la sucursal elegida
+		List<SectorSalon> sectoresSalon = SectoresSalonDAO.getInstancia().getAll();
+		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>();
+		for (SectorSalon ss : sectoresSalon) {
+			if (ss.getSucursal().getNombre().equals(this.getNombre())) sectoresSalonDeLaSucursal.add(ss);
+		}
+		return sectoresSalonDeLaSucursal;
 	}
 
 }

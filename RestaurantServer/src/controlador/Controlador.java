@@ -123,12 +123,8 @@ public class Controlador {
 		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
 		Empleado empleado = EmpleadoDAO.getInstancia().getById(idEmpleado);
 
-		//filtro los sectores salon de la sucursal elegida
-		List<SectorSalon> sectoresSalon = SectoresSalonDAO.getInstancia().getAll();
-		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>();
-		for (SectorSalon ss : sectoresSalon) {
-			if (ss.getSucursal().getNombre().equals(sucursal.getNombre())) sectoresSalonDeLaSucursal.add(ss);
-		}
+		List<SectorSalon> sectoresSalonDeLaSucursal = sucursal.getSectoresSalon();
+
 		//filtro los sectores salon que tengan al empleado elegido
 		List<SectorSalon> sectoresSalonEmpleado = new ArrayList<>();
 		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
@@ -229,7 +225,7 @@ public class Controlador {
 			Factura factura = mesaOcupacion.getFactura();
 			factura.setComisionMozo(factura.getComisionMozo() + producto.getComisionMozo());
 			factura.getItemsFactura().add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			factura.setMonto(factura.getMonto() + (producto.getPrecio()*cantidadProducto));
+			factura.setMonto(factura.getMonto() + (producto.getPrecio() * cantidadProducto));
 			mesaOcupacion.setFactura(factura);
 		}
 
@@ -380,10 +376,10 @@ public class Controlador {
 
 		FormaPago fp = new FormaPago(null, "debito", 1, "santander", 10);
 		fp.save();
-		
+
 		FormaPago fp2 = new FormaPago(null, "credito", 1, "itau", 10);
 		fp2.save();
-		
+
 		FormaPago fp3 = new FormaPago(null, "credito", 1, "frances", 10);
 		fp3.save();
 
