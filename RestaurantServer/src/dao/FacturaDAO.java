@@ -48,18 +48,21 @@ public class FacturaDAO {
 
 	public FacturaEntity toEntity(Factura business) {
 		List<ItemFacturaEntity> itemsFactura = new ArrayList<>();
-		for (ItemFactura ife : business.getItemsFactura()) {
-			DirectoEntity directo = null;
-			SemiElaboradoEntity semiElaborado = null;
-			try {
-				directo = ProductoDAO.getInstancia().toEntity((Directo)ife.getProducto());
-			} catch (Exception e) {
-				semiElaborado = ProductoDAO.getInstancia().toEntity((SemiElaborado)ife.getProducto());
+		if (business.getItemsFactura() != null) {
+			for (ItemFactura ife : business.getItemsFactura()) {
+				DirectoEntity directo = null;
+				SemiElaboradoEntity semiElaborado = null;
+				try {
+					directo = ProductoDAO.getInstancia().toEntity((Directo)ife.getProducto());
+				} catch (Exception e) {
+					semiElaborado = ProductoDAO.getInstancia().toEntity((SemiElaborado)ife.getProducto());
+				}
+				
+				ItemFacturaEntity itemFactura = new ItemFacturaEntity(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
+				itemsFactura.add(itemFactura);
 			}
-			
-			ItemFacturaEntity itemFactura = new ItemFacturaEntity(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
-			itemsFactura.add(itemFactura);
 		}
+		
 		return new FacturaEntity(business.getFecha(),business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, FormaPagoDAO.getInstancia().toEntity(business.getFormaPago()));
 	}
 

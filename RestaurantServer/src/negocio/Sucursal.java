@@ -23,7 +23,6 @@ public class Sucursal {
 	private Deposito deposito;
 
 	public Sucursal(String nombre, String ubicacion, int capacidad) {
-		super();
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		this.capacidad = capacidad;
@@ -32,7 +31,6 @@ public class Sucursal {
 	public Sucursal(Long id, String nombre, String ubicacion, int capacidad, List<Carta> cartas, Caja caja,
 			List<Area> areas, List<Pedido> pedidos, List<Reserva> reservas, List<Tarea> tareas,
 			List<SectorSalon> sectores, List<PedidoReposicion> pedidosReposicion, Deposito deposito) {
-		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
@@ -114,6 +112,7 @@ public class Sucursal {
 		List<Mesa> mesas = new ArrayList<Mesa>();
 		for (SectorSalon sector : this.sectores) {
 			mesas.addAll(sector.getMesasDisponibles(cantPersonas));
+			if (!mesas.isEmpty()) break;
 		}
 		return mesas;
 	}

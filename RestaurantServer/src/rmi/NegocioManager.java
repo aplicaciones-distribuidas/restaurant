@@ -3,20 +3,10 @@ package rmi;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import controlador.Controlador;
-import dao.AreaDAO;
-import dao.EmpleadoDAO;
-import dao.FormaPagoDAO;
-import dao.InsumoDAO;
-import dao.MesasDAO;
-import dao.MesasOcupacionDAO;
-import dao.ProductoDAO;
-import dao.SectoresSalonDAO;
-import dao.SucursalDAO;
 import dto.ComisionView;
 import dto.EmpleadoView;
 import dto.InsumoProductoView;
@@ -39,21 +29,6 @@ import excepciones.RubroNoExisteException;
 import excepciones.SucursalNoExisteException;
 import excepciones.TareaNoExisteException;
 import interfaces.NegocioTDA;
-import negocio.Area;
-import negocio.Comision;
-import negocio.Directo;
-import negocio.Empleado;
-import negocio.Factura;
-import negocio.FormaPago;
-import negocio.Insumo;
-import negocio.InsumoProducto;
-import negocio.ItemFactura;
-import negocio.Mesa;
-import negocio.MesaOcupacion;
-import negocio.Producto;
-import negocio.SectorSalon;
-import negocio.SemiElaborado;
-import negocio.Sucursal;
 
 public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, Serializable {
 	public NegocioManager() throws RemoteException {

@@ -56,6 +56,22 @@ public class MesasOcupacionDAO {
 				new java.sql.Date(business.getFechaEgreso().getTime()), business.getProximaLiberarse(), business
 				.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toEntity(business.getEmpleado()));
 	}
+	
+	public MesaOcupacionEntity toEntityWithoutMesasSector(MesaOcupacion business) {
+		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntityWithoutMesaSector(business.getMesaItems());
+		FacturaEntity factura = business.getFactura() != null ? FacturaDAO.getInstancia().toEntity(business.getFactura()) : null;
+		return new MesaOcupacionEntity(business.getId() != null ? business.getId() : null, new java.sql.Date(business.getFechaIngreso().getTime()),
+				business.getFechaEgreso() != null ? new java.sql.Date(business.getFechaEgreso().getTime()) : null, business.getProximaLiberarse(), business
+				.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toEntity(business.getEmpleado()));
+	}
+	
+	public MesaOcupacionEntity toEntityWithoutSectoresSalon(MesaOcupacion business) {
+		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntity(business.getMesaItems());
+		FacturaEntity factura = FacturaDAO.getInstancia().toEntity(business.getFactura());
+		return new MesaOcupacionEntity(business.getId(), new java.sql.Date(business.getFechaIngreso().getTime()),
+				new java.sql.Date(business.getFechaEgreso().getTime()), business.getProximaLiberarse(), business
+				.getCantidadPersonas(), mesas, factura, EmpleadoDAO.getInstancia().toEntity(business.getEmpleado()));
+	}
 
 	public List<MesaOcupacionEntity> toEntity(List<MesaOcupacion> businesses) {
 		List<MesaOcupacionEntity> entities = new ArrayList<MesaOcupacionEntity>();
@@ -98,6 +114,20 @@ public class MesasOcupacionDAO {
 
 	public Long save(MesaOcupacion mesa) throws BaseDeDatosException {
 		MesaOcupacionEntity entity = this.toEntity(mesa);
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			session.beginTransaction();
+			session.save(entity);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+		return entity.getId();
+	}
+	
+	public Long saveWithoutSectorMesa(MesaOcupacion mesa) throws BaseDeDatosException {
+		MesaOcupacionEntity entity = this.toEntityWithoutMesasSector(mesa);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
 			session.beginTransaction();

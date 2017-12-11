@@ -1,6 +1,11 @@
 package test;
 
+import java.util.List;
+
 import controlador.Controlador;
+import dao.EmpleadoDAO;
+import dto.MesaView;
+import negocio.Empleado;
 import server.Server;
 
 public class Test {
@@ -24,12 +29,16 @@ public class Test {
 				System.out.println(s.toString());
 
 			System.out.println("Mesas:");
-			for (Object m : Controlador.getInstancia().getMesas())
-				System.out.println(m.toString());
+			for (MesaView m : Controlador.getInstancia().getMesas())
+				System.out.println("numero: " + m.getNumero() + ", identificador: " + m.getId());
 
 			System.out.println("Mesas disponibles para 5 personas en la sucursal 'Belgrano':");
-			for (Object m : Controlador.getInstancia().getMesasDisponibles("Belgrano", 5))
-				System.out.println(m.toString());
+			for (MesaView m : Controlador.getInstancia().getMesasDisponibles("Belgrano", 5))
+				System.out.println("numero: " + m.getNumero() + ", identificador: " + m.getId());
+			
+			List<Empleado> empleados = EmpleadoDAO.getInstancia().getAll(); 
+			
+			Controlador.getInstancia().abrirMesa("Belgrano", 4, empleados.get(0).getId());
 		} catch (Exception e) {
 			System.err.println("Error corriendo tests");
 			System.err.printf("Mensaje: %s\n", e.getMessage());
