@@ -180,4 +180,9 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 	public List<SucursalView> getSucursales() throws RemoteException, BaseDeDatosException {
 		return Controlador.getInstancia().getSucursales();
 	}
+
+	@Override
+	public List<EmpleadoView> getEmpleadosBySucursal(String nombreSucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException {
+		return Controlador.getInstancia().getEmpleadosBySucursal(nombreSucursal);
+	}
 }

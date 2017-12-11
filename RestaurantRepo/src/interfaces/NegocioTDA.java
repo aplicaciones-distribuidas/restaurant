@@ -62,5 +62,6 @@ public interface NegocioTDA extends Remote {
 	//public void liberarMesa(Long idMesaOcupacion) throws RemoteException;
 	public List<ComisionView> getComisionesMozos(String sucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException;
 	public List<SucursalView> getSucursales() throws RemoteException, BaseDeDatosException;
+	public List<EmpleadoView> getEmpleadosBySucursal(String nombreSucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException;
 
 }

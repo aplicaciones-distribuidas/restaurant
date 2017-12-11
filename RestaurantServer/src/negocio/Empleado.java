@@ -2,6 +2,7 @@ package negocio;
 
 import dao.EmpleadoDAO;
 import dao.MesasDAO;
+import dto.EmpleadoView;
 import excepciones.BaseDeDatosException;
 
 import java.util.ArrayList;
@@ -61,5 +62,9 @@ public class Empleado {
 
 	public void save() throws BaseDeDatosException {
 		this.id = EmpleadoDAO.getInstancia().save(this);
+	}
+
+	public EmpleadoView toView() {
+		return new EmpleadoView(this.id, this.nombre, this.apellido);
 	}
 }

@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Restaurant</title>
     <link rel="stylesheet" href="/estilos.css">
+    <script type="application/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
@@ -54,7 +55,7 @@
         </tr>
         <tr>
             <td>Empleado</td>
-            <td>
+            <td id="container-empleados">
                 <input name="empleado_id" type="text">
             </td>
         </tr>
@@ -63,5 +64,26 @@
         </tr>
     </table>
 </form>
+
+<script>
+    $(function () {
+        $comboSucursal = $('#sucursal');
+        $comboSucursal.change(function () {
+            cargarEmpleados($comboSucursal.val());
+        });
+
+        console.log($comboSucursal.val());
+
+        cargarEmpleados($comboSucursal.val());
+    });
+
+    function cargarEmpleados(sucursal) {
+        $.get('/restaurant/empleados', {sucursal: sucursal}, function (data) {
+            $('#container-empleados').html(data);
+        });
+    }
+
+</script>
+
 </body>
 </html>

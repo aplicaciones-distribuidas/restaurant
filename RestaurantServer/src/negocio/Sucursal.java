@@ -3,6 +3,7 @@ package negocio;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.xml.internal.rngom.parse.host.Base;
 import dao.SucursalDAO;
 import excepciones.BaseDeDatosException;
 
@@ -29,8 +30,8 @@ public class Sucursal {
 	}
 
 	public Sucursal(Long id, String nombre, String ubicacion, int capacidad, List<Carta> cartas, Caja caja,
-			List<Area> areas, List<Pedido> pedidos, List<Reserva> reservas, List<Tarea> tareas,
-			List<SectorSalon> sectores, List<PedidoReposicion> pedidosReposicion, Deposito deposito) {
+					List<Area> areas, List<Pedido> pedidos, List<Reserva> reservas, List<Tarea> tareas,
+					List<SectorSalon> sectores, List<PedidoReposicion> pedidosReposicion, Deposito deposito) {
 		this.id = id;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
@@ -123,6 +124,14 @@ public class Sucursal {
 			mesasOcupacion.addAll(sector.getMesasOcupadas());
 		}
 		return mesasOcupacion;
+	}
+
+	public List<Empleado> getEmpleados() {
+		List<Empleado> empleados = new ArrayList<>();
+		for (SectorSalon sector : this.sectores) {
+			empleados.addAll(sector.getEmpleados());
+		}
+		return empleados;
 	}
 
 }

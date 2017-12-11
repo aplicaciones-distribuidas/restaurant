@@ -3,6 +3,8 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.SectorSalonEntity;
+import negocio.SectorSalon;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -37,7 +39,7 @@ public class EmpleadoDAO {
 
 		return new Empleado(entity.getId(), entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones, SectoresSalonDAO.getInstancia().toBusiness(entity.getSectorSalon()));
 	}
-	
+
 	public Empleado toBusinessWithoutSectoresSalon(EmpleadoEntity entity) {
 		List<Comision> comisiones = new ArrayList<>();
 
@@ -57,7 +59,7 @@ public class EmpleadoDAO {
 
 		return new EmpleadoEntity(business.getId(), business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones, SectoresSalonDAO.getInstancia().toEntity(business.getSectorSalon()));
 	}
-	
+
 	public EmpleadoEntity toEntityWithoutSectoresSalon(Empleado business) {
 		List<ComisionEntity> comisiones = new ArrayList<>();
 
@@ -75,6 +77,26 @@ public class EmpleadoDAO {
 			Session session = HibernateUtil.getInstancia().getSession();
 			entity = (EmpleadoEntity) session.createQuery("from EmpleadoEntity s where s.id = :id")
 					.setParameter("id", id).uniqueResult();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+
+		if (entity == null) {
+			throw new EmpleadoNoExisteException();
+		}
+
+		return this.toBusiness(entity);
+	}
+
+	public Empleado getBySectorSalon(SectorSalon sectorSalon) throws BaseDeDatosException, EmpleadoNoExisteException {
+		SectorSalonEntity sectorSalonEntity = new SectorSalonEntity();
+		sectorSalonEntity.setId(sectorSalon.getId());
+		EmpleadoEntity entity;
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			entity = (EmpleadoEntity) session.createQuery("from EmpleadoEntity s where s.sectorSalon = :sectorSalon")
+					.setParameter("sectorSalon", sectorSalonEntity).uniqueResult();
 			session.close();
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
