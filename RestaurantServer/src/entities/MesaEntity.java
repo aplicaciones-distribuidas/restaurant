@@ -24,10 +24,6 @@ public class MesaEntity implements Serializable {
 	public MesaEntity() {
 	}
 
-	public MesaEntity(int numero) {
-		this.numero = numero;
-	}
-
 	public MesaEntity(Long id, int numero, boolean ocupada, int capacidad, SectorSalonEntity sectorSalon) {
 		this.id = id;
 		this.numero = numero;
