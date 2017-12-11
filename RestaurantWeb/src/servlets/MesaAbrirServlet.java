@@ -21,6 +21,7 @@ public class MesaAbrirServlet extends HttpServlet {
 
 		try {
 			BusinessDelegate.getInstancia().abrirMesa(sucursal, cantidadDePersonas, idEmpleado);
+			response.sendRedirect("/restaurant/mesas-ocupadas");
 		} catch (BaseDeDatosException | ConexionException | EmpleadoNoExisteException | NoHayMesasDisponiblesException | SucursalNoExisteException e) {
 			response.sendError(500, e.getMessage());
 		}

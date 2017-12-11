@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@WebServlet(name = "MesaAbrirServlet", urlPatterns = {"/restaurant/plato-directo-crear"})
+@WebServlet(name = "PlatoDirectoServlet", urlPatterns = {"/restaurant/plato-directo-crear"})
 public class PlatoDirectoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String rubro = request.getParameter("rubro");
