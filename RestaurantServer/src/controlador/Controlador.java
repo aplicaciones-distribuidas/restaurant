@@ -1,15 +1,11 @@
 package controlador;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import dao.*;
-import dto.ComisionView;
-import dto.InsumoProductoView;
-import dto.MesaOcupacionView;
-import dto.MesaView;
+import dto.*;
 import excepciones.*;
 import negocio.*;
 
@@ -45,8 +41,15 @@ public class Controlador {
 		return mesasOcupacion;
 	}
 
-	public List<Sucursal> getSucursales() throws BaseDeDatosException {
-		return SucursalDAO.getInstancia().getAll();
+	public List<SucursalView> getSucursales() throws BaseDeDatosException {
+		List<Sucursal> sucursales = SucursalDAO.getInstancia().getAll();
+		List<SucursalView> sucursalesView = new ArrayList<>();
+
+		for (Sucursal sucursal : sucursales) {
+			sucursalesView.add(new SucursalView(sucursal.getNombre(), sucursal.getUbicacion(), sucursal.getCapacidad()));
+		}
+
+		return sucursalesView;
 	}
 
 	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {

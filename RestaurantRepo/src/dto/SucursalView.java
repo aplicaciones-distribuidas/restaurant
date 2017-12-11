@@ -29,4 +29,8 @@ public class SucursalView {
 		return capacidad;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("SucursalView [id => %d, nombre => %s, ubicacion => %s, capacidad => %d]", this.getId(), this.getNombre(), this.getUbicacion(), this.getCapacidad());
+	}
 }
