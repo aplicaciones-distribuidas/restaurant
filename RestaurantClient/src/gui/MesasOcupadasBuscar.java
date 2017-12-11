@@ -6,16 +6,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import business_delegate.BusinessDelegate;
 import dto.MesaOcupacionView;
+import dto.SucursalView;
 import excepciones.BaseDeDatosException;
 import excepciones.ConexionException;
 import excepciones.SucursalNoExisteException;
@@ -23,27 +18,27 @@ import excepciones.SucursalNoExisteException;
 public class MesasOcupadasBuscar extends JInternalFrame {
 	private static final long serialVersionUID = -52201933573009057L;
 	private JLabel lblSucursal;
-	private JTextField txtSucursal;
+	private JComboBox<SucursalView> comboSucursal;
 	private JButton btnBuscar, btnSalir;
 	private MesasOcupadasBuscar aux;
 
-	public MesasOcupadasBuscar() {
+	public MesasOcupadasBuscar(String[] sucursales) {
 		super("Mesas Ocupadas", false, true, false, true);
-		configurar();
+		configurar(sucursales);
 		this.setVisible(true);
 		this.pack();
 		aux = this;
 	}
 
-	private void configurar() {
+	private void configurar(String[] sucursales) {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(2, 2));
 
 		lblSucursal = new JLabel("Sucursal", JLabel.TRAILING);
-		txtSucursal = new JTextField(10);
-		lblSucursal.setLabelFor(txtSucursal);
+		comboSucursal = new JComboBox(sucursales);
+		lblSucursal.setLabelFor(comboSucursal);
 		p.add(lblSucursal);
-		p.add(txtSucursal);
+		p.add(comboSucursal);
 
 		btnBuscar = new JButton("Buscar");
 		btnSalir = new JButton("Salir");
@@ -58,7 +53,7 @@ public class MesasOcupadasBuscar extends JInternalFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String sucursal = txtSucursal.getText();
+				String sucursal = (String) comboSucursal.getSelectedItem();
 				if (sucursal == null || sucursal.length() == 0) {
 					JOptionPane.showMessageDialog(aux, "Debe ingresar una sucursal");
 					return;

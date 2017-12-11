@@ -15,7 +15,7 @@ import java.sql.Date;
 public class MesaReservar extends JInternalFrame {
 	private static final long serialVersionUID = 3623782223140267378L;
 	private JLabel lblSucursal;
-	private JTextField txtSucursal;
+	private JComboBox comboSucursal;
 	private JLabel lblCantidadPersonas;
 	private JTextField txtCantidadPersonas;
 	private JLabel lblFecha;
@@ -23,23 +23,23 @@ public class MesaReservar extends JInternalFrame {
 	private JButton btnReservar, btnSalir;
 	private MesaReservar aux;
 
-	public MesaReservar() {
+	public MesaReservar(String[] sucursales) {
 		super("Reservar Mesa", false, true, false, true);
-		configurar();
+		configurar(sucursales);
 		this.setVisible(true);
 		this.pack();
 		aux = this;
 	}
 
-	private void configurar() {
+	private void configurar(String[] sucursales) {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(4, 2));
 
 		lblSucursal = new JLabel("Sucursal", JLabel.TRAILING);
-		txtSucursal = new JTextField(10);
-		lblSucursal.setLabelFor(txtSucursal);
+		comboSucursal = new JComboBox(sucursales);
+		lblSucursal.setLabelFor(comboSucursal);
 		p.add(lblSucursal);
-		p.add(txtSucursal);
+		p.add(comboSucursal);
 
 		lblCantidadPersonas = new JLabel("Cantidad de Personas", JLabel.TRAILING);
 		txtCantidadPersonas = new JTextField(10);
@@ -66,7 +66,7 @@ public class MesaReservar extends JInternalFrame {
 		btnReservar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String sucursal = txtSucursal.getText();
+				String sucursal = (String) comboSucursal.getSelectedItem();
 				if (sucursal == null || sucursal.length() == 0) {
 					JOptionPane.showMessageDialog(aux, "Debe ingresar una sucursal");
 					return;

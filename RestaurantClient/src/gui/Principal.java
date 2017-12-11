@@ -1,13 +1,16 @@
 package gui;
 
+import business_delegate.BusinessDelegate;
+import dto.SucursalView;
+import excepciones.BaseDeDatosException;
+import excepciones.ConexionException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 public class Principal extends JFrame {
 	private static final long serialVersionUID = -7189647070719732198L;
@@ -23,8 +26,10 @@ public class Principal extends JFrame {
 	private MesasOcupadasBuscar mesasOcupadasBuscar;
 	private MesaAbrir mesaAbrir;
 	private MesaReservar mesaReservar;
+	private String[] sucursales = {};
 
 	public Principal() {
+		traerDatos();
 		configurar();
 		asignarEventos();
 		this.setVisible(true);
@@ -35,6 +40,7 @@ public class Principal extends JFrame {
 
 	private void asignarEventos() {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		Principal aux = this;
 		mnSalirItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -44,31 +50,45 @@ public class Principal extends JFrame {
 		mnMesasDisponibles.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mesasDisponibles = new MesasDisponiblesBuscar();
+				mesasDisponibles = new MesasDisponiblesBuscar(aux.sucursales);
 				desktop.add(mesasDisponibles);
 			}
 		});
 		mnMesasOcupadas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mesasOcupadasBuscar = new MesasOcupadasBuscar();
+				mesasOcupadasBuscar = new MesasOcupadasBuscar(aux.sucursales);
 				desktop.add(mesasOcupadasBuscar);
 			}
 		});
 		mnAbrirMesa.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mesaAbrir = new MesaAbrir();
+				mesaAbrir = new MesaAbrir(aux.sucursales);
 				desktop.add(mesaAbrir);
 			}
 		});
 		mnReservarMesa.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mesaReservar = new MesaReservar();
+				mesaReservar = new MesaReservar(aux.sucursales);
 				desktop.add(mesaReservar);
 			}
 		});
+	}
+
+	private void traerDatos() {
+		try {
+			List<SucursalView> sucursales = BusinessDelegate.getInstancia().getSucursales();
+			List<String> sucursalesStrings = new ArrayList<>();
+			for (SucursalView suc : sucursales) {
+				sucursalesStrings.add(suc.getNombre());
+			}
+			this.sucursales = new String[sucursalesStrings.size()];
+			sucursalesStrings.toArray(this.sucursales);
+		} catch (ConexionException | BaseDeDatosException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 	private void configurar() {
