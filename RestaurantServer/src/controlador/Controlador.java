@@ -105,7 +105,7 @@ public class Controlador {
 		MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(mesaOcupacion);
 
 		//update de mesas
-		for (Mesa mesa : mesasDisponibles) MesasDAO.getInstancia().save(mesa);
+		for (Mesa mesa : mesasDisponibles) MesasDAO.getInstancia().update(mesa);
 
 		return mesaOcupacion.toView();
 

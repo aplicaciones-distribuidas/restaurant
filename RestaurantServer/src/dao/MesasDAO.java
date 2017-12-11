@@ -137,5 +137,19 @@ public class MesasDAO {
 		}
 		return entity.getId();
 	}
+	
+	public Long update(Mesa mesa) throws BaseDeDatosException {
+		MesaEntity entity = this.toEntity(mesa);
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			session.beginTransaction();
+			session.update(entity);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+		return entity.getId();
+	}
 
 }
