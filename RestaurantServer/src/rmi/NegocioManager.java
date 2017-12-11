@@ -336,17 +336,17 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
 			empleados.addAll(ss.getEmpleados());
 		}
-		
+
 		for (Empleado e : empleados) {
 			float comision = 0;
 			for (Comision c : e.getComisiones()) {
 				comision += c.getMonto();
 			}
-			comisionView.add(new ComisionView(e.getNombre(), e.getApellido(), comision*e.getPorcentajeComision()));
+			comisionView.add(new ComisionView(e.getNombre(), e.getApellido(), comision * e.getPorcentajeComision()));
 		}
-		
+
 		return comisionView;
-		
+
 	}
 
 	@Override
@@ -357,9 +357,8 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 		Area area = AreaDAO.getInstancia().getByNombre(nombreArea);
 		Insumo insumo = InsumoDAO.getInstancia().getById(idInsumo);
 
-		Directo productoDirecto = new Directo(rubro, caducidad, comisionMozo, fecha, precio, area, new InsumoProducto(cantInsumo, insumo));
-
-		ProductoDAO.getInstancia().save(productoDirecto);
+		Directo productoDirecto = new Directo(null, rubro, caducidad, comisionMozo, fecha, precio, area, new InsumoProducto(cantInsumo, insumo));
+		productoDirecto.save();
 	}
 
 	@Override
@@ -373,9 +372,7 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 			);
 		}
 
-		SemiElaborado semiElaborado = new SemiElaborado(rubro, caducidad, comisionMozo, fecha, precio, insumos, area);
-
-		ProductoDAO.getInstancia().save(semiElaborado);
-
+		SemiElaborado semiElaborado = new SemiElaborado(null, rubro, caducidad, comisionMozo, fecha, precio, insumos, area);
+		semiElaborado.save();
 	}
 }

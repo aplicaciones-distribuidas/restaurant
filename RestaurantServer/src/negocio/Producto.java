@@ -1,9 +1,11 @@
 package negocio;
 
+import excepciones.BaseDeDatosException;
+
 import java.util.Date;
 
 public abstract class Producto {
-
+	private Long id;
 	private String rubro;
 	private int caducidad;
 	private float comisionMozo;
@@ -12,7 +14,8 @@ public abstract class Producto {
 	private Area area;
 
 
-	public Producto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, Area area) {
+	public Producto(Long id, String rubro, int caducidad, float comisionMozo, Date fecha, float precio, Area area) {
+		this.id = id;
 		this.rubro = rubro;
 		this.caducidad = caducidad;
 		this.comisionMozo = comisionMozo;
@@ -21,6 +24,13 @@ public abstract class Producto {
 		this.area = area;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getRubro() {
 		return rubro;
@@ -50,5 +60,7 @@ public abstract class Producto {
 	public Area getArea() {
 		return area;
 	}
+
+	public abstract void save() throws BaseDeDatosException;
 
 }

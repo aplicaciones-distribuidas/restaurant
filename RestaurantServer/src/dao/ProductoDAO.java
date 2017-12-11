@@ -33,72 +33,76 @@ public class ProductoDAO {
 
 	public Directo toBusiness(DirectoEntity entity) {
 		return new Directo(
-				entity.getRubro(), 
-				entity.getCaducidad(), 
-				entity.getComisionMozo(), 
-				entity.getFecha(), 
-				entity.getPrecio(), 
+				entity.getId(),
+				entity.getRubro(),
+				entity.getCaducidad(),
+				entity.getComisionMozo(),
+				entity.getFecha(),
+				entity.getPrecio(),
 				AreaDAO.getInstancia().toBusiness(entity.getArea()),
 				new InsumoProducto(entity.getInsumoProducto().getCantidad(), InsumoDAO.getInstancia().toBusiness(entity.getInsumoProducto().getInsumo()))
-				);
+		);
 	}
 
 	public DirectoEntity toEntity(Directo business) {
 		return new DirectoEntity(
-				business.getRubro(), 
-				business.getCaducidad(), 
-				business.getComisionMozo(), 
-				business.getFecha(), 
-				business.getPrecio(), 
+				business.getId(),
+				business.getRubro(),
+				business.getCaducidad(),
+				business.getComisionMozo(),
+				business.getFecha(),
+				business.getPrecio(),
 				AreaDAO.getInstancia().toEntity(business.getArea()),
 				new InsumoProductoEntity(business.getInsumoProducto().getCantidad(), InsumoDAO.getInstancia().toEntity(business.getInsumoProducto().getInsumo()))
-				);
+		);
 	}
-	
+
 	public SemiElaborado toBusiness(SemiElaboradoEntity entity) {
-		
+
 		List<InsumoProducto> insumos = new ArrayList<>();
-		
+
 		for (InsumoProductoEntity insumo : entity.getInsumosProducto()) {
 			insumos.add(
 					new InsumoProducto(insumo.getCantidad(), InsumoDAO.getInstancia().toBusiness(insumo.getInsumo()))
-					);
+			);
 		}
-		
+
 		return new SemiElaborado(
-				entity.getRubro(), 
-				entity.getCaducidad(), 
-				entity.getComisionMozo(), 
-				entity.getFecha(), 
-				entity.getPrecio(), 
+				entity.getId(),
+				entity.getRubro(),
+				entity.getCaducidad(),
+				entity.getComisionMozo(),
+				entity.getFecha(),
+				entity.getPrecio(),
 				insumos,
 				AreaDAO.getInstancia().toBusiness(entity.getArea())
-				);
+		);
 	}
 
 	public SemiElaboradoEntity toEntity(SemiElaborado business) {
-		
+
 		List<InsumoProductoEntity> insumos = new ArrayList<>();
-		
+
 		for (InsumoProducto insumo : business.getInsumosProducto()) {
 			insumos.add(
 					new InsumoProductoEntity(insumo.getCantidad(), InsumoDAO.getInstancia().toEntity(insumo.getInsumo()))
-					);
+			);
 		}
-		
+
 		return new SemiElaboradoEntity(
-				business.getRubro(), 
-				business.getCaducidad(), 
-				business.getComisionMozo(), 
-				business.getFecha(), 
-				business.getPrecio(), 
+				business.getId(),
+				business.getRubro(),
+				business.getCaducidad(),
+				business.getComisionMozo(),
+				business.getFecha(),
+				business.getPrecio(),
 				insumos,
 				AreaDAO.getInstancia().toEntity(business.getArea())
-				);
+		);
 	}
 
 
-	public void save(Directo directo) throws BaseDeDatosException {
+	public Long save(Directo directo) throws BaseDeDatosException {
 		DirectoEntity entity = this.toEntity(directo);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -109,9 +113,10 @@ public class ProductoDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
-	
-	public void save(SemiElaborado semiElaborado) throws BaseDeDatosException {
+
+	public Long save(SemiElaborado semiElaborado) throws BaseDeDatosException {
 		SemiElaboradoEntity entity = this.toEntity(semiElaborado);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -122,8 +127,9 @@ public class ProductoDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
-	
+
 	public Producto getById(Long id) throws BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException {
 		ProductoEntity entity;
 		try {
@@ -138,7 +144,7 @@ public class ProductoDAO {
 		if (entity == null) {
 			throw new InsumoNoExisteException();
 		}
-		
+
 		try {
 			DirectoEntity directoEntity = (DirectoEntity) entity;
 			return this.toBusiness(directoEntity);

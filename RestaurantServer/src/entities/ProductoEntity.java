@@ -22,16 +22,12 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public abstract class ProductoEntity implements Serializable {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8088811606516162589L;
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String rubro;
 	private int caducidad;
 	private float comisionMozo;
@@ -39,9 +35,9 @@ public abstract class ProductoEntity implements Serializable {
 	private float precio;
 	@OneToOne
 	private AreaEntity area;
-	
-	
-	public ProductoEntity(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, AreaEntity area) {
+
+	public ProductoEntity(Long id, String rubro, int caducidad, float comisionMozo, Date fecha, float precio, AreaEntity area) {
+		this.id = id;
 		this.rubro = rubro;
 		this.caducidad = caducidad;
 		this.comisionMozo = comisionMozo;
@@ -49,9 +45,13 @@ public abstract class ProductoEntity implements Serializable {
 		this.precio = precio;
 		this.area = area;
 	}
-	
-	public ProductoEntity() {}
 
+	public ProductoEntity() {
+	}
+
+	public Long getId() {
+		return id;
+	}
 
 	public String getRubro() {
 		return rubro;
@@ -81,5 +81,5 @@ public abstract class ProductoEntity implements Serializable {
 	public AreaEntity getArea() {
 		return area;
 	}
-	
+
 }
