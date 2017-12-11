@@ -380,6 +380,12 @@ public class Controlador {
 
 		FormaPago fp = new FormaPago(null, "debito", 1, "santander", 10);
 		fp.save();
+		
+		FormaPago fp2 = new FormaPago(null, "credito", 1, "itau", 10);
+		fp2.save();
+		
+		FormaPago fp3 = new FormaPago(null, "credito", 1, "frances", 10);
+		fp3.save();
 
 		this.abrirMesa(sucursal.getNombre(), 3, empleado.getId());
 	}
