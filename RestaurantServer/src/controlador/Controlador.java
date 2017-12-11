@@ -350,13 +350,12 @@ public class Controlador {
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
 
-		Area areaCocina = new Area("cocina");
-		Area areaBarra = new Area("barra");
-		Area areaCafeteria = new Area("cafeteria");
-
-		AreaDAO.getInstancia().save(areaCafeteria);
-		AreaDAO.getInstancia().save(areaBarra);
-		AreaDAO.getInstancia().save(areaCocina);
+		Area areaCocina = new Area(null, "cocina");
+		areaCocina.save();
+		Area areaBarra = new Area(null, "barra");
+		areaBarra.save();
+		Area areaCafeteria = new Area(null, "cafeteria");
+		areaCafeteria.save();
 
 		Proveedor proveedor1 = new Proveedor("proveedor 1", "43028730", "calle falsa 123");
 		//Long proveedorId = ProveedorDAO.getInstancia().save(proveedor1);

@@ -18,11 +18,16 @@ public class AreaEntity implements Serializable {
 
 	private String nombre;
 
-	public AreaEntity(String nombre) {
+	public AreaEntity(Long id, String nombre) {
+		this.id = id;
 		this.nombre = nombre;
 	}
 
 	public AreaEntity() {
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getNombre() {

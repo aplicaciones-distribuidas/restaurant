@@ -24,13 +24,12 @@ public class AreaDAO {
 	}
 
 	public Area toBusiness(AreaEntity entity) {
-		return new Area(entity.getNombre());
+		return new Area(entity.getId(), entity.getNombre());
 	}
 
 	public AreaEntity toEntity(Area business) {
-		return new AreaEntity(business.getNombre());
+		return new AreaEntity(business.getId(), business.getNombre());
 	}
-
 
 	public Area getByNombre(String nombre) throws BaseDeDatosException, AreaNoExisteException {
 		AreaEntity entity;
@@ -50,7 +49,7 @@ public class AreaDAO {
 		return this.toBusiness(entity);
 	}
 
-	public void save(Area area) throws BaseDeDatosException {
+	public Long save(Area area) throws BaseDeDatosException {
 		AreaEntity entity = this.toEntity(area);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -61,6 +60,7 @@ public class AreaDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
 
 }
