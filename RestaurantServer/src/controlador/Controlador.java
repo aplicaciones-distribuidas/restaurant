@@ -11,10 +11,7 @@ import dto.MesaView;
 import excepciones.BaseDeDatosException;
 import excepciones.MesaNoExisteException;
 import excepciones.SucursalNoExisteException;
-import negocio.Mesa;
-import negocio.MesaOcupacion;
-import negocio.SectorSalon;
-import negocio.Sucursal;
+import negocio.*;
 
 public class Controlador {
 	private static Controlador instancia;
@@ -75,6 +72,14 @@ public class Controlador {
 		SectorSalon sB = new SectorSalon("B");
 		sB.setSucursal(sucursal);
 		sB.save();
+
+		Rol mozo = new Rol(null, "mozo");
+		mozo.save();
+
+		List<Comision> comisiones = new ArrayList<>();
+
+		Empleado empleado = new Empleado(null, "José", "Pérez", 10, mozo, comisiones, sA);
+		empleado.save();
 
 		Mesa m1 = new Mesa(null, 1, false, 8, sA);
 		m1.save();
