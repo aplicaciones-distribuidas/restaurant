@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dto.FacturaView;
 import dto.MesaOcupacionView;
 import dto.MesaView;
 
@@ -105,7 +106,7 @@ public class MesaOcupacion {
 		for (Mesa mesa : this.mesaItems) {
 			mesas.add(mesa.toView());
 		}
-		return new MesaOcupacionView(this.id, mesas);
+		return new MesaOcupacionView(this.id, mesas, this.factura != null ? new FacturaView(this.factura.getMonto()): null);
 	}
 
 	@Override

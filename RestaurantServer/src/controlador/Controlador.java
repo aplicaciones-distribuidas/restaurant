@@ -6,7 +6,6 @@ import java.util.List;
 
 import dao.AreaDAO;
 import dao.EmpleadoDAO;
-import dao.FacturaDAO;
 import dao.FormaPagoDAO;
 import dao.InsumoDAO;
 import dao.MesasDAO;
@@ -33,7 +32,6 @@ import excepciones.ProductoSinStockException;
 import excepciones.RubroNoExisteException;
 import excepciones.SucursalNoExisteException;
 import negocio.Area;
-import negocio.AreaEnum;
 import negocio.Comision;
 import negocio.Directo;
 import negocio.Empleado;
