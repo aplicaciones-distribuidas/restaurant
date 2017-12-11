@@ -11,8 +11,8 @@
 <ul>
     <li><a href="mesas-disponibles">Mesas Disponibles</a></li>
     <li><a href="mesas-ocupadas">Mesas Ocupadas</a></li>
-    <li><a href="abrir-mesa">Abrir Mesa</a></li>
-    <li><a href="reservar-mesa">Reservar Mesa</a></li>
+    <li><a href="mesa-abrir">Abrir Mesa</a></li>
+    <li><a href="mesa-reservar">Reservar Mesa</a></li>
 </ul>
 </body>
 </html>

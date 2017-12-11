@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
-<%@ page import="dto.MesaOcupacionView" %>
-<%@ page import="java.util.List" %>
 <%@ page import="dto.SucursalView" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,7 +16,7 @@
     <li><a href="mesa-abrir">Abrir Mesa</a></li>
     <li><a href="mesa-reservar">Reservar Mesa</a></li>
 </ul>
-<form action="mesas-ocupadas" method="post">
+<form action="mesa-abrir" method="post">
     <table>
         <tr>
             <td>Sucursal</td>
@@ -36,7 +35,19 @@
                 </select>
         </tr>
         <tr>
-            <td colspan="2" align="right"><input type="submit" value="Buscar"/></td>
+            <td>Cantidad de Personas</td>
+            <td>
+                <input name="cantidad_de_personas" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>Empleado</td>
+            <td>
+                <input name="empleado_id" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right"><input type="submit" value="Abrir"/></td>
         </tr>
     </table>
 </form>
