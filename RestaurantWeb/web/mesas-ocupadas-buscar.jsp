@@ -13,10 +13,10 @@
 <ul>
     <li>Mesas</li>
     <ul>
-        <li><a href="mesas-disponibles">Mesas Disponibles</a></li>
+        <li><a href="">Mesas Disponibles</a></li>
         <li><a href="mesas-ocupadas">Mesas Ocupadas</a></li>
         <li><a href="mesa-abrir">Abrir Mesa</a></li>
-        <li><a href="mesa-reservar">Reservar Mesa</a></li>
+        <li><a href="">Reservar Mesa</a></li>
     </ul>
     <li>Comisiones</li>
     <ul>
