@@ -229,7 +229,7 @@ public class Controlador {
 			Factura factura = mesaOcupacion.getFactura();
 			factura.setComisionMozo(factura.getComisionMozo() + producto.getComisionMozo());
 			factura.getItemsFactura().add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			factura.setMonto(factura.getMonto() + producto.getPrecio());
+			factura.setMonto(factura.getMonto() + (producto.getPrecio()*cantidadProducto));
 			mesaOcupacion.setFactura(factura);
 		}
 
