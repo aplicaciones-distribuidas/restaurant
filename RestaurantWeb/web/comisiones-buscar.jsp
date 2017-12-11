@@ -13,10 +13,10 @@
 <ul>
     <li>Mesas</li>
     <ul>
-        <li><a href="mesas-disponibles">Mesas Disponibles</a></li>
+        <li><a href="">Mesas Disponibles</a></li>
         <li><a href="mesas-ocupadas">Mesas Ocupadas</a></li>
         <li><a href="mesa-abrir">Abrir Mesa</a></li>
-        <li><a href="mesa-reservar">Reservar Mesa</a></li>
+        <li><a href="">Reservar Mesa</a></li>
     </ul>
     <li>Comisiones</li>
     <ul>
@@ -27,7 +27,7 @@
         <li><a href="plato-directo-crear">Crear Plato Directo</a></li>
     </ul>
 </ul>
-<h3>Obtener Comisiones</h3>
+<h3>Comisiones</h3>
 <form action="comisiones" method="post">
     <table>
         <tr>
