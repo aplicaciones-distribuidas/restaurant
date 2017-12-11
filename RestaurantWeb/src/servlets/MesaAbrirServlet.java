@@ -1,6 +1,7 @@
 package servlets;
 
 import business_delegate.BusinessDelegate;
+import dto.EmpleadoView;
 import dto.SucursalView;
 import excepciones.*;
 

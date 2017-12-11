@@ -7,10 +7,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
-import dto.ComisionView;
-import dto.MesaOcupacionView;
-import dto.MesaView;
-import dto.SucursalView;
+import dto.*;
 import excepciones.*;
 import interfaces.NegocioTDA;
 
@@ -112,6 +109,15 @@ public class BusinessDelegate {
 	public void crearPlatoDirecto(String rubro, int caducidad, float comisionMozo, Date fecha, float precio, String nombreArea, int idInsumo, float cantInsumo) throws ConexionException, AreaNoExisteException, InsumoNoExisteException, RubroNoExisteException, BaseDeDatosException {
 		try {
 			remoteObject.crearPlatoDirecto(rubro, caducidad, comisionMozo, fecha, precio, nombreArea, idInsumo, cantInsumo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
+	}
+
+	public List<EmpleadoView> getEmpleadosBySucursal(String nombreSucursal) throws ConexionException, BaseDeDatosException, SucursalNoExisteException {
+		try {
+			return remoteObject.getEmpleadosBySucursal(nombreSucursal);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			throw new ConexionException();

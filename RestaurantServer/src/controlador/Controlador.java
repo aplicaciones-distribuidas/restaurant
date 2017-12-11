@@ -15,6 +15,7 @@ import dao.ProductoDAO;
 import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
 import dto.ComisionView;
+import dto.EmpleadoView;
 import dto.InsumoProductoView;
 import dto.MesaOcupacionView;
 import dto.MesaView;
@@ -95,6 +96,15 @@ public class Controlador {
 
 	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
 		return SectoresSalonDAO.getInstancia().getAll();
+	}
+
+	public List<EmpleadoView> getEmpleadosBySucursal(String nombreSucursal) throws BaseDeDatosException, SucursalNoExisteException {
+		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
+		List<EmpleadoView> empleados = new ArrayList<>();
+		for (Empleado empleado : sucursal.getEmpleados()) {
+			empleados.add(empleado.toView());
+		}
+		return empleados;
 	}
 
 	public List<MesaView> getMesas() throws BaseDeDatosException {
@@ -335,35 +345,35 @@ public class Controlador {
 		Area areaCocina = new Area("cocina");
 		Area areaBarra = new Area("barra");
 		Area areaCafeteria = new Area("cafeteria");
-		
+
 		//AreaDAO.getInstancia().save(areaCafeteria);
 		//AreaDAO.getInstancia().save(areaBarra);
 		//AreaDAO.getInstancia().save(areaCocina);
-		
+
 		Proveedor proveedor1 = new Proveedor("proveedor 1", "43028730", "calle falsa 123");
 		//Long proveedorId = ProveedorDAO.getInstancia().save(proveedor1);
 		//proveedor1.setId(proveedorId);
-		
+
 		Insumo insumo1 = new Insumo("insumo 1", "arroz", 10, new Date(), new Date(), proveedor1, 15);
 		Insumo insumo2 = new Insumo("insumo 2", "pure", 10, new Date(), new Date(), proveedor1, 15);
 		Insumo insumo3 = new Insumo("insumo 3", "papas", 10, new Date(), new Date(), proveedor1, 15);
-		
+
 		//InsumoDAO.getInstancia().save(insumo1);
 		//InsumoDAO.getInstancia().save(insumo2);
 		//InsumoDAO.getInstancia().save(insumo3);
-		
+
 		InsumoProducto insumoProducto1 = new InsumoProducto(10, insumo1);
 		InsumoProducto insumoProducto2 = new InsumoProducto(10, insumo2);
 		InsumoProducto insumoProducto3 = new InsumoProducto(10, insumo3);
-		
+
 		//InsumoProductoDAO.getInstancia().save(insumoProducto1);
 		//InsumoProductoDAO.getInstancia().save(insumoProducto2);
 		//InsumoProductoDAO.getInstancia().save(insumoProducto3);
-		
+
 		Directo directo1 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto1);
 		Directo directo2 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto2);
 		Directo directo3 = new Directo(null, "plato", 10, 10, new Date(), 100, areaCocina, insumoProducto3);
-		
+
 		ProductoDAO.getInstancia().save(directo1);
 		ProductoDAO.getInstancia().save(directo2);
 		ProductoDAO.getInstancia().save(directo3);
