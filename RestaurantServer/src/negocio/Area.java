@@ -2,13 +2,13 @@ package negocio;
 
 public class Area {
 
-	private AreaEnum nombre;
+	private String nombre;
 
-	public Area(AreaEnum nombre) {
+	public Area(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public AreaEnum getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
 

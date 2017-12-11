@@ -16,16 +16,16 @@ public class AreaEntity implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	private AreaEnumEntity nombre;
+	private String nombre;
 
-	public AreaEntity(AreaEnumEntity nombre) {
+	public AreaEntity(String nombre) {
 		this.nombre = nombre;
 	}
 
 	public AreaEntity() {
 	}
 
-	public AreaEnumEntity getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
 

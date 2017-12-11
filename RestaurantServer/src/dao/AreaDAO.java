@@ -24,11 +24,11 @@ public class AreaDAO {
 	}
 
 	public Area toBusiness(AreaEntity entity) {
-		return new Area(AreaEnum.valueOf(entity.getNombre().name()));
+		return new Area(entity.getNombre());
 	}
 
 	public AreaEntity toEntity(Area business) {
-		return new AreaEntity(AreaEnumEntity.valueOf(business.getNombre().name()));
+		return new AreaEntity(business.getNombre());
 	}
 
 

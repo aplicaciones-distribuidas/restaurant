@@ -332,9 +332,9 @@ public class Controlador {
 		Mesa m3 = new Mesa(null, 3, false, 4, sB);
 		m3.save();
 		
-		Area areaCocina = new Area(AreaEnum.cocina);
-		Area areaBarra = new Area(AreaEnum.barra);
-		Area areaCafeteria = new Area(AreaEnum.cafeteria);
+		Area areaCocina = new Area("cocina");
+		Area areaBarra = new Area("barra");
+		Area areaCafeteria = new Area("cafeteria");
 		
 		//AreaDAO.getInstancia().save(areaCafeteria);
 		//AreaDAO.getInstancia().save(areaBarra);
