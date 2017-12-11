@@ -9,7 +9,8 @@ public class SucursalView implements Serializable {
 	private String ubicacion;
 	private int capacidad;
 
-	public SucursalView(String nombre, String ubicacion, int capacidad) {
+	public SucursalView(Long id, String nombre, String ubicacion, int capacidad) {
+		this.id = id;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		this.capacidad = capacidad;
