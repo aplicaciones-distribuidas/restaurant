@@ -17,7 +17,7 @@ import dao.MesasOcupacionDAO;
 import dao.ProductoDAO;
 import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
-import dto.ComisionesMozosView;
+import dto.ComisionView;
 import dto.EmpleadoView;
 import dto.InsumoProductoView;
 import dto.MesaOcupacionView;
@@ -322,9 +322,31 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 
 
 	@Override
-	public ComisionesMozosView getComisionesMozos(String sucursal) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ComisionView> getComisionesMozos(String nombreSucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException {
+		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
+		List<ComisionView> comisionView = new ArrayList<>();
+
+		//filtro los sectores salon de la sucursal elegida
+		List<SectorSalon> sectoresSalon = SectoresSalonDAO.getInstancia().getAll();
+		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>();
+		for (SectorSalon ss : sectoresSalon) {
+			if (ss.getSucursal().getNombre().equals(sucursal.getNombre())) sectoresSalonDeLaSucursal.add(ss);
+		}
+		List<Empleado> empleados = new ArrayList<>();
+		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
+			empleados.addAll(ss.getEmpleados());
+		}
+		
+		for (Empleado e : empleados) {
+			float comision = 0;
+			for (Comision c : e.getComisiones()) {
+				comision += c.getMonto();
+			}
+			comisionView.add(new ComisionView(e.getNombre(), e.getApellido(), comision*e.getPorcentajeComision()));
+		}
+		
+		return comisionView;
+		
 	}
 
 	@Override

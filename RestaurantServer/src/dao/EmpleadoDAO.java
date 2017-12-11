@@ -8,11 +8,13 @@ import org.hibernate.Session;
 
 import entities.ComisionEntity;
 import entities.EmpleadoEntity;
+import entities.MesaEntity;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
 import hibernate.HibernateUtil;
 import negocio.Comision;
 import negocio.Empleado;
+import negocio.Mesa;
 
 public class EmpleadoDAO {
 	private static EmpleadoDAO instancia;
@@ -76,6 +78,21 @@ public class EmpleadoDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Empleado> getAll() throws BaseDeDatosException {
+		List<EmpleadoEntity> all = new ArrayList<EmpleadoEntity>();
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			all = session.createQuery("from EmpleadoEntity").list();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+		List<Empleado> empleados = new ArrayList<>();
+		for (EmpleadoEntity empleado : all) empleados.add(toBusiness(empleado));
+		return empleados;
 	}
 
 }

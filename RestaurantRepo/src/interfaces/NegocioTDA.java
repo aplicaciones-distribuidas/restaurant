@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
-import dto.ComisionesMozosView;
+import dto.ComisionView;
 import dto.EmpleadoView;
 import dto.InsumoProductoView;
 import dto.MesaOcupacionView;
@@ -59,6 +59,6 @@ public interface NegocioTDA extends Remote {
 	//public void cobrarMesa(Long idMesaOcupacion) throws RemoteException;
 	//public void facturarMesa(Long idMesaOcupacion) throws RemoteException;
 	//public void liberarMesa(Long idMesaOcupacion) throws RemoteException;
-	public ComisionesMozosView getComisionesMozos(String sucursal) throws RemoteException;
+	public List<ComisionView> getComisionesMozos(String sucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException;
 
 }
