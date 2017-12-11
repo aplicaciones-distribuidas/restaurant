@@ -6,12 +6,16 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import entities.DirectoEntity;
 import entities.FacturaEntity;
 import entities.ItemFacturaEntity;
+import entities.SemiElaboradoEntity;
 import excepciones.BaseDeDatosException;
 import hibernate.HibernateUtil;
+import negocio.Directo;
 import negocio.Factura;
 import negocio.ItemFactura;
+import negocio.SemiElaborado;
 
 public class FacturaDAO {
 	private static FacturaDAO instancia;
@@ -28,15 +32,33 @@ public class FacturaDAO {
 	public Factura toBusiness(FacturaEntity entity) {
 		List<ItemFactura> itemsFactura = new ArrayList<>();
 		for (ItemFacturaEntity ife : entity.getItemsFactura()) {
-			//itemsFactura.add(new Item);
+			Directo directo = null;
+			SemiElaborado semiElaborado = null;
+			try {
+				directo = ProductoDAO.getInstancia().toBusiness((DirectoEntity)ife.getProducto());
+			} catch (Exception e) {
+				semiElaborado = ProductoDAO.getInstancia().toBusiness((SemiElaboradoEntity)ife.getProducto());
+			}
+			
+			ItemFactura itemFactura = new ItemFactura(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
+			itemsFactura.add(itemFactura);
 		}
 		return new Factura(entity.getFecha(),entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
 	}
 
 	public FacturaEntity toEntity(Factura business) {
 		List<ItemFacturaEntity> itemsFactura = new ArrayList<>();
-		for (ItemFactura ifac : business.getItemsFactura()) {
-			//itemsFactura.add(new Item);
+		for (ItemFactura ife : business.getItemsFactura()) {
+			DirectoEntity directo = null;
+			SemiElaboradoEntity semiElaborado = null;
+			try {
+				directo = ProductoDAO.getInstancia().toEntity((Directo)ife.getProducto());
+			} catch (Exception e) {
+				semiElaborado = ProductoDAO.getInstancia().toEntity((SemiElaborado)ife.getProducto());
+			}
+			
+			ItemFacturaEntity itemFactura = new ItemFacturaEntity(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
+			itemsFactura.add(itemFactura);
 		}
 		return new FacturaEntity(business.getFecha(),business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, FormaPagoDAO.getInstancia().toEntity(business.getFormaPago()));
 	}
