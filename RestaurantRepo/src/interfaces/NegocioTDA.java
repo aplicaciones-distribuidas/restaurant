@@ -13,6 +13,7 @@ import dto.MesaView;
 import dto.PedidoReposicionView;
 import dto.PedidoView;
 import dto.ReporteView;
+import dto.SucursalView;
 import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
@@ -60,5 +61,6 @@ public interface NegocioTDA extends Remote {
 	//public void facturarMesa(Long idMesaOcupacion) throws RemoteException;
 	//public void liberarMesa(Long idMesaOcupacion) throws RemoteException;
 	public List<ComisionView> getComisionesMozos(String sucursal) throws RemoteException, BaseDeDatosException, SucursalNoExisteException;
+	public List<SucursalView> getSucursales() throws RemoteException, BaseDeDatosException;
 
 }

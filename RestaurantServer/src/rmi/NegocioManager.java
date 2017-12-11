@@ -25,6 +25,7 @@ import dto.MesaView;
 import dto.PedidoReposicionView;
 import dto.PedidoView;
 import dto.ReporteView;
+import dto.SucursalView;
 import excepciones.AreaNoExisteException;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
@@ -374,5 +375,17 @@ public class NegocioManager extends UnicastRemoteObject implements NegocioTDA, S
 
 		SemiElaborado semiElaborado = new SemiElaborado(null, rubro, caducidad, comisionMozo, fecha, precio, insumos, area);
 		semiElaborado.save();
+	}
+
+	@Override
+	public List<SucursalView> getSucursales() throws RemoteException, BaseDeDatosException {
+		List<Sucursal> sucursales = SucursalDAO.getInstancia().getAll();
+		List<SucursalView> sucursalesView = new ArrayList<>();
+		
+		for (Sucursal sucursal : sucursales) {
+			sucursalesView.add(new SucursalView(sucursal.getNombre(), sucursal.getUbicacion(), sucursal.getCapacidad()));
+		}
+		
+		return sucursalesView;
 	}
 }
