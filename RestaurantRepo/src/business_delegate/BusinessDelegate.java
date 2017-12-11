@@ -9,6 +9,7 @@ import java.util.List;
 
 import dto.MesaOcupacionView;
 import dto.MesaView;
+import dto.SucursalView;
 import excepciones.*;
 import interfaces.NegocioTDA;
 
@@ -30,6 +31,15 @@ public class BusinessDelegate {
 		if (instancia == null)
 			instancia = new BusinessDelegate();
 		return instancia;
+	}
+
+	public List<SucursalView> getSucursales() throws ConexionException, BaseDeDatosException {
+		try {
+			return remoteObject.getSucursales();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			throw new ConexionException();
+		}
 	}
 
 	public List<MesaView> mesasDisponibles(String sucursal, int cantPersonas) throws ConexionException,
