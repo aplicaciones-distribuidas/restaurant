@@ -152,10 +152,10 @@ public class Controlador {
 		MesaOcupacion mesaOcupacion = new MesaOcupacion(new Date(), null, false, cantPersonas, mesasDisponibles, null, empleado);
 
 		//guardar el objeto mesa ocupacion
-		MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(mesaOcupacion);
+		mesaOcupacion.saveWithoutSectorMesa();
 
 		//update de mesas
-		for (Mesa mesa : mesasDisponibles) MesasDAO.getInstancia().update(mesa);
+		for (Mesa mesa : mesasDisponibles) mesa.update();
 
 		return mesaOcupacion.toView();
 

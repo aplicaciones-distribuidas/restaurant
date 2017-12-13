@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dao.MesasOcupacionDAO;
 import dto.FacturaView;
 import dto.MesaOcupacionView;
 import dto.MesaView;
+import excepciones.BaseDeDatosException;
 
 public class MesaOcupacion {
 
@@ -113,6 +115,10 @@ public class MesaOcupacion {
 	public String toString() {
 		return String.format("MesaOcupacion [id => %d, cantidadPersonas => %s]", this.getId(), this
 				.getCantidadPersonas());
+	}
+	
+	public void saveWithoutSectorMesa() throws BaseDeDatosException {
+		MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(this);
 	}
 
 }

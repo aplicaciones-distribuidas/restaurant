@@ -64,5 +64,9 @@ public class Mesa {
 	public void save() throws BaseDeDatosException {
 		this.id = MesasDAO.getInstancia().save(this);
 	}
+	
+	public void update() throws BaseDeDatosException {
+		MesasDAO.getInstancia().update(this);
+	}
 
 }
