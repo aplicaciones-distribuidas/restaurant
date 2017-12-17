@@ -135,26 +135,11 @@ public class Controlador {
 	}
 
 	public List<ComisionView> getComisionesMozos(String nombreSucursal) throws BaseDeDatosException, SucursalNoExisteException {
-		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
 		List<ComisionView> comisionView = new ArrayList<>();
+		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
 
-		//filtro los sectores salon de la sucursal elegida
-		List<SectorSalon> sectoresSalon = SectoresSalonDAO.getInstancia().getAll();
-		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>();
-		for (SectorSalon ss : sectoresSalon) {
-			if (ss.getSucursal().getNombre().equals(sucursal.getNombre())) sectoresSalonDeLaSucursal.add(ss);
-		}
-		List<Empleado> empleados = new ArrayList<>();
-		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
-			empleados.addAll(ss.getEmpleados());
-		}
-
-		for (Empleado e : empleados) {
-			float comision = 0;
-			for (Comision c : e.getComisiones()) {
-				comision += c.getMonto();
-			}
-			comisionView.add(new ComisionView(e.getNombre(), e.getApellido(), comision * (e.getPorcentajeComision())));
+		for (Comision c : sucursal.obtenerComisionesMozos()) {
+			comisionView.add(c.toView());
 		}
 
 		return comisionView;
@@ -173,9 +158,7 @@ public class Controlador {
 		List<InsumoProducto> insumos = new ArrayList<>();
 
 		for (InsumoProductoView insumo : insumosView) {
-			insumos.add(
-					new InsumoProducto(insumo.getCantidad(), InsumoDAO.getInstancia().getById(insumo.getInsumoId()))
-			);
+			insumos.add(new InsumoProducto(insumo.getCantidad(), InsumoDAO.getInstancia().getById(insumo.getInsumoId())));
 		}
 
 		SemiElaborado semiElaborado = new SemiElaborado(null, rubro, caducidad, comisionMozo, fecha, precio, insumos, area);

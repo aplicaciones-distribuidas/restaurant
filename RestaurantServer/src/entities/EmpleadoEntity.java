@@ -1,5 +1,8 @@
 package entities;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,8 +27,8 @@ public class EmpleadoEntity implements Serializable {
 	@ManyToOne
 	private SectorSalonEntity sectorSalon;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "idEmpleado")
+	@OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ComisionEntity> comisiones;
 
 	public EmpleadoEntity(Long id, String nombre, String apellido, int porcentajeComision, RolEntity rol,

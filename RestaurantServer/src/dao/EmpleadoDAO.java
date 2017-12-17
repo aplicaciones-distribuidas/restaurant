@@ -10,13 +10,11 @@ import org.hibernate.Session;
 
 import entities.ComisionEntity;
 import entities.EmpleadoEntity;
-import entities.MesaEntity;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
 import hibernate.HibernateUtil;
 import negocio.Comision;
 import negocio.Empleado;
-import negocio.Mesa;
 
 public class EmpleadoDAO {
 	private static EmpleadoDAO instancia;
@@ -34,7 +32,7 @@ public class EmpleadoDAO {
 		List<Comision> comisiones = new ArrayList<>();
 
 		for (ComisionEntity comision : entity.getComisiones()) {
-			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision));
+			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision, false));
 		}
 
 		return new Empleado(entity.getId(), entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones, SectoresSalonDAO.getInstancia().toBusiness(entity.getSectorSalon()));
@@ -44,17 +42,23 @@ public class EmpleadoDAO {
 		List<Comision> comisiones = new ArrayList<>();
 
 		for (ComisionEntity comision : entity.getComisiones()) {
-			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision));
+			comisiones.add(ComisionDAO.getInstancia().toBusiness(comision, false));
 		}
 
 		return new Empleado(entity.getId(), entity.getNombre(), entity.getApellido(), entity.getPorcentajeComision(), RolDAO.getInstancia().toBusiness(entity.getRol()), comisiones, null);
 	}
 
 	public EmpleadoEntity toEntity(Empleado business) {
+		return this.toEntity(business, true);
+	}
+
+	public EmpleadoEntity toEntity(Empleado business, boolean includeComision) {
 		List<ComisionEntity> comisiones = new ArrayList<>();
 
-		for (Comision comision : business.getComisiones()) {
-			comisiones.add(ComisionDAO.getInstancia().toEntity(comision));
+		if (includeComision) {
+			for (Comision comision : business.getComisiones()) {
+				comisiones.add(ComisionDAO.getInstancia().toEntity(comision, false));
+			}
 		}
 
 		return new EmpleadoEntity(business.getId(), business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones, SectoresSalonDAO.getInstancia().toEntity(business.getSectorSalon()));
@@ -64,7 +68,7 @@ public class EmpleadoDAO {
 		List<ComisionEntity> comisiones = new ArrayList<>();
 
 		for (Comision comision : business.getComisiones()) {
-			comisiones.add(ComisionDAO.getInstancia().toEntity(comision));
+			comisiones.add(ComisionDAO.getInstancia().toEntity(comision, false));
 		}
 
 		return new EmpleadoEntity(business.getId(), business.getNombre(), business.getApellido(), business.getPorcentajeComision(), RolDAO.getInstancia().toEntity(business.getRol()), comisiones, null);

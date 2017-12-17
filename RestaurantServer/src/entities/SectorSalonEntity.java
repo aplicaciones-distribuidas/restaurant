@@ -28,7 +28,7 @@ public class SectorSalonEntity implements Serializable {
 	}
 
 	public SectorSalonEntity(Long id, String nombre, SucursalEntity sucursal, List<MesaEntity> mesas,
-			List<EmpleadoEntity> empleados) {
+							 List<EmpleadoEntity> empleados) {
 		this.id = id;
 		this.nombre = nombre;
 		this.sucursal = sucursal;

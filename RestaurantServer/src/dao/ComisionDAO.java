@@ -1,5 +1,7 @@
 package dao;
 
+import entities.EmpleadoEntity;
+import negocio.Empleado;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -21,14 +23,32 @@ public class ComisionDAO {
 	}
 
 	public Comision toBusiness(ComisionEntity entity) {
-		return new Comision(entity.getMonto(), entity.getFecha());
+		return toBusiness(entity, true);
+	}
+
+	public Comision toBusiness(ComisionEntity entity, boolean includeEmpleado) {
+		Empleado empleado = null;
+		if (includeEmpleado) {
+			empleado = EmpleadoDAO.getInstancia().toBusiness(entity.getEmpleado());
+		}
+		return new Comision(entity.getId(), empleado, entity.getMonto(), entity.getFecha());
 	}
 
 	public ComisionEntity toEntity(Comision business) {
-		return new ComisionEntity(business.getMonto(), business.getFecha());
+		return this.toEntity(business, true);
 	}
 
-	public void save(Comision comision) throws BaseDeDatosException {
+	public ComisionEntity toEntity(Comision business, boolean includeEmpleado) {
+		EmpleadoEntity empleado = null;
+
+		if (includeEmpleado) {
+			empleado = EmpleadoDAO.getInstancia().toEntity(business.getEmpleado(), false);
+		}
+
+		return new ComisionEntity(business.getId(), empleado, business.getMonto(), business.getFecha());
+	}
+
+	public Long save(Comision comision) throws BaseDeDatosException {
 		ComisionEntity entity = this.toEntity(comision);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
@@ -39,6 +59,7 @@ public class ComisionDAO {
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+		return entity.getId();
 	}
 
 }

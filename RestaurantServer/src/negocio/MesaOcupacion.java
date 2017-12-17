@@ -130,8 +130,8 @@ public class MesaOcupacion {
 		this.setProximaLiberarse(true);
 		for (Mesa mesa : this.getMesaItems()) mesa.setOcupada(false);
 
-		//actualizar el empleado con la comision
-		this.getEmpleado().getComisiones().add(new Comision(this.getFactura().getComisionMozo(), new Date()));
+		Comision comision = new Comision(this.getEmpleado(), this.getFactura().calcularComisionMozo());
+		comision.save();
 
 		this.update();
 	}

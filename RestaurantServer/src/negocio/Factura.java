@@ -77,6 +77,10 @@ public class Factura {
 		this.formaPago = formaPago;
 	}
 
+	public float calcularComisionMozo() {
+		return this.comisionMozo * this.monto / 100;
+	}
+
 	public void save() throws BaseDeDatosException {
 		this.id = FacturaDAO.getInstancia().save(this);
 	}

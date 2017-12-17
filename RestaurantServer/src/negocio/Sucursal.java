@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import dao.EmpleadoDAO;
-import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
 import excepciones.BaseDeDatosException;
 import excepciones.EmpleadoNoExisteException;
@@ -138,16 +137,6 @@ public class Sucursal {
 		return empleados;
 	}
 
-	public List<SectorSalon> getSectoresSalon() throws BaseDeDatosException {
-		//filtro los sectores salon de la sucursal elegida
-		List<SectorSalon> sectoresSalon = SectoresSalonDAO.getInstancia().getAll();
-		List<SectorSalon> sectoresSalonDeLaSucursal = new ArrayList<>();
-		for (SectorSalon ss : sectoresSalon) {
-			if (ss.getSucursal().getNombre().equals(this.getNombre())) sectoresSalonDeLaSucursal.add(ss);
-		}
-		return sectoresSalonDeLaSucursal;
-	}
-
 	public MesaOcupacion abrirMesa(int cantPersonas, Long idEmpleado) throws NoHayMesasDisponiblesException, BaseDeDatosException, EmpleadoNoExisteException {
 		Empleado empleado = EmpleadoDAO.getInstancia().getById(idEmpleado);
 		SectorSalon sectorSalonEmpleado = empleado.getSectorSalon();
@@ -161,6 +150,27 @@ public class Sucursal {
 		MesaOcupacion mesaOcupacion = new MesaOcupacion(new Date(), null, false, cantPersonas, mesasDisponibles, null, empleado);
 		mesaOcupacion.save();
 		return mesaOcupacion;
+	}
+
+	public List<Comision> obtenerComisionesMozos() {
+		List<SectorSalon> sectoresSalonDeLaSucursal = this.getSectores();
+
+		List<Empleado> empleados = new ArrayList<>();
+		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
+			empleados.addAll(ss.getEmpleados());
+		}
+
+		List<Comision> comisiones = new ArrayList<>();
+
+		for (Empleado e : empleados) {
+			float comision = 0;
+			for (Comision c : e.getComisiones()) {
+				comision += c.getMonto();
+			}
+			comisiones.add(new Comision(e, comision));
+		}
+
+		return comisiones;
 	}
 
 }
