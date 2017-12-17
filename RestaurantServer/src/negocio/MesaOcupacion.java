@@ -103,6 +103,22 @@ public class MesaOcupacion {
 		return this.empleado;
 	}
 
+	public void agregarProducto(Producto producto, int cantidadProducto) throws BaseDeDatosException {
+		if (this.getFactura() == null) { //es el primer plato que se agrega y no tiene factura creada
+			List<ItemFactura> itemsFactura = new ArrayList<>();
+			itemsFactura.add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
+			Factura factura = new Factura(new Date(), producto.getComisionMozo(), false, producto.getPrecio(), itemsFactura, null);
+			this.setFactura(factura);
+		} else { // ya tiene platos y por lo tanto tiene factura con al menos 1 item creada, se agrega el nuevo item y se actualizan los valores
+			Factura factura = this.getFactura();
+			factura.setComisionMozo(factura.getComisionMozo() + producto.getComisionMozo());
+			factura.getItemsFactura().add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
+			factura.setMonto(factura.getMonto() + (producto.getPrecio() * cantidadProducto));
+			this.setFactura(factura);
+		}
+		this.update();
+	}
+
 	public MesaOcupacionView toView() {
 		List<MesaView> mesas = new ArrayList<MesaView>();
 		for (Mesa mesa : this.mesaItems) {
@@ -119,6 +135,10 @@ public class MesaOcupacion {
 
 	public void save() throws BaseDeDatosException {
 		this.id = MesasOcupacionDAO.getInstancia().save(this);
+	}
+
+	public void update() throws BaseDeDatosException {
+		MesasOcupacionDAO.getInstancia().update(this);
 	}
 
 	public void saveWithoutSectorMesa() throws BaseDeDatosException {

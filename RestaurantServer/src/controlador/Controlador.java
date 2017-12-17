@@ -29,11 +29,9 @@ import negocio.Area;
 import negocio.Comision;
 import negocio.Directo;
 import negocio.Empleado;
-import negocio.Factura;
 import negocio.FormaPago;
 import negocio.Insumo;
 import negocio.InsumoProducto;
-import negocio.ItemFactura;
 import negocio.Mesa;
 import negocio.MesaOcupacion;
 import negocio.Producto;
@@ -126,72 +124,13 @@ public class Controlador {
 	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException, MesaOcupacionNoExisteException, ProductoSinStockException {
 		//buscar el producto y sino existe tirar una ProductoNoExisteException
 		Producto producto = ProductoDAO.getInstancia().getById(idProducto);
-		Directo productoDirecto = null;
-		SemiElaborado productoSemiElaborado = null;
-
-		try {
-			productoDirecto = (Directo) producto;
-		} catch (Exception e) {
-			productoSemiElaborado = (SemiElaborado) producto;
-		}
-
-
-		//buscar la mesaocupacion y sino existe tirar una mesaocupacionNoExisteException
-		MesaOcupacion mesaOcupacion = null;
-		for (MesaOcupacion mo : MesasOcupacionDAO.getInstancia().getAll()) {
-			if (mo.getId().equals(idMesaOcupacion)) {
-				mesaOcupacion = mo;
-				break;
-			}
-		}
-
-		if (mesaOcupacion == null) throw new MesaOcupacionNoExisteException();
+		MesaOcupacion mesaOcupacion = MesasOcupacionDAO.getInstancia().getById(idMesaOcupacion);
 
 		//validar que el producto tenga el stock que se solicita sino ProductoSinStockException, si tiene, descontar el stock y actualizar los insumos
-		if (productoDirecto != null) { // es directo
-
-			if (productoDirecto.getInsumoProducto().getInsumo().getCantidad() >= productoDirecto.getInsumoProducto().getCantidad()) { // hay stock
-				// descuento stock y actualizo insumo
-				productoDirecto.getInsumoProducto().getInsumo().setCantidad(productoDirecto.getInsumoProducto().getInsumo().getCantidad() - productoDirecto.getInsumoProducto().getCantidad());
-				InsumoDAO.getInstancia().update(productoDirecto.getInsumoProducto().getInsumo());
-			} else { // no hay stock
-				throw new ProductoSinStockException();
-			}
-
-		} else { // es semielaborado
-			boolean tieneStock = true;
-
-			for (InsumoProducto ip : productoSemiElaborado.getInsumosProducto()) {
-				if (ip.getInsumo().getCantidad() < ip.getCantidad()) {
-					tieneStock = false;
-					break;
-				}
-			}
-
-			if (!tieneStock) throw new ProductoSinStockException();
-
-			// si llega aca es porque todos los insumos del semielaborado tienen stock suficiente, entonces descuento stock y actualizo insumos
-			for (InsumoProducto ip : productoSemiElaborado.getInsumosProducto()) {
-				ip.getInsumo().setCantidad(ip.getInsumo().getCantidad() - ip.getCantidad());
-				InsumoDAO.getInstancia().update(ip.getInsumo());
-			}
-		}
+		producto.descontarStock();
 
 		//agregar a mesa ocupacion, factura, el producto y la cantidad que se agregaron (y actualizar el objeto mesaocupacion)
-		if (mesaOcupacion.getFactura() == null) { //es el primer plato que se agrega y no tiene factura creada
-			List<ItemFactura> itemsFactura = new ArrayList<>();
-			itemsFactura.add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			Factura factura = new Factura(new Date(), producto.getComisionMozo(), false, producto.getPrecio(), itemsFactura, null);
-			mesaOcupacion.setFactura(factura);
-		} else { // ya tiene platos y por lo tanto tiene factura con al menos 1 item creada, se agrega el nuevo item y se actualizan los valores
-			Factura factura = mesaOcupacion.getFactura();
-			factura.setComisionMozo(factura.getComisionMozo() + producto.getComisionMozo());
-			factura.getItemsFactura().add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			factura.setMonto(factura.getMonto() + (producto.getPrecio() * cantidadProducto));
-			mesaOcupacion.setFactura(factura);
-		}
-
-		MesasOcupacionDAO.getInstancia().update(mesaOcupacion);
+		mesaOcupacion.agregarProducto(producto, cantidadProducto);
 	}
 
 	public void cerrarMesa(Long idMesaOcupacion, Long idFormaDePago) throws BaseDeDatosException, MesaOcupacionNoExisteException, FormaDePagoNoExisteException {

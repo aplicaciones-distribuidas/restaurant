@@ -1,6 +1,7 @@
 package negocio;
 
 import excepciones.BaseDeDatosException;
+import excepciones.ProductoSinStockException;
 
 import java.util.Date;
 
@@ -62,5 +63,7 @@ public abstract class Producto {
 	}
 
 	public abstract void save() throws BaseDeDatosException;
+
+	public abstract void descontarStock() throws BaseDeDatosException, ProductoSinStockException;
 
 }

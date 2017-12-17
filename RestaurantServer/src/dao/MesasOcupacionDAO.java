@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import excepciones.MesaOcupacionNoExisteException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -92,6 +93,24 @@ public class MesasOcupacionDAO {
 			throw new BaseDeDatosException(e);
 		}
 		return this.toBusiness(all);
+	}
+
+	public MesaOcupacion getById(Long id) throws BaseDeDatosException, MesaOcupacionNoExisteException {
+		MesaOcupacionEntity entity;
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			entity = (MesaOcupacionEntity) session.createQuery("from MesaOcupacionEntity mo where mo.id = :id").setParameter(
+					"id", id).uniqueResult();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+
+		if (entity == null) {
+			throw new MesaOcupacionNoExisteException();
+		}
+
+		return this.toBusiness(entity);
 	}
 
 	@SuppressWarnings("unchecked")

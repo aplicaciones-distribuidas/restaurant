@@ -58,7 +58,6 @@ public class ProductoDAO {
 	}
 
 	public SemiElaborado toBusiness(SemiElaboradoEntity entity) {
-
 		List<InsumoProducto> insumos = new ArrayList<>();
 
 		for (InsumoProductoEntity insumo : entity.getInsumosProducto()) {
@@ -134,7 +133,7 @@ public class ProductoDAO {
 		ProductoEntity entity;
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			entity = (ProductoEntity) session.createQuery("from ProductoEntity s where s.id = :id")
+			entity = (ProductoEntity) session.createQuery("from ProductoEntity p where p.id = :id")
 					.setParameter("id", id).uniqueResult();
 			session.close();
 		} catch (HibernateException e) {
@@ -142,7 +141,7 @@ public class ProductoDAO {
 		}
 
 		if (entity == null) {
-			throw new InsumoNoExisteException();
+			throw new ProductoNoExisteException();
 		}
 
 		try {
