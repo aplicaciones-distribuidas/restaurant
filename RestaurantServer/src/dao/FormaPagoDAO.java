@@ -1,7 +1,5 @@
 package dao;
 
-import entities.MesaEntity;
-import negocio.Mesa;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -39,6 +37,10 @@ public class FormaPagoDAO {
 	}
 
 	public FormaPagoEntity toEntity(FormaPago business) {
+		if (business == null) {
+			return null;
+		}
+
 		return new FormaPagoEntity(business.getId(), business.getTipo(), business.getNumeroCupon(), business.getBanco(), business.getMonto());
 	}
 

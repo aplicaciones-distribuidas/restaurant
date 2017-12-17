@@ -3,13 +3,10 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import entities.DirectoEntity;
-import entities.FacturaEntity;
-import entities.ItemFacturaEntity;
-import entities.SemiElaboradoEntity;
 import excepciones.BaseDeDatosException;
 import hibernate.HibernateUtil;
 import negocio.Directo;
@@ -50,6 +47,7 @@ public class FacturaDAO {
 		if (business == null) {
 			return null;
 		}
+
 		List<ItemFacturaEntity> itemsFactura = new ArrayList<>();
 		if (business.getItemsFactura() != null) {
 			for (ItemFactura ife : business.getItemsFactura()) {
@@ -66,7 +64,8 @@ public class FacturaDAO {
 			}
 		}
 
-		return new FacturaEntity(business.getId(), business.getFecha(), business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, null);
+		FormaPagoEntity formaDePago = FormaPagoDAO.getInstancia().toEntity(business.getFormaPago());
+		return new FacturaEntity(business.getId(), business.getFecha(), business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, formaDePago);
 	}
 
 	public Long save(Factura factura) throws BaseDeDatosException {
