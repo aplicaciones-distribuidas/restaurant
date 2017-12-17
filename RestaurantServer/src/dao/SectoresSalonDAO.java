@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import excepciones.MesaNoExisteException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -35,7 +36,7 @@ public class SectoresSalonDAO {
 
 	public SectorSalon toBusiness(SectorSalonEntity entity, boolean includeSucursal) {
 		boolean includeSectorSalon = false;
-		
+
 		if (entity == null) return null;
 
 		Sucursal sucursal = null;
@@ -45,7 +46,7 @@ public class SectoresSalonDAO {
 
 		List<Mesa> mesas = MesasDAO.getInstancia().toBusiness(entity.getMesas(), includeSectorSalon);
 		List<Empleado> empleados = new ArrayList<Empleado>();
-		
+
 		for (EmpleadoEntity ee : entity.getEmpleados()) {
 			empleados.add(EmpleadoDAO.getInstancia().toBusinessWithoutSectoresSalon(ee));
 		}
@@ -69,12 +70,12 @@ public class SectoresSalonDAO {
 		if (business == null) return null;
 		SucursalEntity sucursal = SucursalDAO.getInstancia().toEntity(business.getSucursal());
 		List<MesaEntity> mesas = MesasDAO.getInstancia().toEntity(business.getMesas());
-		List<EmpleadoEntity> empleados = new ArrayList<EmpleadoEntity>(); 
-		
+		List<EmpleadoEntity> empleados = new ArrayList<EmpleadoEntity>();
+
 		for (Empleado e : business.getEmpleados()) {
 			empleados.add(EmpleadoDAO.getInstancia().toEntity(e));
 		}
-		
+
 		return new SectorSalonEntity(business.getId(), business.getNombre(), sucursal, mesas, empleados);
 	}
 

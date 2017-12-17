@@ -69,58 +69,47 @@ public class SectorSalon {
 
 	public List<Mesa> getMesasDisponibles(int cantPersonas) throws BaseDeDatosException {
 		List<Mesa> mesas = new ArrayList<Mesa>();
-		
 		List<Mesa> mesasDisponiblesPorSalon = MesasDAO.getInstancia().getDisponiblesBySectorSalon(this);
-		
+
 		for (Mesa mesa : mesasDisponiblesPorSalon) {
-			int capacidadMaxima = mesa.getCapacidad();
-			switch (capacidadMaxima) {
-			case 8:
-				capacidadMaxima += 2;
-				break;
-			case 6:
-				capacidadMaxima += 1;
-				break;
-			default:
-				break;
-			}
+			int capacidadMaxima = calculateCapacidadMaxima(mesa.getCapacidad());
 			if (capacidadMaxima >= cantPersonas) {
 				mesas.add(mesa);
 				break;
 			}
 		}
-		
+
 		//si mesas esta vacio significa que no hay una mesa que cumpla con la condicion, entonces hay que unir mesas
 		if (mesas.isEmpty()) {
 			int capacidadAcum = 0;
 			for (Mesa mesa : mesasDisponiblesPorSalon) {
-				int capacidadMaxima = mesa.getCapacidad();
-				switch (capacidadMaxima) {
-				case 8:
-					capacidadMaxima += 2;
-					break;
-				case 6:
-					capacidadMaxima += 1;
-					break;
-				default:
-					break;
-				}
-				capacidadAcum+=capacidadMaxima;
-				
+				int capacidadMaxima = calculateCapacidadMaxima(mesa.getCapacidad());
+				capacidadAcum += capacidadMaxima;
+
 				if (capacidadAcum >= cantPersonas) {
 					break;
 				}
 				mesas.add(mesa);
 			}
 			return mesas;
-		} else {
-			return mesas;
 		}
-		
+
+		return mesas;
 	}
 
 	public List<MesaOcupacion> getMesasOcupadas() throws BaseDeDatosException {
 		return MesasOcupacionDAO.getInstancia().getOcupadasBySectorSalon(this);
+	}
+
+	private int calculateCapacidadMaxima(int lugares) {
+		switch (lugares) {
+			case 8:
+				return lugares + 2;
+			case 6:
+				return lugares + 1;
+			default:
+				return lugares;
+		}
 	}
 
 }

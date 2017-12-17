@@ -51,6 +51,11 @@ public class Mesa {
 		this.sectorSalon = sectorSalon;
 	}
 
+	public void ocupar() throws BaseDeDatosException {
+		this.setOcupada(true);
+		this.update();
+	}
+
 	public MesaView toView() {
 		return new MesaView(this.id, this.numero, this.ocupada, this.sectorSalon != null ? this.sectorSalon.toView() : null);
 	}
@@ -64,7 +69,7 @@ public class Mesa {
 	public void save() throws BaseDeDatosException {
 		this.id = MesasDAO.getInstancia().save(this);
 	}
-	
+
 	public void update() throws BaseDeDatosException {
 		MesasDAO.getInstancia().update(this);
 	}

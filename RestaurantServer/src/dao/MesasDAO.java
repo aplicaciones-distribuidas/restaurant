@@ -54,7 +54,7 @@ public class MesasDAO {
 		return new MesaEntity(business.getId(), business.getNumero(), business.isOcupada(), business.getCapacidad(),
 				sectorSalon);
 	}
-	
+
 	public MesaEntity toEntityWithoutMesaSector(Mesa business) {
 		SectorSalonEntity sectorSalon = null;
 		return new MesaEntity(business.getId(), business.getNumero(), business.isOcupada(), business.getCapacidad(),
@@ -68,7 +68,7 @@ public class MesasDAO {
 		}
 		return entities;
 	}
-	
+
 	public List<MesaEntity> toEntityWithoutMesaSector(List<Mesa> businesses) {
 		List<MesaEntity> entities = new ArrayList<MesaEntity>();
 		for (Mesa business : businesses) {
@@ -115,7 +115,7 @@ public class MesasDAO {
 		List<MesaEntity> all = new ArrayList<MesaEntity>();
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			all = session.createQuery("from MesaEntity m where m.sectorSalon = :sectorSalon and m.ocupada = 0")
+			all = session.createQuery("from MesaEntity m where m.sectorSalon = :sectorSalon and m.ocupada = false")
 					.setParameter("sectorSalon", sectorSalonEntity).list();
 			session.close();
 		} catch (HibernateException e) {
@@ -137,7 +137,7 @@ public class MesasDAO {
 		}
 		return entity.getId();
 	}
-	
+
 	public Long update(Mesa mesa) throws BaseDeDatosException {
 		MesaEntity entity = this.toEntity(mesa);
 		try {

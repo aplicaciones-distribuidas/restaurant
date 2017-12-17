@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import dao.AreaDAO;
-import dao.EmpleadoDAO;
 import dao.FormaPagoDAO;
 import dao.InsumoDAO;
 import dao.MesasDAO;
@@ -121,44 +120,7 @@ public class Controlador {
 
 	public MesaOcupacionView abrirMesa(String nombreSucursal, int cantPersonas, Long idEmpleado) throws NoHayMesasDisponiblesException, BaseDeDatosException, SucursalNoExisteException, EmpleadoNoExisteException {
 		Sucursal sucursal = SucursalDAO.getInstancia().getByNombre(nombreSucursal);
-		Empleado empleado = EmpleadoDAO.getInstancia().getById(idEmpleado);
-
-		List<SectorSalon> sectoresSalonDeLaSucursal = sucursal.getSectoresSalon();
-
-		//filtro los sectores salon que tengan al empleado elegido
-		List<SectorSalon> sectoresSalonEmpleado = new ArrayList<>();
-		for (SectorSalon ss : sectoresSalonDeLaSucursal) {
-			for (Empleado e : ss.getEmpleados()) {
-				if (e.getNombre().equals(empleado.getNombre()) && e.getApellido().equals(empleado.getApellido()))
-					sectoresSalonEmpleado.add(ss);
-			}
-		}
-
-		//mesas disponibles
-		List<Mesa> mesasDisponibles = new ArrayList<>();
-
-		for (SectorSalon ss : sectoresSalonEmpleado) {
-			if (!ss.getMesasDisponibles(cantPersonas).isEmpty()) {
-				mesasDisponibles.addAll(ss.getMesasDisponibles(cantPersonas));
-				break;
-			}
-		}
-
-		if (mesasDisponibles.isEmpty()) throw new NoHayMesasDisponiblesException();
-
-		//hay mesas dispobibles, entonces se marcan las mesas como ocupadas y se crea un objeto MesaOcupacion
-		for (Mesa mesa : mesasDisponibles) mesa.setOcupada(true);
-
-		MesaOcupacion mesaOcupacion = new MesaOcupacion(new Date(), null, false, cantPersonas, mesasDisponibles, null, empleado);
-
-		//guardar el objeto mesa ocupacion
-		mesaOcupacion.saveWithoutSectorMesa();
-
-		//update de mesas
-		for (Mesa mesa : mesasDisponibles) mesa.update();
-
-		return mesaOcupacion.toView();
-
+		return sucursal.abrirMesa(cantPersonas, idEmpleado).toView();
 	}
 
 	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException, MesaOcupacionNoExisteException, ProductoSinStockException {

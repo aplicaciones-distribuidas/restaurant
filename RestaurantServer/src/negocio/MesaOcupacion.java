@@ -13,7 +13,7 @@ import excepciones.BaseDeDatosException;
 public class MesaOcupacion {
 
 	public MesaOcupacion(Long id, Date fechaIngreso, Date fechaEgreso, boolean proximaLiberarse, int cantidadPersonas,
-			List<Mesa> mesaItems, Factura factura, Empleado empleado) {
+						 List<Mesa> mesaItems, Factura factura, Empleado empleado) {
 		this.id = id;
 		this.fechaIngreso = fechaIngreso;
 		this.fechaEgreso = fechaEgreso;
@@ -98,7 +98,7 @@ public class MesaOcupacion {
 	public void setFactura(Factura factura) {
 		this.factura = factura;
 	}
-	
+
 	public Empleado getEmpleado() {
 		return this.empleado;
 	}
@@ -108,7 +108,7 @@ public class MesaOcupacion {
 		for (Mesa mesa : this.mesaItems) {
 			mesas.add(mesa.toView());
 		}
-		return new MesaOcupacionView(this.id, mesas, this.factura != null ? new FacturaView(this.factura.getMonto()): null);
+		return new MesaOcupacionView(this.id, mesas, this.factura != null ? new FacturaView(this.factura.getMonto()) : null);
 	}
 
 	@Override
@@ -116,9 +116,13 @@ public class MesaOcupacion {
 		return String.format("MesaOcupacion [id => %d, cantidadPersonas => %s]", this.getId(), this
 				.getCantidadPersonas());
 	}
-	
+
+	public void save() throws BaseDeDatosException {
+		this.id = MesasOcupacionDAO.getInstancia().save(this);
+	}
+
 	public void saveWithoutSectorMesa() throws BaseDeDatosException {
-		MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(this);
+		this.id = MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(this);
 	}
 
 }

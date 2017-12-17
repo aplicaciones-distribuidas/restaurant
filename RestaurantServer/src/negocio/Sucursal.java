@@ -1,11 +1,15 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import dao.EmpleadoDAO;
 import dao.SectoresSalonDAO;
 import dao.SucursalDAO;
 import excepciones.BaseDeDatosException;
+import excepciones.EmpleadoNoExisteException;
+import excepciones.NoHayMesasDisponiblesException;
 
 public class Sucursal {
 
@@ -142,6 +146,21 @@ public class Sucursal {
 			if (ss.getSucursal().getNombre().equals(this.getNombre())) sectoresSalonDeLaSucursal.add(ss);
 		}
 		return sectoresSalonDeLaSucursal;
+	}
+
+	public MesaOcupacion abrirMesa(int cantPersonas, Long idEmpleado) throws NoHayMesasDisponiblesException, BaseDeDatosException, EmpleadoNoExisteException {
+		Empleado empleado = EmpleadoDAO.getInstancia().getById(idEmpleado);
+		SectorSalon sectorSalonEmpleado = empleado.getSectorSalon();
+
+		List<Mesa> mesasDisponibles = sectorSalonEmpleado.getMesasDisponibles(cantPersonas);
+
+		if (mesasDisponibles.isEmpty()) throw new NoHayMesasDisponiblesException();
+
+		for (Mesa mesa : mesasDisponibles) mesa.ocupar();
+
+		MesaOcupacion mesaOcupacion = new MesaOcupacion(new Date(), null, false, cantPersonas, mesasDisponibles, null, empleado);
+		mesaOcupacion.save();
+		return mesaOcupacion;
 	}
 
 }

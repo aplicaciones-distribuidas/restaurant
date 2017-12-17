@@ -35,35 +35,38 @@ public class FacturaDAO {
 			Directo directo = null;
 			SemiElaborado semiElaborado = null;
 			try {
-				directo = ProductoDAO.getInstancia().toBusiness((DirectoEntity)ife.getProducto());
+				directo = ProductoDAO.getInstancia().toBusiness((DirectoEntity) ife.getProducto());
 			} catch (Exception e) {
-				semiElaborado = ProductoDAO.getInstancia().toBusiness((SemiElaboradoEntity)ife.getProducto());
+				semiElaborado = ProductoDAO.getInstancia().toBusiness((SemiElaboradoEntity) ife.getProducto());
 			}
-			
+
 			ItemFactura itemFactura = new ItemFactura(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
 			itemsFactura.add(itemFactura);
 		}
-		return new Factura(entity.getFecha(),entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, entity.getFormaPago() == null ? null : FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
+		return new Factura(entity.getFecha(), entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, entity.getFormaPago() == null ? null : FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
 	}
 
 	public FacturaEntity toEntity(Factura business) {
+		if (business == null) {
+			return null;
+		}
 		List<ItemFacturaEntity> itemsFactura = new ArrayList<>();
 		if (business.getItemsFactura() != null) {
 			for (ItemFactura ife : business.getItemsFactura()) {
 				DirectoEntity directo = null;
 				SemiElaboradoEntity semiElaborado = null;
 				try {
-					directo = ProductoDAO.getInstancia().toEntity((Directo)ife.getProducto());
+					directo = ProductoDAO.getInstancia().toEntity((Directo) ife.getProducto());
 				} catch (Exception e) {
-					semiElaborado = ProductoDAO.getInstancia().toEntity((SemiElaborado)ife.getProducto());
+					semiElaborado = ProductoDAO.getInstancia().toEntity((SemiElaborado) ife.getProducto());
 				}
-				
+
 				ItemFacturaEntity itemFactura = new ItemFacturaEntity(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
 				itemsFactura.add(itemFactura);
 			}
 		}
-		
-		return new FacturaEntity(business.getFecha(),business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, null);
+
+		return new FacturaEntity(business.getFecha(), business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, null);
 	}
 
 	public void save(Factura factura) throws BaseDeDatosException {
