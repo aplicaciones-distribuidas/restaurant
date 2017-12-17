@@ -107,7 +107,7 @@ public class MesaOcupacion {
 		if (this.getFactura() == null) { //es el primer plato que se agrega y no tiene factura creada
 			List<ItemFactura> itemsFactura = new ArrayList<>();
 			itemsFactura.add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			Factura factura = new Factura(new Date(), producto.getComisionMozo(), false, producto.getPrecio(), itemsFactura, null);
+			Factura factura = new Factura(null, new Date(), producto.getComisionMozo(), false, producto.getPrecio(), itemsFactura, null);
 			this.setFactura(factura);
 		} else { // ya tiene platos y por lo tanto tiene factura con al menos 1 item creada, se agrega el nuevo item y se actualizan los valores
 			Factura factura = this.getFactura();
@@ -116,6 +116,23 @@ public class MesaOcupacion {
 			factura.setMonto(factura.getMonto() + (producto.getPrecio() * cantidadProducto));
 			this.setFactura(factura);
 		}
+		this.update();
+	}
+
+	public void cerrar(FormaPago formaDePago) throws BaseDeDatosException {
+		Factura factura = this.getFactura();
+		factura.setCobrado(true);
+		factura.setFormaPago(formaDePago);
+		factura.setFecha(new Date());
+		factura.update();
+
+		this.setFechaEgreso(new Date());
+		this.setProximaLiberarse(true);
+		for (Mesa mesa : this.getMesaItems()) mesa.setOcupada(false);
+
+		//actualizar el empleado con la comision
+		this.getEmpleado().getComisiones().add(new Comision(this.getFactura().getComisionMozo(), new Date()));
+
 		this.update();
 	}
 

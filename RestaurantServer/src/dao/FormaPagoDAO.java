@@ -46,7 +46,7 @@ public class FormaPagoDAO {
 		FormaPagoEntity entity;
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			entity = (FormaPagoEntity) session.createQuery("from FormaPagoEntity s where s.id = :id")
+			entity = (FormaPagoEntity) session.createQuery("from FormaPagoEntity f where f.id = :id")
 					.setParameter("id", id).uniqueResult();
 			session.close();
 		} catch (HibernateException e) {

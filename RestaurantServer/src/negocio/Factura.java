@@ -1,24 +1,32 @@
 package negocio;
 
+import dao.FacturaDAO;
+import excepciones.BaseDeDatosException;
+
 import java.util.Date;
 import java.util.List;
 
 public class Factura {
-	
+	private Long id;
 	private Date fecha;
 	private float comisionMozo;
 	private boolean cobrado;
 	private float monto;
 	private List<ItemFactura> itemsFactura;
 	private FormaPago formaPago;
-	
-	public Factura(Date fecha, float comisionMozo, boolean cobrado, float monto, List<ItemFactura> itemsFactura, FormaPago formaPago) {
+
+	public Factura(Long id, Date fecha, float comisionMozo, boolean cobrado, float monto, List<ItemFactura> itemsFactura, FormaPago formaPago) {
+		this.id = id;
 		this.fecha = fecha;
 		this.comisionMozo = comisionMozo;
 		this.cobrado = cobrado;
 		this.monto = monto;
 		this.itemsFactura = itemsFactura;
 		this.formaPago = formaPago;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public Date getFecha() {
@@ -68,5 +76,13 @@ public class Factura {
 	public void setFormaPago(FormaPago formaPago) {
 		this.formaPago = formaPago;
 	}
-	
+
+	public void save() throws BaseDeDatosException {
+		this.id = FacturaDAO.getInstancia().save(this);
+	}
+
+	public void update() throws BaseDeDatosException {
+		FacturaDAO.getInstancia().update(this);
+	}
+
 }

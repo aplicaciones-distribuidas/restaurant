@@ -129,34 +129,9 @@ public class Controlador {
 	}
 
 	public void cerrarMesa(Long idMesaOcupacion, Long idFormaDePago) throws BaseDeDatosException, MesaOcupacionNoExisteException, FormaDePagoNoExisteException {
-		//buscar la forma de pago y sino tirar un FormaDePagoNoExisteException
 		FormaPago formaDePago = FormaPagoDAO.getInstancia().getById(idFormaDePago);
-
-		// buscar la mesa ocupacion y sino tirar un mesaOcupacionNoExiste exception
-		MesaOcupacion mesaOcupacion = null;
-		for (MesaOcupacion mo : MesasOcupacionDAO.getInstancia().getAll()) {
-			if (mo.getId().equals(idMesaOcupacion)) {
-				mesaOcupacion = mo;
-				break;
-			}
-		}
-
-		if (mesaOcupacion == null) throw new MesaOcupacionNoExisteException();
-
-		//actualizar valores de MesaOcupacion
-		mesaOcupacion.setFechaEgreso(new Date());
-		mesaOcupacion.setProximaLiberarse(true);
-		//mesaOcupacion.setFactura(new Factura(new Date(), 0, true, 0, null, formaDePago));
-		mesaOcupacion.getFactura().setCobrado(true);
-		mesaOcupacion.getFactura().setFormaPago(formaDePago);
-		mesaOcupacion.getFactura().setFecha(new Date());
-		// liberar mesas del sector salon
-		for (Mesa mesa : mesaOcupacion.getMesaItems()) mesa.setOcupada(false);
-
-		//actualizar el empleado con la comision
-		mesaOcupacion.getEmpleado().getComisiones().add(new Comision(mesaOcupacion.getFactura().getComisionMozo(), new Date()));
-
-		MesasOcupacionDAO.getInstancia().update(mesaOcupacion);
+		MesaOcupacion mesaOcupacion = MesasOcupacionDAO.getInstancia().getById(idMesaOcupacion);
+		mesaOcupacion.cerrar(formaDePago);
 	}
 
 	public List<ComisionView> getComisionesMozos(String nombreSucursal) throws BaseDeDatosException, SucursalNoExisteException {

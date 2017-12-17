@@ -43,7 +43,7 @@ public class FacturaDAO {
 			ItemFactura itemFactura = new ItemFactura(directo != null ? directo : semiElaborado, ife.getCantidad(), ife.getMonto());
 			itemsFactura.add(itemFactura);
 		}
-		return new Factura(entity.getFecha(), entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, entity.getFormaPago() == null ? null : FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
+		return new Factura(entity.getId(), entity.getFecha(), entity.getComisionMozo(), entity.getCobrado(), entity.getMonto(), itemsFactura, entity.getFormaPago() == null ? null : FormaPagoDAO.getInstancia().toBusiness(entity.getFormaPago()));
 	}
 
 	public FacturaEntity toEntity(Factura business) {
@@ -66,15 +66,29 @@ public class FacturaDAO {
 			}
 		}
 
-		return new FacturaEntity(business.getFecha(), business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, null);
+		return new FacturaEntity(business.getId(), business.getFecha(), business.getComisionMozo(), business.isCobrado(), business.getMonto(), itemsFactura, null);
 	}
 
-	public void save(Factura factura) throws BaseDeDatosException {
+	public Long save(Factura factura) throws BaseDeDatosException {
 		FacturaEntity entity = this.toEntity(factura);
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
 			session.beginTransaction();
 			session.save(entity);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			throw new BaseDeDatosException(e);
+		}
+		return entity.getId();
+	}
+
+	public void update(Factura factura) throws BaseDeDatosException {
+		FacturaEntity entity = this.toEntity(factura);
+		try {
+			Session session = HibernateUtil.getInstancia().getSession();
+			session.beginTransaction();
+			session.update(entity);
 			session.getTransaction().commit();
 			session.close();
 		} catch (HibernateException e) {

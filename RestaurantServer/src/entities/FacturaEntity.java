@@ -9,10 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "facturas")
 public class FacturaEntity implements Serializable {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -798692605392125434L;
 
 	@Id
@@ -26,11 +22,12 @@ public class FacturaEntity implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idFactura")
 	private List<ItemFacturaEntity> itemsFactura;
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private FormaPagoEntity formaPago;
 
-	public FacturaEntity(Date fecha, float comisionMozo, boolean cobrado, float monto,
+	public FacturaEntity(Long id, Date fecha, float comisionMozo, boolean cobrado, float monto,
 						 List<ItemFacturaEntity> itemsFactura, FormaPagoEntity formaPago) {
+		this.id = id;
 		this.fecha = fecha;
 		this.comisionMozo = comisionMozo;
 		this.cobrado = cobrado;
@@ -40,6 +37,10 @@ public class FacturaEntity implements Serializable {
 	}
 
 	public FacturaEntity() {
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public Date getFecha() {
