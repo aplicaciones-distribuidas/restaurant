@@ -122,15 +122,10 @@ public class Controlador {
 	}
 
 	public void agregarProductoAMesa(Long idMesaOcupacion, Long idProducto, int cantidadProducto) throws BaseDeDatosException, ProductoNoExisteException, InsumoNoExisteException, MesaOcupacionNoExisteException, ProductoSinStockException {
-		//buscar el producto y sino existe tirar una ProductoNoExisteException
 		Producto producto = ProductoDAO.getInstancia().getById(idProducto);
 		MesaOcupacion mesaOcupacion = MesasOcupacionDAO.getInstancia().getById(idMesaOcupacion);
-
-		//validar que el producto tenga el stock que se solicita sino ProductoSinStockException, si tiene, descontar el stock y actualizar los insumos
-		producto.descontarStock();
-
-		//agregar a mesa ocupacion, factura, el producto y la cantidad que se agregaron (y actualizar el objeto mesaocupacion)
 		mesaOcupacion.agregarProducto(producto, cantidadProducto);
+		producto.descontarStock();
 	}
 
 	public void cerrarMesa(Long idMesaOcupacion, Long idFormaDePago) throws BaseDeDatosException, MesaOcupacionNoExisteException, FormaDePagoNoExisteException {
