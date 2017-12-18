@@ -117,7 +117,10 @@ public class MesaOcupacion {
 
 	public void cerrar(FormaPago formaDePago) throws BaseDeDatosException {
 		Factura factura = this.getFactura();
-		factura.cobrar(formaDePago, this.getEmpleado());
+
+		if (factura != null) {
+			factura.cobrar(formaDePago, this.getEmpleado());
+		}
 
 		this.setFechaEgreso(new Date());
 		this.setProximaLiberarse(true);
