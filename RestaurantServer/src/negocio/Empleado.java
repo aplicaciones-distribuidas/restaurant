@@ -1,7 +1,6 @@
 package negocio;
 
 import dao.EmpleadoDAO;
-import dao.MesasDAO;
 import dto.EmpleadoView;
 import excepciones.BaseDeDatosException;
 

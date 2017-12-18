@@ -104,40 +104,29 @@ public class MesaOcupacion {
 	}
 
 	public void agregarProducto(Producto producto, int cantidadProducto) throws BaseDeDatosException {
-		if (this.getFactura() == null) { //es el primer plato que se agrega y no tiene factura creada
-			List<ItemFactura> itemsFactura = new ArrayList<>();
-			itemsFactura.add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			Factura factura = new Factura(null, new Date(), producto.getComisionMozo()*cantidadProducto, false, producto.getPrecio()*cantidadProducto, itemsFactura, null);
-			this.setFactura(factura);
-		} else { // ya tiene platos y por lo tanto tiene factura con al menos 1 item creada, se agrega el nuevo item y se actualizan los valores
-			Factura factura = this.getFactura();
-			factura.setComisionMozo(factura.getComisionMozo() + (producto.getComisionMozo()*cantidadProducto));
-			factura.getItemsFactura().add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
-			factura.setMonto(factura.getMonto() + (producto.getPrecio() * cantidadProducto));
-			this.setFactura(factura);
+		Factura factura = this.getFactura();
+
+		if (factura == null) {
+			factura = new Factura();
 		}
+
+		factura.agregarItem(producto, cantidadProducto);
+		this.setFactura(factura);
 		this.update();
 	}
 
 	public void cerrar(FormaPago formaDePago) throws BaseDeDatosException {
 		Factura factura = this.getFactura();
-		factura.setCobrado(true);
-		factura.setFormaPago(formaDePago);
-		factura.setFecha(new Date());
-		factura.update();
+		factura.cobrar(formaDePago, this.getEmpleado());
 
 		this.setFechaEgreso(new Date());
 		this.setProximaLiberarse(true);
 		for (Mesa mesa : this.getMesaItems()) mesa.setOcupada(false);
-
-		Comision comision = new Comision(this.getEmpleado(), this.getFactura().getComisionMozo());
-		comision.save();
-
 		this.update();
 	}
 
 	public MesaOcupacionView toView() {
-		List<MesaView> mesas = new ArrayList<MesaView>();
+		List<MesaView> mesas = new ArrayList<>();
 		for (Mesa mesa : this.mesaItems) {
 			mesas.add(mesa.toView());
 		}
@@ -156,10 +145,6 @@ public class MesaOcupacion {
 
 	public void update() throws BaseDeDatosException {
 		MesasOcupacionDAO.getInstancia().update(this);
-	}
-
-	public void saveWithoutSectorMesa() throws BaseDeDatosException {
-		this.id = MesasOcupacionDAO.getInstancia().saveWithoutSectorMesa(this);
 	}
 
 }

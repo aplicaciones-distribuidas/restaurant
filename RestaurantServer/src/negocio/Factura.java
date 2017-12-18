@@ -3,6 +3,7 @@ package negocio;
 import dao.FacturaDAO;
 import excepciones.BaseDeDatosException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,15 @@ public class Factura {
 		this.monto = monto;
 		this.itemsFactura = itemsFactura;
 		this.formaPago = formaPago;
+	}
+
+	public Factura() {
+		this.fecha = new Date();
+		this.comisionMozo = 0;
+		this.cobrado = false;
+		this.monto = 0;
+		this.itemsFactura = new ArrayList<>();
+		this.formaPago = null;
 	}
 
 	public Long getId() {
@@ -77,8 +87,24 @@ public class Factura {
 		this.formaPago = formaPago;
 	}
 
-	public float calcularComisionMozo() {
-		return this.comisionMozo * this.monto / 100;
+	public void agregarItem(Producto producto, int cantidadProducto) {
+		this.itemsFactura.add(new ItemFactura(producto, cantidadProducto, producto.getPrecio()));
+		this.comisionMozo += producto.getComisionMozo() * cantidadProducto;
+		this.monto += producto.getPrecio() * cantidadProducto;
+	}
+
+	public void cobrar(FormaPago formaDePago, Empleado empleado) throws BaseDeDatosException {
+		this.setCobrado(true);
+		this.setFormaPago(formaDePago);
+		this.setFecha(new Date());
+		this.update();
+
+		Comision comision = new Comision(empleado, this.calcularComisionMozo(empleado));
+		comision.save();
+	}
+
+	private float calcularComisionMozo(Empleado empleado) {
+		return this.comisionMozo + (this.monto * empleado.getPorcentajeComision() / 100);
 	}
 
 	public void save() throws BaseDeDatosException {
