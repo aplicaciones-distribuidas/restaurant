@@ -167,7 +167,7 @@ public class Sucursal {
 			for (Comision c : e.getComisiones()) {
 				comision += c.getMonto();
 			}
-			comisiones.add(new Comision(e, comision));
+			comisiones.add(new Comision(e, comision * ((float)e.getPorcentajeComision()/100)));
 		}
 
 		return comisiones;
