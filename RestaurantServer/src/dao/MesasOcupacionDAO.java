@@ -1,7 +1,6 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import excepciones.MesaOcupacionNoExisteException;
 import org.hibernate.HibernateException;
@@ -100,18 +99,23 @@ public class MesasOcupacionDAO {
 	@SuppressWarnings("unchecked")
 	public List<MesaOcupacion> getOcupadasBySectorSalon(SectorSalon sectorSalon) throws BaseDeDatosException {
 		SectorSalonEntity sectorSalonEntity = new SectorSalonEntity(sectorSalon.getId());
-
-		List<MesaOcupacionEntity> all = new ArrayList<MesaOcupacionEntity>();
+		Set<MesaOcupacionEntity> set = new HashSet<>();
 		try {
 			Session session = HibernateUtil.getInstancia().getSession();
-			// TODO: prevent duplicates
-			all = session.createQuery(
+			Iterator<MesaOcupacionEntity> iter = session.createQuery(
 					"select mo from MesaOcupacionEntity mo join mo.mesaItems m where mo.fechaEgreso is null and m.sectorSalon = :sectorSalon")
-					.setParameter("sectorSalon", sectorSalonEntity).list();
+					.setParameter("sectorSalon", sectorSalonEntity).iterate();
+
+			while (iter.hasNext()) {
+				set.add(iter.next());
+			}
+
 			session.close();
 		} catch (HibernateException e) {
 			throw new BaseDeDatosException(e);
 		}
+
+		List<MesaOcupacionEntity> all = new ArrayList<>(set);
 		return this.toBusiness(all);
 	}
 
